@@ -9,7 +9,7 @@
                 <p class="text-gray-200 font-light w-full text-center lg:text-left lg:max-w-96 self-end">An automated web-based Vannamei Shrimp Brackish Aquaculture Monitoring System through pH probe sensor and Dissolved Oxygen Sensor.</p>
             </div>
             <div class="flex justify-center items-center mt-5">
-                <a href="#" class="bg-gradient-to-r from-white to-blue-400 px-8 py-2 rounded-full z-10">
+                <a href="/pondguard-admin" class="bg-gradient-to-r from-white to-blue-400 px-8 py-2 rounded-full z-10">
                     Start now
                 </a>
             </div>
