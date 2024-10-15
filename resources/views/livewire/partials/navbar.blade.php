@@ -1,4 +1,4 @@
-<header class="flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-transparent text-sm py-6 px-10 fixed">
+<header class="flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-transparent text-sm py-6 px-2 lg:px-5 fixed top-0 left-0 z-50">
     <nav class="max-w-[85rem] w-full mx-auto px-4 flex flex-wrap basis-full items-center justify-between">
       <a class="flex-none text-xl font-medium focus:outline-none focus:opacity-80" href="#" aria-label="Brand">
         <span class="inline-flex items-center gap-x-2 text-xl text-white font-medium uppercase">
