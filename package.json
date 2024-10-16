@@ -13,6 +13,9 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "@tailwindcss/forms": "^0.5.9",
+        "chart.js": "^4.4.5",
+        "firebase": "^10.14.1",
         "preline": "^2.5.1"
     }
 }

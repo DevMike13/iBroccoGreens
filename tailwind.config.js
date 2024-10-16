@@ -5,6 +5,9 @@ module.exports = {
     "./resources/**/*.js",
     "./resources/**/*.vue",
     'node_modules/preline/dist/*.js',
+    './vendor/wireui/wireui/resources/**/*.blade.php',
+    './vendor/wireui/wireui/ts/**/*.ts',
+    './vendor/wireui/wireui/src/View/**/*.php'
   ],
   theme: {
     extend: {
@@ -21,7 +24,11 @@ module.exports = {
       },
     },
   },
+  presets: [
+    require('./vendor/wireui/wireui/tailwind.config.js')
+  ],
   plugins: [
+    require('@tailwindcss/forms'),
     require('preline/plugin'),
   ],
 }
