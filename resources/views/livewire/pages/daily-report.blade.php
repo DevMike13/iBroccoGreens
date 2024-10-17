@@ -75,7 +75,9 @@
                         label: 'pH Level',
                         data: values, 
                         borderWidth: 1,
-                        tension: 0.5
+                        tension: 0.5,
+                        borderColor: '#FF6384',
+                        backgroundColor: '#FFB1C1',
                     }]
                 },
                 options: {
@@ -107,7 +109,9 @@
                     label: 'Dissolved Oxygen Level',
                     data: valuesdo, 
                     borderWidth: 1,
-                    tension: 0.5
+                    tension: 0.5,
+                    borderColor: '#90EE90',
+                    backgroundColor: '#90EE90',
                 }]
             },
             options: {
@@ -158,7 +162,9 @@
                     label: 'Alkalinity Level',
                     data: valuesal, 
                     borderWidth: 1,
-                    tension: 0.5
+                    tension: 0.5,
+                    borderColor: '#FFA500',
+                    backgroundColor: '#FFA500',
                 }]
             },
             options: {

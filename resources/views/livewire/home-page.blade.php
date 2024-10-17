@@ -69,12 +69,12 @@
         <img src="{{ asset('images/shrimp-side.png') }}" alt="" class="w-[150px] absolute bottom-1/3 right-1/4 opacity-10 -rotate-45">
     </div>
     <svg
-    class="absolute left-0 bottom-0 w-full h-[30vw] max-h-[200px]"
-    xmlns="http://www.w3.org/2000/svg"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
-    viewBox="0 24 150 28"
-    preserveAspectRatio="none"
-  >
+      class="absolute left-0 bottom-0 w-full h-[30vw] max-h-[200px]"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      viewBox="0 24 150 28"
+      preserveAspectRatio="none"
+    >
     <defs>
       <path
         id="gentle-wave"

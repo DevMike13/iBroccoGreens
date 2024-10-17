@@ -11,5 +11,5 @@ class UserManual extends Page
 
     protected static string $view = 'filament.pages.user-manual';
 
-    
+    protected static ?int $navigationSort = 10;
 }
