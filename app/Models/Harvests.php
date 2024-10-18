@@ -19,6 +19,6 @@ class Harvests extends Model
 
     public function cycle(): BelongsTo
     {
-        return $this->belongsTo(Cycles::class, 'cycle_id');
+        return $this->belongsTo(Cycles::class);
     }
 }

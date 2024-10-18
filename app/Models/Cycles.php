@@ -15,7 +15,8 @@ class Cycles extends Model
         'cycle_no',
         'start_date', 
         'end_date',
-        'status'
+        'status',
+        'description'
     ];
 
     public function samplings(): HasMany
@@ -30,7 +31,7 @@ class Cycles extends Model
 
     public function harvest(): HasOne
     {
-        return $this->hasOne(Harvests::class);
+        return $this->hasOne(Harvests::class, 'cycle_id');
     }
 
     public function sensors(): HasMany
