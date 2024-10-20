@@ -12,15 +12,24 @@
         import { getAuth } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js'
         import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js'
         import { getDatabase, ref, onValue } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js';
+
+        var apiKey = "{{ env('API_KEY_FRB')}}";
+        var authDomain = "{{ env('AUTH_DOMAIN')}}";
+        var databaseURL = "{{ env('DATABASE_URL_FRB') }}";
+        var projectId = "{{ env('PROJECT_ID_FRB') }}";
+        var storageBucket = "{{ env('STORAGE_BUCKET_FRB') }}";
+        var messagingSenderId = "{{ env('MESSAGING_SENDER_ID_FRB') }}";
+        var appId = "{{ env('APP_ID_FRB') }}";
+       
         // Initialize Firebase (replace with your Firebase config)
         const firebaseConfig = {
-            apiKey: "AIzaSyD7R-QfMOTuy6aQ30vg4le5ih1P9dxN9_4",
-            authDomain: "pondguard-e6c97.firebaseapp.com",
-            databaseURL: "https://pondguard-e6c97-default-rtdb.firebaseio.com",
-            projectId: "pondguard-e6c97",
-            storageBucket: "pondguard-e6c97.appspot.com",
-            messagingSenderId: "44302708937",
-            appId: "1:44302708937:web:78ab4964f47601fa2c1d18"
+            apiKey: apiKey,
+            authDomain: authDomain,
+            databaseURL: databaseURL,
+            projectId: projectId,
+            storageBucket: storageBucket,
+            messagingSenderId: messagingSenderId,
+            appId: appId
         };
     
         // Initialize Firebase app and database
