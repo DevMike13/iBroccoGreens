@@ -29,6 +29,9 @@ class CycleDetails extends Component
     public $editShrimpCount;
     public $editDescription;
 
+    public $harvestDate;
+    public $harvestWeight;
+
     public function getCycleNumber(Database $database){
         $latestCycle = Cycles::latest('cycle_no')->first();
         $this->cycleNo = $latestCycle ? $latestCycle->cycle_no + 1 : 1;
@@ -150,6 +153,7 @@ class CycleDetails extends Component
                 ->success()
                 ->send();
 
+            $this->cancelEdit();
             $this->dispatch('reload');
 
             return redirect()->back();
@@ -173,6 +177,15 @@ class CycleDetails extends Component
         $this->editStartDate = "";
         $this->editShrimpCount = "";
         $this->editDescription = "";
+    }
+
+    public function getSelectedHarvestCycle($id){
+        $harvestCycle = Cycles::findOrFail($id);
+
+        if($harvestCycle && $id){
+            $this->selectedCycleId = $id;
+            $this->editCycleNo = $harvestCycle->cycle_no;
+        }
     }
 
     public function fetchFirebaseCurrentCycle()

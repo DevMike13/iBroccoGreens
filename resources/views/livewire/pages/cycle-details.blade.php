@@ -88,7 +88,7 @@
                                                             Edit
                                                         </a>
                                                         @if ($cycle->status == 'current' && $cycle->harvest == null)
-                                                            <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-green-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700" href="#">
+                                                            <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-green-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700" href="#" wire:click="getSelectedHarvestCycle({{ $cycle->id }})" onclick="$openModal('harvestCycle')">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
                                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.05 4.575a1.575 1.575 0 1 0-3.15 0v3m3.15-3v-1.5a1.575 1.575 0 0 1 3.15 0v1.5m-3.15 0 .075 5.925m3.075.75V4.575m0 0a1.575 1.575 0 0 1 3.15 0V15M6.9 7.575a1.575 1.575 0 1 0-3.15 0v8.175a6.75 6.75 0 0 0 6.75 6.75h2.018a5.25 5.25 0 0 0 3.712-1.538l1.732-1.732a5.25 5.25 0 0 0 1.538-3.712l.003-2.024a.668.668 0 0 1 .198-.471 1.575 1.575 0 1 0-2.228-2.228 3.818 3.818 0 0 0-1.12 2.687M6.9 7.575V12m6.27 4.318A4.49 4.49 0 0 1 16.35 15m.002 0h-.002" />
                                                                 </svg>
@@ -204,6 +204,42 @@
             </div> --}}
             <div class="mt-3">
                 <x-textarea label="Description" placeholder="write cycle description" wire:model="editDescription" />
+            </div>
+            
+            <x-slot name="footer" class="flex justify-end gap-x-4">
+                <div class="flex justify-end gap-x-4">
+                    <x-button flat label="Cancel" x-on:click="close" wire:click="cancelEdit" />
+                    <x-button primary label="Save" wire:click="editCycleConfirmation({{ $selectedCycleId }})" />
+                </div>
+            </x-slot>
+        </x-card>
+    </x-modal>
+
+    <x-modal blur name="harvestCycle" persistent align="center" max-width="sm">
+        <x-card title="Harvest Cycle">
+            
+            <div class="relative w-auto">
+                {{-- <span class="absolute left-[4.5rem] top-[0.10rem] text-xs italic text-green-400">(This value is not changeable.)</span>
+                <x-input right-icon="hashtag" label="Cycle No." placeholder="Ex: 1"  wire:model="editCycleNo" disabled /> --}}
+
+            </div>
+           
+            <div class="mt-3">
+                <x-datetime-picker
+                    label="Harvest Date"
+                    placeholder="Harvest Date"
+                    parse-format="YYYY-MM-DD"
+                    display-format="MMMM DD, YYYY"
+                    wire:model.defer="harvestDate"
+                    without-tips
+                    :min="now()"
+                    without-time
+                />
+            </div>
+
+            <div class="relative w-auto mt-3">
+                <span class="absolute left-[3.5rem] top-[0.10rem] text-xs italic text-green-400">(This value is in kilogram.)</span>
+                <x-inputs.number label="Weight" wire:model="harvestWeight" />
             </div>
             
             <x-slot name="footer" class="flex justify-end gap-x-4">
