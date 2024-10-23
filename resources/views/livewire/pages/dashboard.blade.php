@@ -14,7 +14,7 @@
                             <path d="M344 328a72 72 0 01-72 72" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/>
                         </svg>
                         <h3 class="text-2xl font-bold text-gray-800 dark:text-white">
-                            {{$phData}}
+                            {{number_format($phData, 2, '.', ',')}}
                         </h3>
                     </div>
                 </div>
@@ -32,7 +32,7 @@
                             <path d="M321.89 171.42C233 114 141 155.22 56 65.22c-19.8-21-8.3 235.5 98.1 332.7 77.79 71 197.9 63.08 238.4-5.92s18.28-163.17-70.61-220.58zM173 253c86 81 175 129 292 147" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/>
                         </svg>                      
                         <h3 class="text-2xl font-bold text-gray-800 dark:text-white">
-                            {{$doData}}mg/L
+                            {{number_format($doData, 2, '.', ',')}}mg/L
                         </h3>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
                             <circle cx="168" cy="328" r="120" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"/>
                         </svg>
                         <h3 class="text-2xl font-bold text-gray-800 dark:text-white">
-                            {{$alData}}ppm
+                            {{number_format($alData, 2, '.', ',')}}ppm
                         </h3>
                     </div>
                 </div>

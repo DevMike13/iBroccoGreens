@@ -21,12 +21,12 @@ class Cycles extends Model
 
     public function samplings(): HasMany
     {
-        return $this->hasMany(Samplings::class);
+        return $this->hasMany(Samplings::class, 'cycle_id');
     }
     
     public function shrimp(): HasOne
     {
-        return $this->hasOne(Shrimps::class);
+        return $this->hasOne(Shrimps::class, 'cycle_id');
     }
 
     public function harvest(): HasOne
@@ -34,8 +34,8 @@ class Cycles extends Model
         return $this->hasOne(Harvests::class, 'cycle_id');
     }
 
-    public function sensors(): HasMany
-    {
-        return $this->hasMany(SensorDatas::class);
-    }
+    // public function sensors(): HasMany
+    // {
+    //     return $this->hasMany(SensorDatas::class);
+    // }
 }

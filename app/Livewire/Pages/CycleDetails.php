@@ -3,6 +3,7 @@
 namespace App\Livewire\Pages;
 
 use App\Models\Cycles;
+use App\Models\Shrimps;
 use Filament\Notifications\Notification;
 use Kreait\Firebase\Contract\Database;
 use Livewire\Component;
@@ -19,8 +20,14 @@ class CycleDetails extends Component
     
     public $cycleNo;
     public $startDate;
-    public $endDate;
+    public $shrimpCount;
     public $description;
+
+    public $selectedCycleId;
+    public $editCycleNo;
+    public $editStartDate;
+    public $editShrimpCount;
+    public $editDescription;
 
     public function getCycleNumber(Database $database){
         $latestCycle = Cycles::latest('cycle_no')->first();
@@ -35,11 +42,11 @@ class CycleDetails extends Component
         $this->validate([ 
             'cycleNo' => 'required|integer',
             'startDate' => 'required|date',
-            'endDate' => ['required', 'date', function ($attribute, $value, $fail) {
-                if (strtotime($value) <= strtotime($this->startDate)) {
-                    $fail('The end date must be after the start date.');
-                }
-            }],
+            // 'endDate' => ['required', 'date', function ($attribute, $value, $fail) {
+            //     if (strtotime($value) <= strtotime($this->startDate)) {
+            //         $fail('The end date must be after the start date.');
+            //     }
+            // }],
             'description' => 'required|max:255',
         ]);
 
@@ -59,17 +66,25 @@ class CycleDetails extends Component
         $previousCycle = Cycles::latest('cycle_no')->first();
 
         if ($previousCycle) {
-            $previousCycle->update(['status' => 'completed']);
+            $previousCycle->update([
+                'status' => 'completed',
+                'end_date' => now()
+            ]);
         }
 
         $newCycle = Cycles::create([
             'cycle_no' => $this->cycleNo,
             'start_date' => $this->startDate,
-            'end_date' => $this->endDate,
+            // 'end_date' => $this->endDate,
             'status' => 'current',
             'description' => $this->description
         ]);
-       
+        
+        $shrimpForTheCycle = Shrimps::create([
+            'cycle_id' => $newCycle->id,
+            'shrimp_count' => $this->shrimpCount
+        ]);
+
         $this->database = $database;
         $this->setFirebaseCurrentCycleNo();
 
@@ -93,6 +108,71 @@ class CycleDetails extends Component
             'icon'        => 'error',
             'params'      => $newCycleNo
         ]);
+    }
+
+    public function getSelectedCycle($id){
+        $cycle = Cycles::with('shrimp')->findOrFail($id);
+
+        if($cycle && $id){
+            $this->selectedCycleId = $id;
+            $this->editCycleNo = $cycle->cycle_no;
+            $this->editStartDate = $cycle->start_date;
+            $this->editShrimpCount = $cycle->shrimp->shrimp_count;
+            $this->editDescription = $cycle->description;
+        }
+    }
+
+    public function editSelectedCycle($id){
+        if($this->selectedCycleId){
+            $this->validate([
+                'editCycleNo' => 'required|integer',
+                'editStartDate' => 'required|date',
+                'editShrimpCount'  => 'required|integer|min:1',
+                'editDescription' => 'required|max:255'
+            ]);
+    
+            $cycle = Cycles::findOrFail($id);
+    
+            $cycle->update([
+                'start_date' => $this->editStartDate,
+                'description' => $this->editDescription,
+            ]);
+
+            $shrimp = Shrimps::where('cycle_id', $id);
+
+            $shrimp->update([
+                'shrimp_count' => $this->editShrimpCount
+            ]);
+
+            Notification::make()
+                ->title('Success!')
+                ->body('Cycle has been updated.')
+                ->success()
+                ->send();
+
+            $this->dispatch('reload');
+
+            return redirect()->back();
+        }
+    }
+
+    public function editCycleConfirmation($id){
+        $this->dialog()->confirm([
+            'title'       => 'Are you Sure?',
+            'description' => "Do you want to edit this cycle with ID No. ".  html_entity_decode('<span class="text-red-600 underline">' . $id . '</span>') . " ?",
+            'acceptLabel' => 'Yes, create it',
+            'method'      => 'editSelectedCycle',
+            'icon'        => 'error',
+            'params'      => $id
+        ]);
+    }
+
+    public function cancelEdit(){
+        $this->selectedCycleId = "";
+        $this->editCycleNo = "";
+        $this->editStartDate = "";
+        $this->editShrimpCount = "";
+        $this->editDescription = "";
     }
 
     public function fetchFirebaseCurrentCycle()
@@ -119,7 +199,7 @@ class CycleDetails extends Component
     
     public function render()
     {
-        $cycleLists = Cycles::with('harvest')->orderBy('cycle_no', 'desc')->get();
+        $cycleLists = Cycles::with(['harvest' , 'shrimp'])->orderBy('cycle_no', 'desc')->get();
         return view('livewire.pages.cycle-details', [
             'cycleLists' => $cycleLists
         ]);

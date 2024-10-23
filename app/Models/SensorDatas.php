@@ -19,8 +19,8 @@ class SensorDatas extends Model
         'reading_date'
     ];
 
-    public function cycle(): BelongsTo
-    {
-        return $this->belongsTo(Cycles::class, 'cycle_id');
-    }
+    // public function cycle(): BelongsTo
+    // {
+    //     return $this->belongsTo(Cycles::class, 'cycle_id');
+    // }
 }

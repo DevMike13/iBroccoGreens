@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer("cycle_no");
             $table->date('start_date');
-            $table->date('end_date');
+            $table->date('end_date')->nullable();
             $table->enum('status', ['current', 'completed'])->default('current');
             $table->string('description');
             $table->timestamps();
