@@ -3,6 +3,7 @@
 namespace App\Livewire\Pages;
 
 use App\Models\Cycles;
+use App\Models\Harvests;
 use App\Models\Shrimps;
 use Filament\Notifications\Notification;
 use Kreait\Firebase\Contract\Database;
@@ -28,7 +29,12 @@ class CycleDetails extends Component
     public $editStartDate;
     public $editShrimpCount;
     public $editDescription;
+    public $editHarvestDate;
+    public $editHarvestWeight;
+    public $status;
 
+    public $selectedCycleToHarvestId;
+    public $harvestCycleNo;
     public $harvestDate;
     public $harvestWeight;
 
@@ -66,46 +72,80 @@ class CycleDetails extends Component
 
     public function saveCycle(Database $database)
     {
+        // Get the latest cycle based on cycle_no
         $previousCycle = Cycles::latest('cycle_no')->first();
 
-        if ($previousCycle) {
-            $previousCycle->update([
-                'status' => 'completed',
-                'end_date' => now()
+        // Check if there is a previous cycle and if it meets the conditions
+        if ($previousCycle && $previousCycle->status == 'completed' && $previousCycle->end_date != null) {
+            // Create a new cycle
+            $newCycle = Cycles::create([
+                'cycle_no' => $this->cycleNo,
+                'start_date' => $this->startDate,
+                'status' => 'current',
+                'description' => $this->description,
             ]);
+
+            // Create the shrimp record for the new cycle
+            Shrimps::create([
+                'cycle_id' => $newCycle->id,
+                'shrimp_count' => $this->shrimpCount,
+            ]);
+
+            // Set the Firebase current cycle number
+            $this->database = $database;
+            $this->setFirebaseCurrentCycleNo();
+
+            // Success notification
+            Notification::make()
+                ->title('Success!')
+                ->body('Cycle has been created.')
+                ->success()
+                ->send();
+        } 
+        // Handle the case where there's no previous cycle or an active cycle exists
+        else if (!$previousCycle) {
+            // If no previous cycle, create a new cycle directly
+            $newCycle = Cycles::create([
+                'cycle_no' => $this->cycleNo,
+                'start_date' => $this->startDate,
+                'status' => 'current',
+                'description' => $this->description,
+            ]);
+
+            Shrimps::create([
+                'cycle_id' => $newCycle->id,
+                'shrimp_count' => $this->shrimpCount,
+            ]);
+
+            $this->database = $database;
+            $this->setFirebaseCurrentCycleNo();
+
+            Notification::make()
+                ->title('Success!')
+                ->body('First cycle has been created.')
+                ->success()
+                ->send();
+        } else {
+            // Error notification when an active cycle already exists
+            Notification::make()
+                ->title('Error!')
+                ->body("There's an active cycle. Harvest it first before you can create a new cycle.")
+                ->danger()
+                ->send();
         }
 
-        $newCycle = Cycles::create([
-            'cycle_no' => $this->cycleNo,
-            'start_date' => $this->startDate,
-            // 'end_date' => $this->endDate,
-            'status' => 'current',
-            'description' => $this->description
-        ]);
-        
-        $shrimpForTheCycle = Shrimps::create([
-            'cycle_id' => $newCycle->id,
-            'shrimp_count' => $this->shrimpCount
-        ]);
-
-        $this->database = $database;
-        $this->setFirebaseCurrentCycleNo();
-
-        Notification::make()
-            ->title('Success!')
-            ->body('Cycle has been created.')
-            ->success()
-            ->send();
-
+        // Reload the page or component
         $this->dispatch('reload');
 
+        // Redirect back to the previous page
         return redirect()->back();
     }
+
 
     public function createCycleConfirmation($newCycleNo){
         $this->dialog()->confirm([
             'title'       => 'Are you Sure?',
-            'description' => "Do you want to create this cycle No. ".  html_entity_decode('<span class="text-red-600 underline">' . $newCycleNo . '</span>') . " it will end the previous cycle?",
+            'description' => "Do you want to create this cycle No. ".  html_entity_decode('<span class="text-red-600 underline">' . $newCycleNo . '</span>') . " ?",
             'acceptLabel' => 'Yes, create it',
             'method'      => 'saveCycle',
             'icon'        => 'error',
@@ -114,7 +154,7 @@ class CycleDetails extends Component
     }
 
     public function getSelectedCycle($id){
-        $cycle = Cycles::with('shrimp')->findOrFail($id);
+        $cycle = Cycles::with(['shrimp', 'harvest'])->findOrFail($id);
 
         if($cycle && $id){
             $this->selectedCycleId = $id;
@@ -122,6 +162,12 @@ class CycleDetails extends Component
             $this->editStartDate = $cycle->start_date;
             $this->editShrimpCount = $cycle->shrimp->shrimp_count;
             $this->editDescription = $cycle->description;
+            $this->status = $cycle->status;
+            if($cycle->harvest != null && $cycle->status == 'completed'){
+                $this->editHarvestDate = $cycle->harvest->date_harvested;
+                $this->editHarvestWeight = $cycle->harvest->harvest_count;
+            }
+            
         }
     }
 
@@ -147,6 +193,13 @@ class CycleDetails extends Component
                 'shrimp_count' => $this->editShrimpCount
             ]);
 
+            $harvest = Harvests::where('cycle_id', $id);
+
+            $harvest->update([
+                'harvest_count' => $this->editHarvestWeight,
+                'date_harvested' => $this->editHarvestDate
+            ]);
+
             Notification::make()
                 ->title('Success!')
                 ->body('Cycle has been updated.')
@@ -164,7 +217,7 @@ class CycleDetails extends Component
         $this->dialog()->confirm([
             'title'       => 'Are you Sure?',
             'description' => "Do you want to edit this cycle with ID No. ".  html_entity_decode('<span class="text-red-600 underline">' . $id . '</span>') . " ?",
-            'acceptLabel' => 'Yes, create it',
+            'acceptLabel' => 'Yes, update it',
             'method'      => 'editSelectedCycle',
             'icon'        => 'error',
             'params'      => $id
@@ -177,15 +230,87 @@ class CycleDetails extends Component
         $this->editStartDate = "";
         $this->editShrimpCount = "";
         $this->editDescription = "";
+        $this->editHarvestDate = "";
+        $this->editHarvestWeight = "";
+        $this->status = "";
     }
 
     public function getSelectedHarvestCycle($id){
         $harvestCycle = Cycles::findOrFail($id);
 
         if($harvestCycle && $id){
-            $this->selectedCycleId = $id;
-            $this->editCycleNo = $harvestCycle->cycle_no;
+            $this->selectedCycleToHarvestId = $id;
+            $this->harvestCycleNo = $harvestCycle->cycle_no;
         }
+    }
+
+    public function harvest($id){
+        $cycle = Cycles::findOrFail($id);
+
+        $this->validate([ 
+            'harvestDate' => 'required|date',
+            'harvestWeight' => 'required|integer',
+        ]);
+
+        if ($cycle && $id) {
+            $cycle->update([
+                'status' => 'completed',
+                'end_date' => $this->harvestDate
+            ]);
+
+            $harvest = Harvests::create([
+                'cycle_id' => $id,
+                'harvest_count' => $this->harvestWeight,
+                'date_harvested' => $this->harvestDate
+            ]);
+
+            Notification::make()
+                ->title('Success!')
+                ->body('Cycle has been harvested.')
+                ->success()
+                ->send();
+        }
+
+        $this->dispatch('reload');
+
+        return redirect()->back();
+    }
+
+    public function harvestCycleConfirmation($id){
+        $this->dialog()->confirm([
+            'title'       => 'Are you Sure?',
+            'description' => "Do you want to harvest this cycle with Cycle No. ".  html_entity_decode('<span class="text-red-600 underline">' . $this->harvestCycleNo . '</span>') . " ?",
+            'acceptLabel' => 'Yes, harvest it',
+            'method'      => 'harvest',
+            'icon'        => 'error',
+            'params'      => $id
+        ]);
+    }
+
+    public function deleteCycle($id){
+        $cycle = Cycles::findOrFail($id);
+        $cycle->delete();
+
+        Notification::make()
+            ->title('Success!')
+            ->body('Cycle has been deleted.')
+            ->success()
+            ->send();
+
+        $this->dispatch('reload');
+
+        return redirect()->back();
+    }
+
+    public function deleteCycleConfirmation($id, $cycleNo){
+        $this->dialog()->confirm([
+            'title'       => 'Are you Sure?',
+            'description' => "Do you want to delete this cycle with Cycle No. ".  html_entity_decode('<span class="text-red-600 underline">' . $cycleNo . '</span>') . " ? This will delete all data such as sensors data.",
+            'acceptLabel' => 'Yes, delete it',
+            'method'      => 'deleteCycle',
+            'icon'        => 'error',
+            'params'      => $id
+        ]);
     }
 
     public function fetchFirebaseCurrentCycle()

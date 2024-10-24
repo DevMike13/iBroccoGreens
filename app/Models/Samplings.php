@@ -11,14 +11,9 @@ class Samplings extends Model
     use HasFactory;
 
     protected $fillable = [
-        'cycle_id',
+        'cycle_no',
         'sampling_no', 
         'date',
         'average_weight'
     ];
-
-    public function cycle(): BelongsTo
-    {
-        return $this->belongsTo(Cycles::class, 'cycle_id');
-    }
 }

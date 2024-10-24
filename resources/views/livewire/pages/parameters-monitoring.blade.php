@@ -7,7 +7,7 @@
                 </p>
                 <div>
                     <p class="text-xs mb-2">Current TR: <span class="inline-flex items-center gap-x-1.5 px-2 rounded-full text-xs font-medium bg-yellow-500 text-white">{{$phTresholdData}}</span></p>
-                    <a href="#" onclick="$openModal('phlevelmodal')" class="text-xs bg-blue-600 px-2 py-1 rounded-lg">Set Threshhold Range</a>
+                    <a href="#" onclick="$openModal('phlevelmodal')" class="text-xs bg-blue-600 px-2 py-1 rounded-lg text-white">Set Threshhold Range</a>
                 </div>
             </div>
             <div class="p-4 md:p-5">
@@ -30,7 +30,7 @@
                 </p>
                 <div>
                     <p class="text-xs mb-2">Current TR: <span class="inline-flex items-center gap-x-1.5 px-2 rounded-full text-xs font-medium bg-yellow-500 text-white">{{$doTresholdData}}mg/L</span></p>
-                    <a href="#" onclick="$openModal('domodal')" class="text-xs bg-blue-600 px-2 py-1 rounded-lg">Set Threshhold Range</a>
+                    <a href="#" onclick="$openModal('domodal')" class="text-xs bg-blue-600 px-2 py-1 rounded-lg text-white">Set Threshhold Range</a>
                 </div>
             </div>
             <div class="p-4 md:p-5">
@@ -54,7 +54,7 @@
                 </p>
                 <div>
                     <p class="text-xs mb-2">Current TR: <span class="inline-flex items-center gap-x-1.5 px-2 rounded-full text-xs font-medium bg-yellow-500 text-white">{{$alTresholdData}}ppm</span></p>
-                    <a href="#" onclick="$openModal('almodal')" class="text-xs bg-blue-600 px-2 py-1 rounded-lg">Set Threshhold Range</a>
+                    <a href="#" onclick="$openModal('almodal')" class="text-xs bg-blue-600 px-2 py-1 rounded-lg text-white">Set Threshhold Range</a>
                 </div>
             </div>
             <div class="p-4 md:p-5">
@@ -78,7 +78,7 @@
                 </p>
                 <div>
                     <p class="text-xs mb-2">Current TR: <span class="inline-flex items-center gap-x-1.5 px-2 rounded-full text-xs font-medium bg-yellow-500 text-white">{{$wTempTresholdData}}°C</span></p>
-                    <a href="#" onclick="$openModal('wtmodal')" class="text-xs bg-blue-600 px-2 py-1 rounded-lg">Set Threshhold Range</a>
+                    <a href="#" onclick="$openModal('wtmodal')" class="text-xs bg-blue-600 px-2 py-1 rounded-lg text-white">Set Threshhold Range</a>
                 </div>
             </div>
             <div class="p-4 md:p-5">

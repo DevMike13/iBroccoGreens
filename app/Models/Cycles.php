@@ -19,10 +19,10 @@ class Cycles extends Model
         'description'
     ];
 
-    public function samplings(): HasMany
-    {
-        return $this->hasMany(Samplings::class, 'cycle_id');
-    }
+    // public function samplings(): HasMany
+    // {
+    //     return $this->hasMany(Samplings::class, 'cycle_id');
+    // }
     
     public function shrimp(): HasOne
     {

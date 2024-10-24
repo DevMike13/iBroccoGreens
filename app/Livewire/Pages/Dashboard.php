@@ -2,6 +2,8 @@
 
 namespace App\Livewire\Pages;
 
+use App\Models\SensorDatas;
+use Carbon\Carbon;
 use Livewire\Component;
 use Kreait\Firebase\Contract\Database;
 
@@ -23,51 +25,116 @@ class Dashboard extends Component
         'updateWTLevel' => 'handleWtLevelUpdate'
     ];
 
-    public $phLevelData=[
-        ['Day'=>'Mon', 'Value' =>56],
-        ['Day'=>'Tue', 'Value' =>32],
-        ['Day'=>'Wed', 'Value' =>44],
-        ['Day'=>'Thu', 'Value' =>68],
-        ['Day'=>'Fri', 'Value' =>12],
-        ['Day'=>'Sat', 'Value' =>86],
-        ['Day'=>'Sun', 'Value' =>55],
-    ];
-
-    public $doLevelData=[
-        ['Day'=>'Mon', 'Value' =>0.5],
-        ['Day'=>'Tue', 'Value' =>3],
-        ['Day'=>'Wed', 'Value' =>2.4],
-        ['Day'=>'Thu', 'Value' =>0.6],
-        ['Day'=>'Fri', 'Value' =>2],
-        ['Day'=>'Sat', 'Value' =>86],
-        ['Day'=>'Sun', 'Value' =>1.6],
-    ];
-
-    public $alLevelData=[
-        ['Day'=>'Mon', 'Value' =>33],
-        ['Day'=>'Tue', 'Value' =>74],
-        ['Day'=>'Wed', 'Value' =>79],
-        ['Day'=>'Thu', 'Value' =>66],
-        ['Day'=>'Fri', 'Value' =>61],
-        ['Day'=>'Sat', 'Value' =>82],
-        ['Day'=>'Sun', 'Value' =>21],
-    ];
-
-    public $wtLevelData=[
-        ['Day'=>'Mon', 'Value' =>23],
-        ['Day'=>'Tue', 'Value' =>18],
-        ['Day'=>'Wed', 'Value' =>30],
-        ['Day'=>'Thu', 'Value' =>32],
-        ['Day'=>'Fri', 'Value' =>28],
-        ['Day'=>'Sat', 'Value' =>19],
-        ['Day'=>'Sun', 'Value' =>36],
-    ];
+    public $phLevelData = [];
+    public $doLevelData = [];
+    public $alLevelData=[];
+    public $wtLevelData=[];
 
     public function mount(Database $database)
     {
         $this->database = $database;
         $this->fetchData();
+        $this->getPhLevelDataForCurrentWeek();
+        $this->getDOLevelDataForCurrentWeek();
+        $this->getAlLevelDataForCurrentWeek();
+        $this->getWtDataForCurrentWeek();
         
+    }
+
+    public function getPhLevelDataForCurrentWeek()
+    {
+        $startOfWeek = Carbon::now()->startOfWeek();
+        $endOfWeek = Carbon::now()->endOfWeek();
+
+        $phData = SensorDatas::selectRaw('DAYNAME(reading_date) as Day, ph_level as Value')
+            ->whereBetween('reading_date', [$startOfWeek, $endOfWeek])
+            ->whereIn('reading_date', function ($query) use ($startOfWeek, $endOfWeek) {
+                $query->selectRaw('MAX(reading_date)')
+                    ->from('sensor_datas')
+                    ->whereBetween('reading_date', [$startOfWeek, $endOfWeek])
+                    ->groupByRaw('DATE(reading_date)');
+            })
+            ->orderByRaw('FIELD(Day, "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")')
+            ->get();
+
+        $this->phLevelData = $phData->map(function ($item) {
+            return [
+                'Day' => substr($item->Day, 0, 3),
+                'Value' => round($item->Value, 2)
+            ];
+        })->toArray();
+    }
+
+    public function getDOLevelDataForCurrentWeek()
+    {
+        $startOfWeek = Carbon::now()->startOfWeek();
+        $endOfWeek = Carbon::now()->endOfWeek();
+
+        $doData = SensorDatas::selectRaw('DAYNAME(reading_date) as Day, dissolved_oxygen as Value')
+            ->whereBetween('reading_date', [$startOfWeek, $endOfWeek])
+            ->whereIn('reading_date', function ($query) use ($startOfWeek, $endOfWeek) {
+                $query->selectRaw('MAX(reading_date)')
+                    ->from('sensor_datas')
+                    ->whereBetween('reading_date', [$startOfWeek, $endOfWeek])
+                    ->groupByRaw('DATE(reading_date)');
+            })
+            ->orderByRaw('FIELD(Day, "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")')
+            ->get();
+
+        $this->doLevelData = $doData->map(function ($item) {
+            return [
+                'Day' => substr($item->Day, 0, 3),
+                'Value' => round($item->Value, 2)
+            ];
+        })->toArray();
+    }
+    
+    public function getAlLevelDataForCurrentWeek()
+    {
+        $startOfWeek = Carbon::now()->startOfWeek();
+        $endOfWeek = Carbon::now()->endOfWeek();
+
+        $alData = SensorDatas::selectRaw('DAYNAME(reading_date) as Day, alkalinity_level as Value')
+            ->whereBetween('reading_date', [$startOfWeek, $endOfWeek])
+            ->whereIn('reading_date', function ($query) use ($startOfWeek, $endOfWeek) {
+                $query->selectRaw('MAX(reading_date)')
+                    ->from('sensor_datas')
+                    ->whereBetween('reading_date', [$startOfWeek, $endOfWeek])
+                    ->groupByRaw('DATE(reading_date)');
+            })
+            ->orderByRaw('FIELD(Day, "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")')
+            ->get();
+
+        $this->alLevelData = $alData->map(function ($item) {
+            return [
+                'Day' => substr($item->Day, 0, 3),
+                'Value' => round($item->Value, 2)
+            ];
+        })->toArray();
+    }
+
+    public function getWtDataForCurrentWeek()
+    {
+        $startOfWeek = Carbon::now()->startOfWeek();
+        $endOfWeek = Carbon::now()->endOfWeek();
+
+        $wtData = SensorDatas::selectRaw('DAYNAME(reading_date) as Day, water_temperature as Value')
+            ->whereBetween('reading_date', [$startOfWeek, $endOfWeek])
+            ->whereIn('reading_date', function ($query) use ($startOfWeek, $endOfWeek) {
+                $query->selectRaw('MAX(reading_date)')
+                    ->from('sensor_datas')
+                    ->whereBetween('reading_date', [$startOfWeek, $endOfWeek])
+                    ->groupByRaw('DATE(reading_date)');
+            })
+            ->orderByRaw('FIELD(Day, "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")')
+            ->get();
+
+        $this->wtLevelData = $wtData->map(function ($item) {
+            return [
+                'Day' => substr($item->Day, 0, 3),
+                'Value' => round($item->Value, 2)
+            ];
+        })->toArray();
     }
 
     public function fetchData()
