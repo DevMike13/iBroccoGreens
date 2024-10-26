@@ -10,5 +10,5 @@ class CycleDetails extends Page
 
     protected static string $view = 'filament.pages.cycle-details';
 
-    protected static ?int $navigationSort = 100;
+    protected static ?int $navigationSort = 40;
 }

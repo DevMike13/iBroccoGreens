@@ -10,5 +10,5 @@ class SamplingRecord extends Page
 
     protected static string $view = 'filament.pages.sampling-record';
 
-    protected static ?int $navigationSort = 100;
+    protected static ?int $navigationSort = 70;
 }
