@@ -61,7 +61,7 @@
     </div>
 
     <x-modal blur name="newPersonnel" persistent align="center" max-width="sm">
-        <form wire:submit.prevent="createNewPersonnel">
+        <form wire:submit.prevent="createNewPersonnel" class="w-full">
             <x-card title="Create New Personnel">
                 
                 <div>
