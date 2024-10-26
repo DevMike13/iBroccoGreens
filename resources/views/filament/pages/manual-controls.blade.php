@@ -4,7 +4,7 @@
     @livewireScripts
     @vite(['resources/css/custom.css', 'resources/css/app.css', 'resources/js/app.js'])
 
-    <livewire:pages.feeding-schedule />
+    <livewire:pages.manual-controls />
     <x-dialog z-index="z-50" blur="md" align="center" />
     <script>
         window.addEventListener('reload', event => {

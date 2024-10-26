@@ -10,12 +10,10 @@ use Kreait\Firebase\Contract\Database;
 class Dashboard extends Component
 {
     protected Database $database;
+    
     public $phData;
-
     public $doData;
-
     public $alData;
-
     public $wTempData;
 
     protected $listeners = [
@@ -47,9 +45,8 @@ class Dashboard extends Component
         $endOfWeek = Carbon::now()->endOfWeek();
 
         $phData = SensorDatas::selectRaw('DAYNAME(reading_date) as Day, ph_level as Value')
-            ->whereBetween('reading_date', [$startOfWeek, $endOfWeek])
-            ->whereIn('reading_date', function ($query) use ($startOfWeek, $endOfWeek) {
-                $query->selectRaw('MAX(reading_date)')
+            ->whereIn('id', function ($query) use ($startOfWeek, $endOfWeek) {
+                $query->selectRaw('MAX(id)')
                     ->from('sensor_datas')
                     ->whereBetween('reading_date', [$startOfWeek, $endOfWeek])
                     ->groupByRaw('DATE(reading_date)');
@@ -59,8 +56,8 @@ class Dashboard extends Component
 
         $this->phLevelData = $phData->map(function ($item) {
             return [
-                'Day' => substr($item->Day, 0, 3),
-                'Value' => round($item->Value, 2)
+                'Day' => substr($item->Day, 0, 3), // Shorten day name (Mon, Tue, etc.)
+                'Value' => round($item->Value, 2)  // Round to 2 decimal places
             ];
         })->toArray();
     }
@@ -70,10 +67,10 @@ class Dashboard extends Component
         $startOfWeek = Carbon::now()->startOfWeek();
         $endOfWeek = Carbon::now()->endOfWeek();
 
+        // Get only the latest dissolved oxygen level data for each day of the current week
         $doData = SensorDatas::selectRaw('DAYNAME(reading_date) as Day, dissolved_oxygen as Value')
-            ->whereBetween('reading_date', [$startOfWeek, $endOfWeek])
-            ->whereIn('reading_date', function ($query) use ($startOfWeek, $endOfWeek) {
-                $query->selectRaw('MAX(reading_date)')
+            ->whereIn('id', function ($query) use ($startOfWeek, $endOfWeek) {
+                $query->selectRaw('MAX(id)')
                     ->from('sensor_datas')
                     ->whereBetween('reading_date', [$startOfWeek, $endOfWeek])
                     ->groupByRaw('DATE(reading_date)');
@@ -81,23 +78,23 @@ class Dashboard extends Component
             ->orderByRaw('FIELD(Day, "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")')
             ->get();
 
+        // Format the data for use in your view or chart
         $this->doLevelData = $doData->map(function ($item) {
             return [
-                'Day' => substr($item->Day, 0, 3),
-                'Value' => round($item->Value, 2)
+                'Day' => substr($item->Day, 0, 3), // Shorten day name (Mon, Tue, etc.)
+                'Value' => round($item->Value, 2)  // Round to 2 decimal places
             ];
         })->toArray();
     }
-    
+
     public function getAlLevelDataForCurrentWeek()
     {
         $startOfWeek = Carbon::now()->startOfWeek();
         $endOfWeek = Carbon::now()->endOfWeek();
 
         $alData = SensorDatas::selectRaw('DAYNAME(reading_date) as Day, alkalinity_level as Value')
-            ->whereBetween('reading_date', [$startOfWeek, $endOfWeek])
-            ->whereIn('reading_date', function ($query) use ($startOfWeek, $endOfWeek) {
-                $query->selectRaw('MAX(reading_date)')
+            ->whereIn('id', function ($query) use ($startOfWeek, $endOfWeek) {
+                $query->selectRaw('MAX(id)')
                     ->from('sensor_datas')
                     ->whereBetween('reading_date', [$startOfWeek, $endOfWeek])
                     ->groupByRaw('DATE(reading_date)');
@@ -107,8 +104,8 @@ class Dashboard extends Component
 
         $this->alLevelData = $alData->map(function ($item) {
             return [
-                'Day' => substr($item->Day, 0, 3),
-                'Value' => round($item->Value, 2)
+                'Day' => substr($item->Day, 0, 3), // Shorten day name (Mon, Tue, etc.)
+                'Value' => round($item->Value, 2)  // Round to 2 decimal places
             ];
         })->toArray();
     }
@@ -118,10 +115,10 @@ class Dashboard extends Component
         $startOfWeek = Carbon::now()->startOfWeek();
         $endOfWeek = Carbon::now()->endOfWeek();
 
+        // Retrieve only the latest water temperature data for each day of the current week
         $wtData = SensorDatas::selectRaw('DAYNAME(reading_date) as Day, water_temperature as Value')
-            ->whereBetween('reading_date', [$startOfWeek, $endOfWeek])
-            ->whereIn('reading_date', function ($query) use ($startOfWeek, $endOfWeek) {
-                $query->selectRaw('MAX(reading_date)')
+            ->whereIn('id', function ($query) use ($startOfWeek, $endOfWeek) {
+                $query->selectRaw('MAX(id)')
                     ->from('sensor_datas')
                     ->whereBetween('reading_date', [$startOfWeek, $endOfWeek])
                     ->groupByRaw('DATE(reading_date)');
@@ -129,10 +126,11 @@ class Dashboard extends Component
             ->orderByRaw('FIELD(Day, "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")')
             ->get();
 
+        // Format the data for use in the chart
         $this->wtLevelData = $wtData->map(function ($item) {
             return [
-                'Day' => substr($item->Day, 0, 3),
-                'Value' => round($item->Value, 2)
+                'Day' => substr($item->Day, 0, 3),  // Shorten the day name (e.g., Mon, Tue)
+                'Value' => round($item->Value, 2)   // Round to 2 decimal places
             ];
         })->toArray();
     }
