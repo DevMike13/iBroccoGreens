@@ -28,7 +28,9 @@ class PondguardAdminPanelProvider extends PanelProvider
             ->id('pondguard-admin')
             ->path('pondguard-admin')
             ->login()
-            ->registration(Register::class)
+            // ->registration(Register::class)
+            ->passwordReset()
+            // ->emailVerification()
             ->colors([
                 'primary' => Color::Teal,
             ])

@@ -21,6 +21,7 @@ class Register extends BaseRegister
                         $this->getMobileNumberFormComponent(), 
                         $this->getPasswordFormComponent(),
                         $this->getPasswordConfirmationFormComponent(),
+                        $this->getRoleFormComponent(),
                        
                     ])
                     ->statePath('data'),
@@ -37,6 +38,25 @@ class Register extends BaseRegister
             ->regex('/^\+63[0-9]{10}$/') // This regex ensures the mobile number follows the format
             ->placeholder('e.g., +639123456789')
             ->type('tel'); // Sets the input type to 'tel' for mobile numbers
+    }
+
+    protected function getRoleFormComponent(): Component
+    {
+        return Select::make('role')
+            ->label('Role')
+            ->default('user') // Default value is 'user'
+            ->options([
+                'user' => 'User',
+            ])
+            ->disabled(); // Make it non-editable so it's fixed to 'user'
+    }
+
+    protected function mutateFormDataBeforeCreate(array $data): array
+    {
+        // Ensure role is always set to 'user'
+        $data['role'] = 'user';
+
+        return $data;
     }
 
 }

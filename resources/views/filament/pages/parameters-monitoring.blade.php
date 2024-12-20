@@ -16,7 +16,7 @@
         // Initialize Firebase (replace with your Firebase config)
         var apiKey = "{{ env('API_KEY_FRB')}}";
         var authDomain = "{{ env('AUTH_DOMAIN')}}";
-        var databaseURL = "{{ env('DATABASE_URL_FRB') }}";
+        var databaseURL = "https://pondguard-e6c97-default-rtdb.firebaseio.com";
         var projectId = "{{ env('PROJECT_ID_FRB') }}";
         var storageBucket = "{{ env('STORAGE_BUCKET_FRB') }}";
         var messagingSenderId = "{{ env('MESSAGING_SENDER_ID_FRB') }}";
@@ -32,6 +32,7 @@
             messagingSenderId: messagingSenderId,
             appId: appId
         };
+        
     
         // Initialize Firebase app and database
         const app = initializeApp(firebaseConfig);

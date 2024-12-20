@@ -1,4 +1,10 @@
 <div>
+    <div class="w-full lg:w-1/2 flex flex-row justify-between bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+        <x-toggle left-label="Schedule ON/OFF:" wire:model.defer="isActiveSchedule" lg wire:click="toggleSchedule" />
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        </svg>            
+    </div>
     <div class="flex flex-col lg:flex-row gap-3">
         <div class="flex flex-row w-full justify-center gap-2 mt-3">
             <div class="w-full flex flex-col justify-between bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">

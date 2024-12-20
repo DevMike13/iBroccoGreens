@@ -15,9 +15,56 @@ class FeedingSchedule extends Component
     public $timeFour;
     public $timeFive;
 
+    public $scheduleState;
+    public bool $isActiveSchedule;
+
     public function mount(Database $database){
         $this->database = $database;
         $this->getFeedingSchedules();
+        $this->getScheduleState();
+    }
+
+    // FEEDING
+    public function getScheduleState()
+    {
+        try {
+            $reference = $this->database->getReference('/ScheduleState');
+            $currentData = $reference->getValue();
+
+            // Set the properties based on the retrieved value
+            if ($currentData == 'ON') {
+                $this->scheduleState = 'ON';
+                $this->isActiveSchedule = true;
+            } else {
+                $this->scheduleState = 'OFF';
+                $this->isActiveSchedule = false;
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error retrieving status: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function toggleSchedule(Database $database)
+    {
+        $this->database = $database;
+        try {
+            $reference = $this->database->getReference('/ScheduleState');
+            
+            $currentData = $reference->getValue();
+            
+            if ($currentData == 'OFF') {
+                $this->scheduleState = 'ON';
+                $this->isActiveSchedule = true;
+            } else {
+                $this->scheduleState = 'OFF';
+                $this->isActiveSchedule = false;
+            }
+
+            $reference->set($this->scheduleState);
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error toggling status: ' . $e->getMessage()], 500);
+        }
     }
 
     public function getFeedingSchedules()

@@ -15,8 +15,8 @@ class ManualControls extends Component
     public $solutionState;
     public bool $isActiveSolution;
 
-    public $wheelState;
-    public bool $isActiveWheel;
+    public $aeratorState;
+    public bool $isActiveAerator;
 
     public $waterReleaseState;
     public bool $isActiveWaterRelease;
@@ -28,7 +28,7 @@ class ManualControls extends Component
         $this->database = $database;
         $this->getFeedingState();
         $this->getSolutionState();
-        $this->getWheelState();
+        $this->getAeratorState();
         $this->getWaterRelasesState();
         $this->getWaterRefillState();
     }
@@ -120,42 +120,42 @@ class ManualControls extends Component
     }
 
     // WHEEL
-    public function getWheelState()
+    public function getAeratorState()
     {
         try {
-            $reference = $this->database->getReference('/WheelState');
+            $reference = $this->database->getReference('/AeratorState');
             $currentData = $reference->getValue();
 
             // Set the properties based on the retrieved value
             if ($currentData == 'ON') {
-                $this->wheelState = 'ON';
-                $this->isActiveWheel = true;
+                $this->aeratorState = 'ON';
+                $this->isActiveAerator = true;
             } else {
-                $this->wheelState = 'OFF';
-                $this->isActiveWheel = false;
+                $this->aeratorState = 'OFF';
+                $this->isActiveAerator = false;
             }
         } catch (\Exception $e) {
             return response()->json(['error' => 'Error retrieving status: ' . $e->getMessage()], 500);
         }
     }
 
-    public function toggleWheel(Database $database)
+    public function toggleAerator(Database $database)
     {
         $this->database = $database;
         try {
-            $reference = $this->database->getReference('/WheelState');
+            $reference = $this->database->getReference('/AeratorState');
             
             $currentData = $reference->getValue();
             
             if ($currentData == 'OFF') {
-                $this->wheelState = 'ON';
-                $this->isActiveWheel = true;
+                $this->aeratorState = 'ON';
+                $this->isActiveAerator = true;
             } else {
-                $this->wheelState = 'OFF';
-                $this->isActiveWheel = false;
+                $this->aeratorState = 'OFF';
+                $this->isActiveAerator = false;
             }
 
-            $reference->set($this->wheelState);
+            $reference->set($this->aeratorState);
 
         } catch (\Exception $e) {
             return response()->json(['error' => 'Error toggling status: ' . $e->getMessage()], 500);

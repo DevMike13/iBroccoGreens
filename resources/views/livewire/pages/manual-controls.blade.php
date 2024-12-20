@@ -16,7 +16,7 @@
     
     <div class="flex flex-col lg:flex-row w-full gap-2 mt-3">
         <div class="w-full lg:w-1/2 flex flex-row justify-between bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
-            <x-toggle left-label="Paddle Wheel" wire:model.defer="isActiveWheel" lg wire:click="toggleWheel"/>
+            <x-toggle left-label="Aerator" wire:model.defer="isActiveAerator" lg wire:click="toggleAerator"/>
             <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512" width="24">
                 <path d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192 192-86 192-192z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"/>
                 <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M360 94.59V296M443.13 212.87L296 360M417.41 360H216M299.13 443.13l-144-144M152 416V216M68.87 299.13l144-144M94.59 152H288M212.87 68.87L360 216"/>
