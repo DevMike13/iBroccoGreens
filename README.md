@@ -1,66 +1,209 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# PondGuard - IoT Solution for Shrimp Farming
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**PondGuard** is an **IoT-based website** developed for real-time monitoring and management of shrimp farming operations. Built with **Laravel (TALL Stack)** and **Firebase**, it allows farm owners to track key water parameters like water temperature, dissolved oxygen, alkalinity, and pH levels. The system automatically adjusts and balances these parameters for optimal shrimp growth, tracks cycles and harvests, and provides manual control when needed.
 
-## About Laravel
+Visit the live app: [PondGuard](https://yellow-grouse-983712.hostingersite.com/)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Deployed on **Hostinger**.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Real-time Monitoring**: 
+  - Monitors **water temperature**, **dissolved oxygen (DO)**, **alkalinity**, and **pH levels** of the shrimp pond in real-time using **Firebase**.
+  - Displays live graphs for water temperature, dissolved oxygen, alkalinity, and pH levels.
+  
+- **Automated Parameter Control**:
+  - Automatically adjusts water parameters such as temperature, dissolved oxygen, alkalinity, and pH level to ensure optimal shrimp farming conditions.
+  
+- **Sensor Integration**: 
+  - **ESP8266** microcontroller communicates with sensors.
+  - **Gravity: Analog Dissolved Oxygen (DO) Sensor Meter Kit** for DO monitoring.
+  - **Gravity Analog pH Sensor** for measuring pH levels.
+  - **DS18B20 Temperature Sensor** for water temperature monitoring.
+  - Alkalinity is calculated based on pH level readings and threshold values.
 
-## Learning Laravel
+- **Cycle and Harvest Management**: 
+  - Users can create farming **cycles** and **harvests** in kilograms.
+  - All cycle and harvest data is logged and stored in the **Firebase** database for analysis and tracking.
+  
+- **Feeding Schedule and Automation**: 
+  - **Automatic feeding** based on schedules, ensuring that shrimp are fed regularly.
+  - The system can trigger feeding events based on real-time water parameter data.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **Manual Control**:
+  - Users can manually adjust water parameters or control feeding through the website interface.
+  
+- **Data Logging & Firebase Functions**:
+  - The system logs water parameters to **Firebase** for future analysis.
+  - Firebase functions automatically calculate and store data for the graphs to monitor water parameters over time.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Installation
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Prerequisites
 
-## Laravel Sponsors
+Make sure the following tools are installed:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+- **PHP** (version 7.4 or higher)
+- **Composer** (for managing PHP dependencies)
+- **Node.js** (for compiling front-end assets)
+- **Laravel** (latest stable version)
+- **Firebase Account** (for real-time data handling)
+- **ESP8266** Microcontroller and sensors
 
-### Premium Partners
+### Steps
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+1. Clone the repository:
 
-## Contributing
+    ```bash
+    git clone https://github.com/DevMike13/PondGuard.git
+    cd PondGuard
+    ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+2. Install PHP dependencies:
 
-## Code of Conduct
+    ```bash
+    composer install
+    ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+3. Set up your environment file:
 
-## Security Vulnerabilities
+    Copy the `.env.example` to `.env`:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    ```bash
+    cp .env.example .env
+    ```
+
+4. Set up your Firebase credentials:
+    - Create a Firebase project and get your Firebase credentials.
+    - Add your Firebase credentials to the `.env` file.
+
+    ```bash
+    API_KEY_FRB=your-firebase-api-key
+    AUTH_DOMAIN=your-firebase-auth-domain
+    DATABASE_URL_FRB=your-firebase-database-url
+    PROJECT_ID_FRB=your-firebase-project-id
+    STORAGE_BUCKET_FRB=your-firebase-storage-bucket
+    MESSAGING_SENDER_ID_FRB=your-firebase-messaging-sender-id
+    APP_ID_FRB=your-firebase-app-id
+    ```
+
+5. Set up your database:
+    - Create a database in MySQL and configure your database settings in the `.env` file:
+
+    ```bash
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=pondguard
+    DB_USERNAME=root
+    DB_PASSWORD=
+    ```
+
+6. Generate your application key:
+
+    ```bash
+    php artisan key:generate
+    ```
+
+7. Run the migrations to set up the database:
+
+    ```bash
+    php artisan migrate
+    ```
+
+8. Install front-end dependencies:
+
+    ```bash
+    npm install
+    ```
+
+9. Compile the front-end assets:
+
+    ```bash
+    npm run dev
+    ```
+
+10. Start the development server:
+
+    ```bash
+    php artisan serve
+    ```
+
+11. Visit the app in your browser at `http://localhost:8000`.
+
+## Hardware Setup
+
+1. **ESP8266**: 
+   - The **ESP8266** is used as the communication hub between your sensors and the server.
+   - It collects data from sensors and sends it to the backend via the internet.
+
+2. **Sensors**:
+   - **Gravity: Analog Dissolved Oxygen Sensor**: Monitors the dissolved oxygen level in the water.
+   - **Gravity Analog pH Sensor**: Monitors the pH levels in the water.
+   - **DS18B20 Temperature Sensor**: Monitors the water temperature.
+
+3. **Alkalinity Calculation**:
+   - Alkalinity is derived from pH level readings using a specific threshold and formula.
+
+4. **Feeding Mechanism**: 
+   - Automatic feeding systems are controlled by the website based on schedules and parameters.
+   - Can also be manually controlled through the web interface.
+
+## Features Breakdown
+
+1. **Real-Time Data**: 
+   - Water temperature, dissolved oxygen, alkalinity, and pH levels are monitored in real-time.
+   - Data is automatically updated and visualized in **Firebase** and shown on the website.
+
+2. **Graphs & Data Storage**:
+   - All water parameters are logged to **Firebase** for tracking over time.
+   - Data is visualized in graph form on the website to help users analyze trends and make informed decisions.
+
+3. **Cycle & Harvest Management**:
+   - Users can track cycles and manage shrimp harvests, specifying the harvest amount in kilograms.
+   - This helps to ensure proper growth and production tracking.
+
+4. **Feeding Automation**:
+   - The system allows automated feeding based on water parameter thresholds and schedules.
+
+5. **Manual Control**:
+   - Users can manually adjust parameters such as temperature, oxygen, pH, and alkalinity through the website.
+
+## Technologies Used
+
+- **Laravel (TALL Stack)**: 
+  - **Tailwind CSS**: For responsive and modern UI design.
+  - **Alpine.js**: For dynamic user interactions.
+  - **Livewire**: For building dynamic interfaces without writing much JavaScript.
+  
+- **Firebase**: 
+  - For real-time data monitoring and logging.
+  - **Firebase Functions** for calculations and automations.
+
+- **ESP8266**: For communication between sensors and the web application.
+
+- **Sensors**:
+  - **Gravity: Analog Dissolved Oxygen (DO) Sensor** for measuring DO levels.
+  - **Gravity Analog pH Sensor** for measuring pH levels.
+  - **DS18B20 Temperature Sensor** for monitoring water temperature.
+
+- **MySQL**: For storing data such as cycle and harvest information.
+
+- **PHP**: Backend logic and API integrations.
+
+## Screenshots
+
+Here’s how the **PondGuard** app looks:
+
+![PondGuard Website](./public/images/PondGuard.jpg)  
+
+## Prototype
+
+Here’s some images of the **PondGuard** machine prototype:
+
+![PondGuard Prototype 1](./public/images/PondGuard-Machine.jpg)  
+![PondGuard Prototype 2](./public/images/PondGuard-Machine-2.jpg)
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is private and is not open for public use or distribution.
