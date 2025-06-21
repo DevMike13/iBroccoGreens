@@ -1,7 +1,49 @@
 <div>
     <div class="flex justify-center items-center flex-col lg:flex-row">
-        <div class="flex justify-between items-center w-full lg:w-1/2 gap-2">
-            <div class="w-full lg:w-1/2 flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
+        <div class="grid grid-cols-3 gap-2 w-full place-items-stretch">
+            <div class="h-full flex flex-col justify-between bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
+                <div class="flex justify-center items-center w-full pt-5">
+                   <img src="{{ asset('images/Moisture.png') }}" alt="">
+                </div>
+                <div class="p-4 md:p-5">
+                    <div class="flex flex-col justify-center items-center gap-4">
+                        <h1 class="text-sm text-center">Soil Moisture</h1>
+                        <h3 class="text-2xl font-bold text-gray-800 dark:text-white">
+                            {{number_format($phData, 2, '.', ',')}}
+                        </h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="h-full flex flex-col justify-between bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
+                <div class="flex justify-center items-center w-full pt-5">
+                   <img src="{{ asset('images/PH.png') }}" alt="">
+                </div>
+                <div class="p-4 md:p-5">
+                    <div class="flex flex-col justify-center items-center gap-4">
+                        <h1 class="text-sm text-center">Soil pH</h1>
+                        <h3 class="text-2xl font-bold text-gray-800 dark:text-white">
+                            {{number_format($phData, 2, '.', ',')}}
+                        </h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="h-full flex flex-col justify-between bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
+                <div class="flex justify-center items-center w-full pt-5">
+                   <img src="{{ asset('images/PH-Water.png') }}" alt="">
+                </div>
+                <div class="p-4 md:p-5">
+                    <div class="flex flex-col justify-center items-center gap-4">
+                        <h1 class="text-sm text-center">Water pH</h1>
+                        <h3 class="text-2xl font-bold text-gray-800 dark:text-white">
+                            {{number_format($phData, 2, '.', ',')}}
+                        </h3>
+                    </div>
+                </div>
+            </div>
+
+            {{-- <div class="w-full lg:w-1/2 flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
                 <div class="bg-gray-100 border-b rounded-t-xl py-3 px-4 md:py-4 md:px-5 dark:bg-neutral-900 dark:border-neutral-700 flex justify-between items-center">
                     <p class="mt-1 text-sm text-gray-500 dark:text-neutral-500">
                         pH Level
@@ -36,10 +78,53 @@
                         </h3>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
-        <div class="flex justify-between items-center w-full lg:w-1/2 gap-2 mt-2 ml-0 lg:mt-0 lg:ml-2 ">
-            <div class="w-full lg:w-1/2 flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
+        <div class="grid grid-cols-3 gap-2 w-full place-items-stretch mt-2 md:mt-0 md:ml-2">
+
+            <div class="h-full flex flex-col justify-between bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
+                <div class="flex justify-center items-center w-full pt-5">
+                   <img src="{{ asset('images/Temperature.png') }}" alt="">
+                </div>
+                <div class="p-4 md:p-5">
+                    <div class="flex flex-col justify-center items-center gap-4">
+                        <h1 class="text-sm text-center">Temperature</h1>
+                        <h3 class="text-2xl font-bold text-gray-800 dark:text-white">
+                            {{number_format($phData, 2, '.', ',')}}
+                        </h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="h-full flex flex-col justify-between bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
+                <div class="flex justify-center items-center w-full pt-5">
+                   <img src="{{ asset('images/Hygrometer.png') }}" alt="">
+                </div>
+                <div class="p-4 md:p-5">
+                    <div class="flex flex-col justify-center items-center gap-4">
+                        <h1 class="text-sm text-center">Humidity</h1>
+                        <h3 class="text-2xl font-bold text-gray-800 dark:text-white">
+                            {{number_format($phData, 2, '.', ',')}}
+                        </h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="h-full flex flex-col justify-between bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
+                <div class="flex justify-center items-center w-full pt-5">
+                   <img src="{{ asset('images/Wind.png') }}" alt="">
+                </div>
+                <div class="p-4 md:p-5">
+                    <div class="flex flex-col justify-center items-center gap-4">
+                        <h1 class="text-sm text-center">Air Flow</h1>
+                        <h3 class="text-2xl font-bold text-gray-800 dark:text-white">
+                            {{number_format($phData, 2, '.', ',')}}
+                        </h3>
+                    </div>
+                </div>
+            </div>
+
+            {{-- <div class="w-full lg:w-1/2 flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
                 <div class="bg-gray-100 border-b rounded-t-xl py-3 px-4 md:py-4 md:px-5 dark:bg-neutral-900 dark:border-neutral-700 flex justify-between items-center">
                     <p class="mt-1 text-sm text-gray-500 dark:text-neutral-500">
                         Alkalinity Level
@@ -76,7 +161,7 @@
                         </h3>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
     <div class="py-3 mt-3 flex items-center text-sm text-gray-800 before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:before:border-neutral-600 dark:after:border-neutral-600">System Status</div>

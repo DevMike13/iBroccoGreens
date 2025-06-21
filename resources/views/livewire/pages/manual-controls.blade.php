@@ -1,5 +1,57 @@
 <div class="w-full">
     <div class="flex flex-col lg:flex-row w-full gap-2">
+        <div class="w-full lg:w-1/2 flex flex-row justify-start items-center bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+            <div class="flex justify-start items-center gap-3">
+                <div class="w-10 h-10 flex justify-center items-center">
+                    <img src="{{ asset('images/Fan Speed.png') }}" alt="" class="w-full h-auto">
+                </div>
+                <p>Fan</p>
+            </div>
+            <div class="ml-auto">
+                <x-toggle wire:model.defer="isActiveFeeding" lg wire:click="toggleFeeding" />
+            </div>
+        </div>
+        <div class="w-full lg:w-1/2 flex flex-row justify-start items-center bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+            <div class="flex justify-start items-center gap-3">
+                <div class="w-10 h-10 flex justify-center items-center">
+                    <img src="{{ asset('images/Wet.png') }}" alt="" class="w-full h-auto">
+                </div>
+                <p>Misting System</p>
+            </div>
+            <div class="ml-auto">
+                {{-- <x-toggle wire:model.defer="isActiveFeeding" lg wire:click="toggleFeeding" /> --}}
+                <p>Active</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex flex-col lg:flex-row w-full gap-2 mt-3">
+        <div class="w-full lg:w-1/2 flex flex-row justify-start items-center bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+            <div class="flex justify-start items-center gap-3">
+                <div class="w-10 h-10 flex justify-center items-center">
+                    <img src="{{ asset('images/Light.png') }}" alt="" class="w-full h-auto">
+                </div>
+                <p>Lights</p>
+            </div>
+            <div class="ml-auto">
+                <x-toggle wire:model.defer="isActiveFeeding" lg wire:click="toggleFeeding" />
+            </div>
+        </div>
+        <div class="w-full lg:w-1/2 flex flex-row justify-start items-center bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+            <div class="flex justify-start items-center gap-3">
+                <div class="w-10 h-10 flex justify-center items-center">
+                    <img src="{{ asset('images/Water.png') }}" alt="" class="w-full h-auto">
+                </div>
+                <p>Water Level</p>
+            </div>
+            <div class="ml-auto">
+                {{-- <x-toggle wire:model.defer="isActiveFeeding" lg wire:click="toggleFeeding" /> --}}
+                <p>70%</p>
+            </div>
+        </div>
+    </div>
+
+    {{-- <div class="flex flex-col lg:flex-row w-full gap-2">
         <div class="w-full lg:w-1/2 flex flex-row justify-between bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
             <x-toggle left-label="Manual Feeding" wire:model.defer="isActiveFeeding" lg wire:click="toggleFeeding" />
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -38,5 +90,5 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 10.5h.375c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125H21M4.5 10.5H18V15H4.5v-4.5ZM3.75 18h15A2.25 2.25 0 0 0 21 15.75v-6a2.25 2.25 0 0 0-2.25-2.25h-15A2.25 2.25 0 0 0 1.5 9.75v6A2.25 2.25 0 0 0 3.75 18Z" />
             </svg>              
         </div>
-    </div>
+    </div> --}}
 </div>
