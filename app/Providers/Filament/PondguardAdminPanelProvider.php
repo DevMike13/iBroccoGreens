@@ -25,14 +25,15 @@ class PondguardAdminPanelProvider extends PanelProvider
     {
         return $panel
             ->default()
-            ->id('pondguard-admin')
-            ->path('pondguard-admin')
+            ->id('ibroccogreens-admin')
+            ->path('ibroccogreens-admin')
             ->login()
-            // ->registration(Register::class)
+            ->registration(Register::class)
             ->passwordReset()
-            // ->emailVerification()
+            ->emailVerification()
+            ->profile()
             ->colors([
-                'primary' => Color::Teal,
+                'primary' => '#659d38',
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')

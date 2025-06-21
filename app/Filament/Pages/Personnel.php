@@ -10,7 +10,9 @@ class Personnel extends Page
 
     protected static string $view = 'filament.pages.personnel';
 
-    protected static ?int $navigationSort = 90;
+    protected static ?int $navigationSort = 5;
+
+    protected static ?string $navigationLabel = "User Management";
 
     public static function shouldRegisterNavigation(): bool
     {

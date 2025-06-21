@@ -16,6 +16,9 @@ return new class extends Migration
             $table->integer("cycle_no");
             $table->date('start_date');
             $table->date('end_date')->nullable();
+            $table->integer('Trays')->nullable();
+            $table->integer('Days')->nullable();
+            $table->enum('phase', ['Germination', 'Seedling Stage', 'Transplanting', 'Establishment', 'Vegetative Growth', 'Head Initiation' , 'Head Development', 'Maturation', 'Harvesting' , 'Post-Harvest'])->default('Germination');
             $table->enum('status', ['current', 'completed'])->default('current');
             $table->string('description');
             $table->timestamps();

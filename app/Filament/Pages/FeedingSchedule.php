@@ -11,4 +11,9 @@ class FeedingSchedule extends Page
     protected static string $view = 'filament.pages.feeding-schedule';
 
     protected static ?int $navigationSort = 50;
+    
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
 }

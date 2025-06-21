@@ -3,7 +3,7 @@
       <a class="flex-none text-xl font-medium focus:outline-none focus:opacity-80" href="#" aria-label="Brand">
         <span class="inline-flex items-center gap-x-2 text-xl text-white font-medium uppercase">
           <img class="w-10 h-auto" src="{{ asset('images/logo.png')}} " alt="Logo">
-          PondGuard
+          iBroccoGreens
         </span>
       </a>
       <div class="sm:order-3 flex items-center gap-x-2">
@@ -12,7 +12,7 @@
           <svg class="hs-collapse-open:block hidden shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
           <span class="sr-only">Toggle</span>
         </button>
-        <a href="/pondguard-admin">
+        <a href="/ibroccogreens-admin">
           <button type="button" class="py-2 px-3 uppercase inline-flex items-center gap-x-2 text-sm font-medium rounded-lg text-white shadow-sm hover:bg-blue-900 disabled:opacity-50 disabled:pointer-events-none">
             Login
           </button>

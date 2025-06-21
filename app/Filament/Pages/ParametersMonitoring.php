@@ -11,4 +11,9 @@ class ParametersMonitoring extends Page
     protected static string $view = 'filament.pages.parameters-monitoring';
 
     protected static ?int $navigationSort = 30;
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
 }

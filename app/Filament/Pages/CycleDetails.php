@@ -6,9 +6,11 @@ use Filament\Pages\Page;
 
 class CycleDetails extends Page
 {
-    protected static ?string $navigationIcon = 'heroicon-o-arrow-path';
+    protected static ?string $navigationIcon = 'heroicon-o-viewfinder-circle';
 
     protected static string $view = 'filament.pages.cycle-details';
 
-    protected static ?int $navigationSort = 40;
+    protected static ?int $navigationSort = 3;
+
+    protected static ?string $navigationLabel = 'Cultivation Cycles';
 }

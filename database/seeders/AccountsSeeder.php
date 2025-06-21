@@ -15,10 +15,10 @@ class AccountsSeeder extends Seeder
     public function run(): void
     {
         User::create([
-            'name' => 'Pond Guard',
-            'email' => 'pondguard@gmail.com',
+            'name' => 'iBroccoGreens Admin',
+            'email' => 'iBroccoGreens@gmail.com',
             'mobile_no' => '+639654865436',
-            'password' => Hash::make('pondguard@2024'),
+            'password' => Hash::make('ibroccogreens@2024'),
             'role' => 'admin',
         ]);
 

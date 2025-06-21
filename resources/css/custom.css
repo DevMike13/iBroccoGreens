@@ -16,6 +16,12 @@
         width: 95%;
     }
 }
+
+.fi-sidebar-item-active svg,
+.fi-sidebar-item-active span {
+    color: #0b5a1e !important;
+}
+
 .calendar-navigation{
    margin-left: 10px;
 }
