@@ -12,8 +12,8 @@ class ParametersMonitoring extends Page
 
     protected static ?int $navigationSort = 30;
 
-    public static function shouldRegisterNavigation(): bool
-    {
-        return false;
-    }
+    // public static function shouldRegisterNavigation(): bool
+    // {
+    //     return false;
+    // }
 }

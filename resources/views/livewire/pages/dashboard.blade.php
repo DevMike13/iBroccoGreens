@@ -79,8 +79,9 @@
             </div>
         </div>
     </div>
-    <div class="py-3 mt-3 flex items-center text-sm text-gray-800 before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:before:border-neutral-600 dark:after:border-neutral-600">Weekly Report</div>
-    <div class="flex items-center flex-col nt-3" wire:ignore>
+    <div class="py-3 mt-3 flex items-center text-sm text-gray-800 before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:before:border-neutral-600 dark:after:border-neutral-600">System Status</div>
+    <livewire:pages.manual-controls />
+    {{-- <div class="flex items-center flex-col nt-3" wire:ignore>
         <div class="w-full flex flex-col lg:flex-row">
             <div class="w-full lg:w-1/2">
                 <canvas id="phLevelChart"></canvas>
@@ -289,5 +290,5 @@
             }
         });
 
-    </script>
+    </script> --}}
 </div>

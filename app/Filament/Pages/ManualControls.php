@@ -10,8 +10,8 @@ class ManualControls extends Page
     protected static ?int $navigationSort = 80;
     protected static string $view = 'filament.pages.manual-controls';
 
-    public static function shouldRegisterNavigation(): bool
-    {
-        return false;
-    }
+    // public static function shouldRegisterNavigation(): bool
+    // {
+    //     return false;
+    // }
 }
