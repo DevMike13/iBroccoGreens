@@ -1,9 +1,9 @@
-<header class="flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-transparent text-sm py-6 px-2 lg:px-5 fixed top-0 left-0 z-50">
+<header class="flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-transparent text-sm py-6 px-2 lg:px-5 md:fixed top-0 left-0 z-50 bg-black">
     <nav class="max-w-[85rem] w-full mx-auto px-4 flex flex-wrap basis-full items-center justify-between">
       <a class="flex-none text-xl font-medium focus:outline-none focus:opacity-80" href="#" aria-label="Brand">
         <span class="inline-flex items-center gap-x-2 text-xl text-white font-medium uppercase">
-          <img class="w-10 h-auto" src="{{ asset('images/logo.png')}} " alt="Logo">
-          iBroccoGreens
+          <img class="w-32 h-auto" src="{{ asset('images/ibroccogreens-logo-rev.svg')}} " alt="Logo">
+          {{-- iBroccoGreens --}}
         </span>
       </a>
       <div class="sm:order-3 flex items-center gap-x-2">
@@ -13,15 +13,15 @@
           <span class="sr-only">Toggle</span>
         </button>
         <a href="/ibroccogreens-admin">
-          <button type="button" class="py-2 px-3 uppercase inline-flex items-center gap-x-2 text-sm font-medium rounded-lg text-white shadow-sm hover:bg-blue-900 disabled:opacity-50 disabled:pointer-events-none">
+          <button type="button" class="py-2 px-3 uppercase inline-flex items-center gap-x-2 text-sm font-medium rounded-lg text-white shadow-sm bg-[#639e2e] hover:bg-[#c0dac1] disabled:opacity-50 disabled:pointer-events-none">
             Login
           </button>
         </a>
       </div>
-      <div id="hs-navbar-alignment" class="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow sm:grow-0 sm:basis-auto sm:block sm:order-2" aria-labelledby="hs-navbar-alignment-collapse">
+      <div id="hs-navbar-alignment" class="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow sm:grow-0 sm:basis-auto sm:block sm:order-2 ml-auto mr-5" aria-labelledby="hs-navbar-alignment-collapse">
         <div class="flex flex-col gap-5 mt-5 sm:flex-row sm:items-center sm:mt-0 sm:ps-5">
-          <a class="font-medium text-blue-300 focus:outline-none uppercase" href="#" aria-current="page">Home</a>
-          <a class="font-medium text-white hover:text-gray-400 focus:outline-none focus:text-gray-400 uppercase" href="#">About</a>
+          <a class="font-medium text-[#639e2e] focus:outline-none uppercase" href="#" aria-current="page">Home</a>
+          <a class="font-medium text-gray-600 hover:text-gray-400 focus:outline-none focus:text-gray-400 uppercase" href="#">About</a>
         </div>
       </div>
     </nav>

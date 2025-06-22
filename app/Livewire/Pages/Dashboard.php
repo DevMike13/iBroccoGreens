@@ -11,16 +11,36 @@ class Dashboard extends Component
 {
     protected Database $database;
     
-    public $phData;
-    public $doData;
-    public $alData;
-    public $wTempData;
+    public $soilMoistureData;
+    public $soilPHData;
+    public $waterPHData;
+    public $temperatureData;
+    public $humidityData;
+    public $airFlowData;
+    
+    public $fanState;
+    public bool $isActiveFan;
+
+    public $lightState;
+    public bool $isActiveLight;
+
+    public $mistingSystemData;
+    public $waterLevelData;
 
     protected $listeners = [
-        'updatePhLevel' => 'handlePhLevelUpdate',
+        'updateSoilMoistureLevel' => 'handleSoilMoistureLevelUpdate',
+        'updateSoilPHLevel' => 'handleSoilPHLevelUpdate',
+        'updateWaterPHLevel' => 'handleWaterPHLevelUpdate',
+        'updateTemperatureLevel' => 'handleTemperatureLevelUpdate',
+        'updateHumidityLevel' => 'handleHumidityLevelUpdate',
+        'updateAirFlowLevel' => 'handleAirFlowLevelUpdate',
         'updateDOLevel' => 'handleDoLevelUpdate',
         'updateALLevel' => 'handleAlLevelUpdate',
-        'updateWTLevel' => 'handleWtLevelUpdate'
+        'updateWTLevel' => 'handleWtLevelUpdate',
+        'updateFanState' => 'handleFanStateUpdate',
+        'updateLightState' => 'handleLightStateUpdate',
+        'updateMistingSystem' => 'handleMistingSystemUpdate',
+        'updateWaterLevel' => 'handleWaterLevelUpdate',
     ];
 
     public $phLevelData = [];
@@ -32,10 +52,11 @@ class Dashboard extends Component
     {
         $this->database = $database;
         $this->fetchData();
-        $this->getPhLevelDataForCurrentWeek();
-        $this->getDOLevelDataForCurrentWeek();
-        $this->getAlLevelDataForCurrentWeek();
-        $this->getWtDataForCurrentWeek();
+        $this->getFanState();
+        // $this->getPhLevelDataForCurrentWeek();
+        // $this->getDOLevelDataForCurrentWeek();
+        // $this->getAlLevelDataForCurrentWeek();
+        // $this->getWtDataForCurrentWeek();
         
     }
 
@@ -138,62 +159,203 @@ class Dashboard extends Component
     public function fetchData()
     {
         try {
-            // PH
-            $referencePH = $this->database->getReference('pHLevel/phLevel');  // Example path
-            $snapshotPH = $referencePH->getSnapshot();
-            $this->phData = $snapshotPH->getValue();
+            // SOIL MOISTURE
+            $referenceSoilMoisture = $this->database->getReference('SensorReadings/SoilMoisture');
+            $snapshotSoilMoisture = $referenceSoilMoisture->getSnapshot();
+            $this->soilMoistureData = $snapshotSoilMoisture->getValue();
 
+            // SOIL PH
+            $referenceSoilPH = $this->database->getReference('SensorReadings/SoilPH');
+            $snapshotSoilPH = $referenceSoilPH->getSnapshot();
+            $this->soilPHData = $snapshotSoilPH->getValue();
 
-            // DISSOLVED OXYGEN
-            $referenceDO = $this->database->getReference('DissolvedOxygen/DO');  // Example path
-            $snapshotDO = $referenceDO->getSnapshot();
-            $this->doData = $snapshotDO->getValue();
+            // SOIL WATER PH
+            $referenceWaterPH = $this->database->getReference('SensorReadings/WaterPH');
+            $snapshotWaterPH= $referenceWaterPH->getSnapshot();
+            $this->waterPHData = $snapshotWaterPH->getValue();
 
+            // TEMPERATURE
+            $referenceTemperature = $this->database->getReference('SensorReadings/Temperature');
+            $snapshotTemperature = $referenceTemperature->getSnapshot();
+            $this->temperatureData = $snapshotTemperature->getValue();
 
-            // ALKALINITY LEVEL
-            $referenceAL = $this->database->getReference('AlkalinityLevel/AL');  // Example path
-            $snapshotAL = $referenceAL->getSnapshot();
-            $this->alData = $snapshotAL->getValue();
+            // HUMIDITY
+            $referenceHumidity = $this->database->getReference('SensorReadings/Humidity');
+            $snapshotHumidity = $referenceHumidity->getSnapshot();
+            $this->humidityData = $snapshotHumidity->getValue();
 
+            // AIR FLOW
+            $referenceAirFlow = $this->database->getReference('SensorReadings/AirFlow');
+            $snapshotAirFlow = $referenceAirFlow->getSnapshot();
+            $this->airFlowData = $snapshotAirFlow->getValue();
 
-            // WATER TEMPERATURE
-            $referenceWT = $this->database->getReference('WaterTemperature/Temperature');  // Example path
-            $snapshotWT = $referenceWT->getSnapshot();
-            $this->wTempData = $snapshotWT->getValue();
+            // FAN STATE
+            $referenceFanState = $this->database->getReference('System/Fan');
+            $snapshotFanState = $referenceFanState->getSnapshot();
+            $this->fanState = $snapshotFanState->getValue();
 
+            // LIGHT STATE
+            $referenceLightState = $this->database->getReference('System/Light');
+            $snapshotLightState = $referenceLightState->getSnapshot();
+            $this->lightState = $snapshotLightState->getValue();
+
+            // MISTING SYSTEM
+            $referenceMistingSystem = $this->database->getReference('System/MistingSystem');
+            $snapshotMistingSystem = $referenceMistingSystem->getSnapshot();
+            $this->mistingSystemData = $snapshotMistingSystem->getValue();
+
+            // WATER LEVEL
+            $referenceWaterLevel = $this->database->getReference('System/WaterLevel');
+            $snapshotWaterLevel = $referenceWaterLevel->getSnapshot();
+            $this->waterLevelData = $snapshotWaterLevel->getValue();
 
         } catch (\Exception $e) {
-            $this->phData = 'Error: ' . $e->getMessage();
+            $this->soilMoistureData = 'Error: ' . $e->getMessage();
         }
     }
 
-    public function handlePhLevelUpdate($phLevel)
+    public function handleSoilMoistureLevelUpdate($soilMoistureLevel)
     {
-        $this->phData = $phLevel;
+        $this->soilMoistureData = $soilMoistureLevel;
     }
 
-    public function handleDoLevelUpdate($doLevel)
+    public function handleSoilPHLevelUpdate($soilPHLevel)
     {
-        $this->doData = $doLevel;
+        $this->soilPHData = $soilPHLevel;
     }
 
-    public function handleAlLevelUpdate($alLevel)
+    public function handleWaterPHLevelUpdate($waterPHLevel)
     {
-        $this->alData = $alLevel;
+        $this->waterPHData = $waterPHLevel;
     }
 
-    public function handleWtLevelUpdate($wtLevel)
+    public function handleTemperatureLevelUpdate($temperatureLevel)
     {
-        $this->wTempData = $wtLevel;
+        $this->temperatureData = $temperatureLevel;
     }
-    
+
+    public function handleHumidityLevelUpdate($humidityLevel)
+    {
+        $this->humidityData = $humidityLevel;
+    }
+
+    public function handleAirFlowLevelUpdate($airFlowLevel)
+    {
+        $this->airFlowData = $airFlowLevel;
+    }
+
+
+    // SYSTEM
+    public function getFanState()
+    {
+        try {
+            $reference = $this->database->getReference('System/Fan');
+            $currentData = $reference->getValue();
+
+            if ($currentData == 'ON') {
+                $this->fanState = 'ON';
+                $this->isActiveFan = true;
+            } else {
+                $this->fanState = 'OFF';
+                $this->isActiveFan = false;
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error retrieving status: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function toggleFan(Database $database)
+    {
+        $this->database = $database;
+        try {
+            $reference = $this->database->getReference('System/Fan');
+            
+            $currentData = $reference->getValue();
+            
+            if ($currentData == 'OFF') {
+                $this->fanState = 'ON';
+                $this->isActiveFan = true;
+            } else {
+                $this->fanState = 'OFF';
+                $this->isActiveFan = false;
+            }
+
+            $reference->set($this->fanState);
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error toggling status: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function handleFanStateUpdate($fanState)
+    {
+        $this->fanState = $fanState;
+        $this->isActiveFan = $fanState === 'ON';
+    }
+
+    // LIGHT
+    public function getLightState()
+    {
+        try {
+            $reference = $this->database->getReference('System/Light');
+            $currentData = $reference->getValue();
+
+            if ($currentData == 'ON') {
+                $this->lightState = 'ON';
+                $this->isActiveLight = true;
+            } else {
+                $this->lightState = 'OFF';
+                $this->isActiveLight = false;
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error retrieving status: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function toggleLight(Database $database)
+    {
+        $this->database = $database;
+        try {
+            $reference = $this->database->getReference('System/Light');
+            
+            $currentData = $reference->getValue();
+            
+            if ($currentData == 'OFF') {
+                $this->lightState = 'ON';
+                $this->isActiveLight = true;
+            } else {
+                $this->lightState = 'OFF';
+                $this->isActiveLight = false;
+            }
+
+            $reference->set($this->lightState);
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error toggling status: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function handleMistingSystemUpdate($mistingSystem)
+    {
+        $this->mistingSystemData = $mistingSystem;
+    }
+
+    public function handleWaterLevelUpdate($waterLevel)
+    {
+        $this->waterLevelData = $waterLevel;
+    }
+
     public function render()
     {
         return view('livewire.pages.dashboard', [
-            'pHLevel' => $this->phData,
-            'DissolvedOxygen' => $this->doData,
-            'AlkalinityLevel' => $this->alData,
-            'WaterTemperature' => $this->wTempData,
+            'soilMoisture' => $this->soilMoistureData,
+            'soilPH' => $this->soilPHData,
+            'waterPH' => $this->waterPHData,
+            'temperature' => $this->temperatureData,
+            'humidity' => $this->humidityData,
+            'airFlow' => $this->airFlowData,
+            'mistingSystem' => $this->mistingSystemData,
+            'waterLevel' => $this->waterLevelData,
         ]);
     }
 }

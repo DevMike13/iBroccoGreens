@@ -9,7 +9,7 @@
                     <div class="flex flex-col justify-center items-center gap-4">
                         <h1 class="text-sm text-center">Soil Moisture</h1>
                         <h3 class="text-2xl font-bold text-gray-800 dark:text-white">
-                            {{number_format($phData, 2, '.', ',')}}
+                            {{number_format($soilMoistureData, 2, '.', ',')}}
                         </h3>
                     </div>
                 </div>
@@ -23,7 +23,7 @@
                     <div class="flex flex-col justify-center items-center gap-4">
                         <h1 class="text-sm text-center">Soil pH</h1>
                         <h3 class="text-2xl font-bold text-gray-800 dark:text-white">
-                            {{number_format($phData, 2, '.', ',')}}
+                            {{number_format($soilPHData, 2, '.', ',')}}
                         </h3>
                     </div>
                 </div>
@@ -37,48 +37,11 @@
                     <div class="flex flex-col justify-center items-center gap-4">
                         <h1 class="text-sm text-center">Water pH</h1>
                         <h3 class="text-2xl font-bold text-gray-800 dark:text-white">
-                            {{number_format($phData, 2, '.', ',')}}
+                            {{number_format($waterPHData, 2, '.', ',')}}
                         </h3>
                     </div>
                 </div>
             </div>
-
-            {{-- <div class="w-full lg:w-1/2 flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
-                <div class="bg-gray-100 border-b rounded-t-xl py-3 px-4 md:py-4 md:px-5 dark:bg-neutral-900 dark:border-neutral-700 flex justify-between items-center">
-                    <p class="mt-1 text-sm text-gray-500 dark:text-neutral-500">
-                        pH Level
-                    </p>
-                </div>
-                <div class="p-4 md:p-5">
-                    <div class="flex justify-center items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512" width="36" height="36">
-                            <path d="M400 320c0 88.37-55.63 144-144 144s-144-55.63-144-144c0-94.83 103.23-222.85 134.89-259.88a12 12 0 0118.23 0C296.77 97.15 400 225.17 400 320z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"/>
-                            <path d="M344 328a72 72 0 01-72 72" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/>
-                        </svg>
-                        <h3 class="text-2xl font-bold text-gray-800 dark:text-white">
-                            {{number_format($phData, 2, '.', ',')}}
-                        </h3>
-                    </div>
-                </div>
-            </div>
-
-            <div class="w-full lg:w-1/2 flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
-                <div class="bg-gray-100 border-b rounded-t-xl py-3 px-4 md:py-4 md:px-5 dark:bg-neutral-900 dark:border-neutral-700 flex justify-between items-center">
-                    <p class="mt-1 text-sm text-gray-500 dark:text-neutral-500">
-                        Dissolved Oxygen
-                    </p>
-                </div>
-                <div class="p-4 md:p-5">
-                    <div class="flex justify-center items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512" width="36" height="36">
-                            <path d="M321.89 171.42C233 114 141 155.22 56 65.22c-19.8-21-8.3 235.5 98.1 332.7 77.79 71 197.9 63.08 238.4-5.92s18.28-163.17-70.61-220.58zM173 253c86 81 175 129 292 147" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/>
-                        </svg>                      
-                        <h3 class="text-2xl font-bold text-gray-800 dark:text-white">
-                            {{number_format($doData, 2, '.', ',')}}mg/L
-                        </h3>
-                    </div>
-                </div>
-            </div> --}}
         </div>
         <div class="grid grid-cols-3 gap-2 w-full place-items-stretch mt-2 md:mt-0 md:ml-2">
 
@@ -90,7 +53,7 @@
                     <div class="flex flex-col justify-center items-center gap-4">
                         <h1 class="text-sm text-center">Temperature</h1>
                         <h3 class="text-2xl font-bold text-gray-800 dark:text-white">
-                            {{number_format($phData, 2, '.', ',')}}
+                            {{number_format($temperatureData, 2, '.', ',')}}
                         </h3>
                     </div>
                 </div>
@@ -104,7 +67,7 @@
                     <div class="flex flex-col justify-center items-center gap-4">
                         <h1 class="text-sm text-center">Humidity</h1>
                         <h3 class="text-2xl font-bold text-gray-800 dark:text-white">
-                            {{number_format($phData, 2, '.', ',')}}
+                            {{number_format($humidityData, 2, '.', ',')}}
                         </h3>
                     </div>
                 </div>
@@ -118,54 +81,66 @@
                     <div class="flex flex-col justify-center items-center gap-4">
                         <h1 class="text-sm text-center">Air Flow</h1>
                         <h3 class="text-2xl font-bold text-gray-800 dark:text-white">
-                            {{number_format($phData, 2, '.', ',')}}
+                            {{number_format($airFlowData, 2, '.', ',')}}
                         </h3>
                     </div>
                 </div>
             </div>
-
-            {{-- <div class="w-full lg:w-1/2 flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
-                <div class="bg-gray-100 border-b rounded-t-xl py-3 px-4 md:py-4 md:px-5 dark:bg-neutral-900 dark:border-neutral-700 flex justify-between items-center">
-                    <p class="mt-1 text-sm text-gray-500 dark:text-neutral-500">
-                        Alkalinity Level
-                    </p>
-                </div>
-                <div class="p-4 md:p-5">
-                    <div class="flex justify-center items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512" width="36" height="36">
-                            <circle cx="256" cy="184" r="120" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"/>
-                            <circle cx="344" cy="328" r="120" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"/>
-                            <circle cx="168" cy="328" r="120" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"/>
-                        </svg>
-                        <h3 class="text-2xl font-bold text-gray-800 dark:text-white">
-                            {{number_format($alData, 2, '.', ',')}}ppm
-                        </h3>
-                    </div>
-                </div>
-            </div>
-
-            <div class="w-full lg:w-1/2 flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
-                <div class="bg-gray-100 border-b rounded-t-xl py-3 px-4 md:py-4 md:px-5 dark:bg-neutral-900 dark:border-neutral-700 flex justify-between items-center">
-                    <p class="mt-1 text-sm text-gray-500 dark:text-neutral-500">
-                        Water Temperature
-                    </p>
-                </div>
-                <div class="p-4 md:p-5">
-                    <div class="flex justify-center items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512" width="36" height="36">
-                            <path d="M307.72 302.27a8 8 0 01-3.72-6.75V80a48 48 0 00-48-48h0a48 48 0 00-48 48v215.52a8 8 0 01-3.71 6.74 97.51 97.51 0 00-44.19 86.07A96 96 0 00352 384a97.49 97.49 0 00-44.28-81.73zM256 112v272" fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32"/>
-                            <circle cx="256" cy="384" r="48"/>
-                        </svg>                      
-                        <h3 class="text-2xl font-bold text-gray-800 dark:text-white">
-                            {{$wTempData}}°C
-                        </h3>
-                    </div>
-                </div>
-            </div> --}}
         </div>
     </div>
     <div class="py-3 mt-3 flex items-center text-sm text-gray-800 before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:before:border-neutral-600 dark:after:border-neutral-600">System Status</div>
-    <livewire:pages.manual-controls />
+    
+    <div class="w-full">
+        <div class="flex flex-col lg:flex-row w-full gap-2">
+            <div class="w-full lg:w-1/2 flex flex-row justify-start items-center bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+                <div class="flex justify-start items-center gap-3">
+                    <div class="w-10 h-10 flex justify-center items-center">
+                        <img src="{{ asset('images/Fan Speed.png') }}" alt="" class="w-full h-auto">
+                    </div>
+                    <p>Fan</p>
+                </div>
+                <div class="ml-auto">
+                    <x-toggle wire:model="isActiveFan" lg wire:click="toggleFan" />
+                </div>
+            </div>
+            <div class="w-full lg:w-1/2 flex flex-row justify-start items-center bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+                <div class="flex justify-start items-center gap-3">
+                    <div class="w-10 h-10 flex justify-center items-center">
+                        <img src="{{ asset('images/Wet.png') }}" alt="" class="w-full h-auto">
+                    </div>
+                    <p>Misting System</p>
+                </div>
+                <div class="ml-auto">
+                    <p>{{ $mistingSystemData }}</p>
+                </div>
+            </div>
+        </div>
+    
+        <div class="flex flex-col lg:flex-row w-full gap-2 mt-3">
+            <div class="w-full lg:w-1/2 flex flex-row justify-start items-center bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+                <div class="flex justify-start items-center gap-3">
+                    <div class="w-10 h-10 flex justify-center items-center">
+                        <img src="{{ asset('images/Light.png') }}" alt="" class="w-full h-auto">
+                    </div>
+                    <p>Lights</p>
+                </div>
+                <div class="ml-auto">
+                    <x-toggle wire:model.defer="isActiveLight" lg wire:click="toggleLight" />
+                </div>
+            </div>
+            <div class="w-full lg:w-1/2 flex flex-row justify-start items-center bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+                <div class="flex justify-start items-center gap-3">
+                    <div class="w-10 h-10 flex justify-center items-center">
+                        <img src="{{ asset('images/Water.png') }}" alt="" class="w-full h-auto">
+                    </div>
+                    <p>Water Level</p>
+                </div>
+                <div class="ml-auto">
+                    <p> {{number_format($waterLevelData, 2, '.', ',')}} %</p>
+                </div>
+            </div>
+        </div>
+    </div>
     {{-- <div class="flex items-center flex-col nt-3" wire:ignore>
         <div class="w-full flex flex-col lg:flex-row">
             <div class="w-full lg:w-1/2">

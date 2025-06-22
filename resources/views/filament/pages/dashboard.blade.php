@@ -15,7 +15,7 @@
 
         var apiKey = "{{ env('API_KEY_FRB')}}";
         var authDomain = "{{ env('AUTH_DOMAIN')}}";
-        var databaseURL = "https://pondguard-e6c97-default-rtdb.firebaseio.com";
+        var databaseURL = "https://ibroccogreens-223d1-default-rtdb.asia-southeast1.firebasedatabase.app";
         var projectId = "{{ env('PROJECT_ID_FRB') }}";
         var storageBucket = "{{ env('STORAGE_BUCKET_FRB') }}";
         var messagingSenderId = "{{ env('MESSAGING_SENDER_ID_FRB') }}";
@@ -32,40 +32,88 @@
             appId: appId
         };
     
-        // Initialize Firebase app and database
         const app = initializeApp(firebaseConfig);
 
         const database = getDatabase(app);
     
-        // Listen for real-time updates on pH Level
-        const phRef = ref(database, 'pHLevel/phLevel');
-        onValue(phRef, (snapshot) => {
-            const phLevel = snapshot.val();
-            console.log('pH Level: ', phLevel);
-            // Trigger Livewire update (assuming you have a Livewire listener)
-            Livewire.dispatch('updatePhLevel', { phLevel: phLevel});
+        // Listen to Soil Moisture
+        const soilMoistureRef = ref(database, 'SensorReadings/SoilMoisture');
+        onValue(soilMoistureRef, (snapshot) => {
+            const soilMoistureLevel = snapshot.val();
+            console.log('Soil Moisture Level: ', soilMoistureLevel);
+            Livewire.dispatch('updateSoilMoistureLevel', { soilMoistureLevel: soilMoistureLevel});
         });
-    
-        // Repeat for other parameters (DO, AL, WT)
-        const doRef = ref(database, 'DissolvedOxygen/DO');
-        onValue(doRef, (snapshot) => {
-            const doLevel = snapshot.val();
-            console.log('Dissolved Oxygen: ', doLevel);
-            Livewire.dispatch('updateDOLevel', { doLevel: doLevel});
+
+        // Listen to Soil PH
+        const soilPHRef = ref(database, 'SensorReadings/SoilPH');
+        onValue(soilPHRef, (snapshot) => {
+            const soilPHLevel = snapshot.val();
+            console.log('Soil PH Level: ', soilPHLevel);
+            Livewire.dispatch('updateSoilPHLevel', { soilPHLevel: soilPHLevel});
         });
-    
-        const alRef = ref(database, 'AlkalinityLevel/AL');
-        onValue(alRef, (snapshot) => {
-            const alLevel = snapshot.val();
-            console.log('Alkalinity Level: ', alLevel);
-            Livewire.dispatch('updateALLevel', { alLevel: alLevel});
+
+        // Listen to Water PH
+        const waterPHRef = ref(database, 'SensorReadings/WaterPH');
+        onValue(waterPHRef, (snapshot) => {
+            const waterPHLevel = snapshot.val();
+            console.log('Water PH Level: ', waterPHLevel);
+            Livewire.dispatch('updateWaterPHLevel', { waterPHLevel: waterPHLevel});
         });
-    
-        const wtRef = ref(database, 'WaterTemperature/Temperature');
-        onValue(wtRef, (snapshot) => {
-            const wtLevel = snapshot.val();
-            console.log('Water Temperature: ', wtLevel);
-            Livewire.dispatch('updateWTLevel', { wtLevel: wtLevel});
+
+        // Listen to Temperature
+        const temperatureRef = ref(database, 'SensorReadings/Temperature');
+        onValue(temperatureRef, (snapshot) => {
+            const temperatureLevel = snapshot.val();
+            console.log('Temperature Level: ', temperatureLevel);
+            Livewire.dispatch('updateTemperatureLevel', { temperatureLevel: temperatureLevel});
+        });
+
+        // Listen to Humidity
+        const humidityRef = ref(database, 'SensorReadings/Humidity');
+        onValue(humidityRef, (snapshot) => {
+            const humidityLevel = snapshot.val();
+            console.log('Humidity Level: ', humidityLevel);
+            Livewire.dispatch('updateHumidityLevel', { humidityLevel: humidityLevel});
+        });
+        
+        // Listen to Air Flow
+        const airFlowRef = ref(database, 'SensorReadings/AirFlow');
+        onValue(airFlowRef, (snapshot) => {
+            const airFlowLevel = snapshot.val();
+            console.log('Air Flow Level: ', airFlowLevel);
+            Livewire.dispatch('updateAirFlowLevel', { airFlowLevel: airFlowLevel});
+        });
+
+        // Listen to Fan State
+        const fanRef = ref(database, 'System/Fan');
+        onValue(fanRef, (snapshot) => {
+            const fanState = snapshot.val();
+            console.log('Fan State: ', fanState);
+            Livewire.dispatch('updateFanState', { fanState });
+        });
+
+        // Listen to Light State
+        const lightRef = ref(database, 'System/Light');
+        onValue(lightRef, (snapshot) => {
+            const lightState = snapshot.val();
+            console.log('Light State: ', lightState);
+            Livewire.dispatch('updateLightState', { lightState });
+        });
+
+        // Listen to Misting System
+        const mistingSystemRef = ref(database, 'System/MistingSystem');
+        onValue(mistingSystemRef, (snapshot) => {
+            const mistingSystem = snapshot.val();
+            console.log('Misting System: ', mistingSystem);
+            Livewire.dispatch('updateMistingSystem', { mistingSystem });
+        });
+
+        // Listen to Water Level
+        const waterLevelRef = ref(database, 'System/WaterLevel');
+        onValue(waterLevelRef, (snapshot) => {
+            const waterLevel = snapshot.val();
+            console.log('Water Level: ', waterLevel);
+            Livewire.dispatch('updateWaterLevel', { waterLevel });
         });
     </script>
     <script>

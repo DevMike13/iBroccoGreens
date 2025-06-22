@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -14,28 +15,14 @@ class AccountsSeeder extends Seeder
      */
     public function run(): void
     {
+        $now = Carbon::now();
+        
         User::create([
             'name' => 'iBroccoGreens Admin',
             'email' => 'iBroccoGreens@gmail.com',
-            'mobile_no' => '+639654865436',
             'password' => Hash::make('ibroccogreens@2024'),
             'role' => 'admin',
-        ]);
-
-        User::create([
-            'name' => 'Normal User',
-            'email' => 'normal@normal.com',
-            'mobile_no' => '+639964664378',
-            'password' => Hash::make('normal@2024'),
-            'role' => 'user',
-        ]);
-
-        User::create([
-            'name' => 'Third User',
-            'email' => 'third@third.com',
-            'mobile_no' => '+6398766543657',
-            'password' => Hash::make('third@2024'),
-            'role' => 'user',
+            'email_verified_at' => $now,
         ]);
     }
 }

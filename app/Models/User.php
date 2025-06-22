@@ -10,7 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Filament\Panel;
 
-class User extends Authenticatable //implements MustVerifyEmail, FilamentUser
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -23,8 +23,7 @@ class User extends Authenticatable //implements MustVerifyEmail, FilamentUser
         'name',
         'email',
         'password',
-        'role',
-        'mobile_no'
+        'role'
     ];
 
     /**
