@@ -6,9 +6,9 @@
 
         <title>{{ $title ?? 'Page Title' }}</title>
         
+        @wireUiScripts
         @livewireStyles
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-        <wireui:scripts />
     </head>
     <body>
         @livewire('partials.navbar')

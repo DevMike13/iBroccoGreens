@@ -13,10 +13,13 @@ class Cycles extends Model
 
     protected $fillable = [
         'cycle_no',
+        'microgreen_type',
         'start_date', 
         'end_date',
-        'status',
-        'description'
+        'trays',
+        'expected_yield',
+        'notes',
+        'status'
     ];
 
     // public function samplings(): HasMany
@@ -24,15 +27,15 @@ class Cycles extends Model
     //     return $this->hasMany(Samplings::class, 'cycle_id');
     // }
     
-    public function shrimp(): HasOne
-    {
-        return $this->hasOne(Shrimps::class, 'cycle_id');
-    }
+    // public function shrimp(): HasOne
+    // {
+    //     return $this->hasOne(Shrimps::class, 'cycle_id');
+    // }
 
-    public function harvest(): HasOne
-    {
-        return $this->hasOne(Harvests::class, 'cycle_id');
-    }
+    // public function harvest(): HasOne
+    // {
+    //     return $this->hasOne(Harvests::class, 'cycle_id');
+    // }
 
     // public function sensors(): HasMany
     // {

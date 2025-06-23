@@ -20,23 +20,22 @@ class CycleDetails extends Component
     public $currentCycleNo;
     
     public $cycleNo;
+    public $microgreenType;
     public $startDate;
-    public $shrimpCount;
-    public $description;
-
+    public $endDate;
+    public $trays;
+    public $expectedYield;
+    public $notes;
+   
     public $selectedCycleId;
     public $editCycleNo;
+    public $editMicrogreenType;
     public $editStartDate;
-    public $editShrimpCount;
-    public $editDescription;
-    public $editHarvestDate;
-    public $editHarvestWeight;
+    public $editEndDate;
+    public $editTrays;
+    public $editExpectedYield;
+    public $editNotes;
     public $status;
-
-    public $selectedCycleToHarvestId;
-    public $harvestCycleNo;
-    public $harvestDate;
-    public $harvestWeight;
 
     public function getCycleNumber(Database $database){
         $latestCycle = Cycles::latest('cycle_no')->first();
@@ -51,12 +50,9 @@ class CycleDetails extends Component
         $this->validate([ 
             'cycleNo' => 'required|integer',
             'startDate' => 'required|date',
-            // 'endDate' => ['required', 'date', function ($attribute, $value, $fail) {
-            //     if (strtotime($value) <= strtotime($this->startDate)) {
-            //         $fail('The end date must be after the start date.');
-            //     }
-            // }],
-            'description' => 'required|max:255',
+            'microgreenType' => 'required',
+            'trays' => 'required|integer',
+            'notes' => 'required',
         ]);
 
         if ($this->cycleNo > 1) {
@@ -80,18 +76,14 @@ class CycleDetails extends Component
             // Create a new cycle
             $newCycle = Cycles::create([
                 'cycle_no' => $this->cycleNo,
+                'microgreen_type' => $this->microgreenType,
                 'start_date' => $this->startDate,
+                'trays' => $this->trays,
+                'expected_yield' => $this->expectedYield,
+                'notes' => $this->notes,
                 'status' => 'current',
-                'description' => $this->description,
             ]);
 
-            // Create the shrimp record for the new cycle
-            Shrimps::create([
-                'cycle_id' => $newCycle->id,
-                'shrimp_count' => $this->shrimpCount,
-            ]);
-
-            // Set the Firebase current cycle number
             $this->database = $database;
             $this->setFirebaseCurrentCycleNo();
 
@@ -107,14 +99,12 @@ class CycleDetails extends Component
             // If no previous cycle, create a new cycle directly
             $newCycle = Cycles::create([
                 'cycle_no' => $this->cycleNo,
+                'microgreen_type' => $this->microgreenType,
                 'start_date' => $this->startDate,
+                'trays' => $this->trays,
+                'expected_yield' => $this->expectedYield,
+                'notes' => $this->notes,
                 'status' => 'current',
-                'description' => $this->description,
-            ]);
-
-            Shrimps::create([
-                'cycle_id' => $newCycle->id,
-                'shrimp_count' => $this->shrimpCount,
             ]);
 
             $this->database = $database;
@@ -154,19 +144,18 @@ class CycleDetails extends Component
     }
 
     public function getSelectedCycle($id){
-        $cycle = Cycles::with(['shrimp', 'harvest'])->findOrFail($id);
+        $cycle = Cycles::findOrFail($id);
 
         if($cycle && $id){
             $this->selectedCycleId = $id;
             $this->editCycleNo = $cycle->cycle_no;
             $this->editStartDate = $cycle->start_date;
-            $this->editShrimpCount = $cycle->shrimp->shrimp_count;
-            $this->editDescription = $cycle->description;
+            $this->editMicrogreenType = $cycle->microgreen_type;
+            $this->editEndDate = $cycle->end_date;
+            $this->editTrays = $cycle->trays;
+            $this->editExpectedYield = $cycle->expected_yield;
+            $this->editNotes = $cycle->notes;
             $this->status = $cycle->status;
-            if($cycle->harvest != null && $cycle->status == 'completed'){
-                $this->editHarvestDate = $cycle->harvest->date_harvested;
-                $this->editHarvestWeight = $cycle->harvest->harvest_count;
-            }
             
         }
     }
@@ -176,28 +165,28 @@ class CycleDetails extends Component
             $this->validate([
                 'editCycleNo' => 'required|integer',
                 'editStartDate' => 'required|date',
-                'editShrimpCount'  => 'required|integer|min:1',
-                'editDescription' => 'required|max:255'
+                'editMicrogreenType'  => 'required',
+                'editEndDate' => 'nullable|date',
+                'editTrays' => 'required|integer',
+                'editExpectedYield' => 'nullable|integer',
+                'editNotes' => 'required',
+                'status' => 'required',
             ]);
     
             $cycle = Cycles::findOrFail($id);
+
+            $endDate = $this->status === 'completed'
+                ? now()->format('Y-m-d') 
+                : $this->editEndDate;
     
             $cycle->update([
+                'microgreen_type' => $this->editMicrogreenType,
                 'start_date' => $this->editStartDate,
-                'description' => $this->editDescription,
-            ]);
-
-            $shrimp = Shrimps::where('cycle_id', $id);
-
-            $shrimp->update([
-                'shrimp_count' => $this->editShrimpCount
-            ]);
-
-            $harvest = Harvests::where('cycle_id', $id);
-
-            $harvest->update([
-                'harvest_count' => $this->editHarvestWeight,
-                'date_harvested' => $this->editHarvestDate
+                'end_date' => $endDate,
+                'trays' => $this->editTrays,
+                'expected_yield' => $this->editExpectedYield,
+                'notes' => $this->editNotes,
+                'status' => $this->status
             ]);
 
             Notification::make()
@@ -228,63 +217,12 @@ class CycleDetails extends Component
         $this->selectedCycleId = "";
         $this->editCycleNo = "";
         $this->editStartDate = "";
-        $this->editShrimpCount = "";
-        $this->editDescription = "";
-        $this->editHarvestDate = "";
-        $this->editHarvestWeight = "";
+        $this->editEndDate = "";
+        $this->editMicrogreenType = "";
+        $this->editTrays = "";
+        $this->editExpectedYield = "";
+        $this->editNotes = "";
         $this->status = "";
-    }
-
-    public function getSelectedHarvestCycle($id){
-        $harvestCycle = Cycles::findOrFail($id);
-
-        if($harvestCycle && $id){
-            $this->selectedCycleToHarvestId = $id;
-            $this->harvestCycleNo = $harvestCycle->cycle_no;
-        }
-    }
-
-    public function harvest($id){
-        $cycle = Cycles::findOrFail($id);
-
-        $this->validate([ 
-            'harvestDate' => 'required|date',
-            'harvestWeight' => 'required|integer',
-        ]);
-
-        if ($cycle && $id) {
-            $cycle->update([
-                'status' => 'completed',
-                'end_date' => $this->harvestDate
-            ]);
-
-            $harvest = Harvests::create([
-                'cycle_id' => $id,
-                'harvest_count' => $this->harvestWeight,
-                'date_harvested' => $this->harvestDate
-            ]);
-
-            Notification::make()
-                ->title('Success!')
-                ->body('Cycle has been harvested.')
-                ->success()
-                ->send();
-        }
-
-        $this->dispatch('reload');
-
-        return redirect()->back();
-    }
-
-    public function harvestCycleConfirmation($id){
-        $this->dialog()->confirm([
-            'title'       => 'Are you Sure?',
-            'description' => "Do you want to harvest this cycle with Cycle No. ".  html_entity_decode('<span class="text-red-600 underline">' . $this->harvestCycleNo . '</span>') . " ?",
-            'acceptLabel' => 'Yes, harvest it',
-            'method'      => 'harvest',
-            'icon'        => 'error',
-            'params'      => $id
-        ]);
     }
 
     public function deleteCycle($id){
@@ -337,7 +275,7 @@ class CycleDetails extends Component
     
     public function render()
     {
-        $cycleLists = Cycles::with(['harvest' , 'shrimp'])->orderBy('cycle_no', 'desc')->get();
+        $cycleLists = Cycles::orderBy('cycle_no', 'desc')->get();
         return view('livewire.pages.cycle-details', [
             'cycleLists' => $cycleLists
         ]);

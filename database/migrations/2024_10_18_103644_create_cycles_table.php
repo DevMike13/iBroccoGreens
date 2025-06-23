@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('cycles', function (Blueprint $table) {
             $table->id();
             $table->integer("cycle_no");
+            $table->enum('microgreen_type', ['Broccoli', 'Cabbage', 'Chives', 'Carrot', 'Basil'])->default('Broccoli');
             $table->date('start_date');
             $table->date('end_date')->nullable();
-            $table->integer('Trays')->nullable();
-            $table->integer('Days')->nullable();
-            $table->enum('phase', ['Germination', 'Seedling Stage', 'Transplanting', 'Establishment', 'Vegetative Growth', 'Head Initiation' , 'Head Development', 'Maturation', 'Harvesting' , 'Post-Harvest'])->default('Germination');
+            $table->integer('trays')->nullable();
+            $table->integer('expected_yield')->nullable();
+            $table->text('notes');
             $table->enum('status', ['current', 'completed'])->default('current');
-            $table->string('description');
             $table->timestamps();
         });
     }

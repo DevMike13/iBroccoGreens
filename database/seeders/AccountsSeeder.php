@@ -20,7 +20,7 @@ class AccountsSeeder extends Seeder
         User::create([
             'name' => 'iBroccoGreens Admin',
             'email' => 'iBroccoGreens@gmail.com',
-            'password' => Hash::make('ibroccogreens@2024'),
+            'password' => Hash::make('ibroccogreens@2025'),
             'role' => 'admin',
             'email_verified_at' => $now,
         ]);

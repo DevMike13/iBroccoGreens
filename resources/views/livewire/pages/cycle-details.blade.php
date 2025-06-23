@@ -1,6 +1,6 @@
 <div>
     <div class="w-full flex justify-end items-center mb-3">
-        <x-button icon="plus-sm" primary label="Create New Cycle" onclick="$openModal('newCycle')" wire:click="getCycleNumber"/>
+        <x-button icon="plus-sm" positive label="Create New Cycle" onclick="$openModal('newCycle')" wire:click="getCycleNumber"/>
     </div>
     <div class="flex flex-col">
         <div class="-m-1.5 overflow-x-auto">
@@ -15,8 +15,8 @@
                                     <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Cycle No.</th>
                                     <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Start Date</th>
                                     <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">End Date</th>
-                                    <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">No. of Shrimp</th>
-                                    <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Harvest</th>
+                                    <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Trays</th>
+                                    <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Expected Yield</th>
                                     {{-- <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Description</th> --}}
                                     <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Status</th>
                                     <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Action</th>
@@ -28,7 +28,7 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
                                             
                                             @if ($cycle->status == 'current')
-                                                <p class="text-lg font-semibold bg-yellow-500 w-fit px-2.5 text-white rounded-full">{{$cycle->cycle_no}}</p>
+                                                <p class="text-lg font-semibold bg-green-500 w-fit px-2.5 text-white rounded-full">{{$cycle->cycle_no}}</p>
                                             @else
                                                 <p class="w-fit px-2">{{$cycle->cycle_no}}</p>
                                             @endif
@@ -40,7 +40,7 @@
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
                                                     </svg>
-                                                    <p class="text-xs text-gray-500">Cycle not ended.</p>
+                                                    <p class="text-xs text-gray-500">Ongoing</p>
                                                 </div>
                                             @else
                                                 {{\Carbon\Carbon::parse($cycle->end_date)->format('M j, Y')}}
@@ -48,23 +48,15 @@
                                         </td>
                                         {{-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">{{$cycle->description}}</td> --}}
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
-                                            {{ number_format($cycle->shrimp->shrimp_count) }}
+                                            {{-- {{ number_format($cycle->shrimp->shrimp_count) }} --}}
+                                            {{ number_format($cycle->trays) }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
-                                            @if ($cycle->harvest == null)
-                                                <div class="flex flex-row items-center gap-0.5 italic">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
-                                                    </svg>
-                                                    <p class="text-xs text-gray-500">Not harvested.</p>
-                                                </div>
-                                            @else
-                                                {{ number_format($cycle->harvest->harvest_count) }} Kg
-                                            @endif
+                                            {{ number_format($cycle->expected_yield) }}
                                         </td>
                                         @if ($cycle->status == 'current')
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
-                                                <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-yellow-500 text-white capitalize">{{$cycle->status}}</span>
+                                                <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-green-500 text-white capitalize">{{$cycle->status}}</span>
                                             </td>
                                         @else
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
@@ -87,14 +79,14 @@
                                                               
                                                             Edit
                                                         </a>
-                                                        @if ($cycle->status == 'current' && $cycle->harvest == null)
+                                                        {{-- @if ($cycle->status == 'current' && $cycle->harvest == null)
                                                             <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-green-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700" href="#" wire:click="getSelectedHarvestCycle({{ $cycle->id }})" onclick="$openModal('harvestCycle')">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
                                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.05 4.575a1.575 1.575 0 1 0-3.15 0v3m3.15-3v-1.5a1.575 1.575 0 0 1 3.15 0v1.5m-3.15 0 .075 5.925m3.075.75V4.575m0 0a1.575 1.575 0 0 1 3.15 0V15M6.9 7.575a1.575 1.575 0 1 0-3.15 0v8.175a6.75 6.75 0 0 0 6.75 6.75h2.018a5.25 5.25 0 0 0 3.712-1.538l1.732-1.732a5.25 5.25 0 0 0 1.538-3.712l.003-2.024a.668.668 0 0 1 .198-.471 1.575 1.575 0 1 0-2.228-2.228 3.818 3.818 0 0 0-1.12 2.687M6.9 7.575V12m6.27 4.318A4.49 4.49 0 0 1 16.35 15m.002 0h-.002" />
                                                                 </svg>
                                                                 Harvest Now
                                                             </a>
-                                                        @endif
+                                                        @endif --}}
                                                         @if ($cycle->status != 'current')
                                                             <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-red-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700" href="#" wire:click="deleteCycleConfirmation({{ $cycle->id }}, {{ $cycle->cycle_no }})">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
@@ -124,7 +116,21 @@
                 <span class="absolute left-[4.5rem] top-[0.10rem] text-xs italic text-green-400">(This will automatically generated)</span>
                 <x-input right-icon="hashtag" label="Cycle No." placeholder="Ex: 1"  wire:model="cycleNo" disabled />
             </div>
-           
+            
+            <div class="mt-3">
+                <x-select
+                    label="Select Microgreen Type"
+                    placeholder="Select Microgreen Type"
+                    wire:model.defer="microgreenType"
+                >
+                    <x-select.user-option src="https://images.pexels.com/photos/161514/brocoli-vegetables-salad-green-161514.jpeg" label="Broccoli" value="Broccoli" />
+                    <x-select.user-option src="https://images.pexels.com/photos/3283450/pexels-photo-3283450.jpeg" label="Cabbage" value="Cabbage" />
+                    <x-select.user-option src="https://images.pexels.com/photos/4202257/pexels-photo-4202257.jpeg" label="Chives" value="Chives" />
+                    <x-select.user-option src="https://images.pexels.com/photos/143133/pexels-photo-143133.jpeg" label="Carrot" value="Carrot" />
+                    <x-select.user-option src="https://images.pexels.com/photos/1391505/pexels-photo-1391505.jpeg" label="Basil" value="Basil" />
+                </x-select>
+            </div>
+
             <div class="mt-3">
                 <x-datetime-picker
                     label="Start Date"
@@ -138,9 +144,6 @@
                 />
             </div>
 
-            <div class="mt-3">
-                <x-inputs.number label="Number of Shrimp" wire:model="shrimpCount" />
-            </div>
             {{-- <div class="mt-3">
                 <x-datetime-picker
                     label="End Date"
@@ -153,10 +156,18 @@
                     without-time
                 />
             </div> --}}
+
             <div class="mt-3">
-                <x-textarea label="Description" placeholder="write cycle description" wire:model="description" />
+                <x-inputs.number label="Number of Trays" wire:model="trays" />
             </div>
-            
+            <div class="mt-3">
+                <x-inputs.number label="Expected Yield" wire:model="expectedYield" />
+            </div>
+           
+            <div class="mt-3">
+                <x-textarea label="Notes" placeholder="write cycle notes" wire:model="notes" />
+            </div>
+
             <x-slot name="footer" class="flex justify-end gap-x-4">
                 <div class="flex justify-end gap-x-4">
                     <x-button flat label="Cancel" x-on:click="close" />
@@ -187,44 +198,40 @@
                 />
             </div>
 
-            <div class="mt-3">
-                <x-inputs.number label="Number of Shrimp" wire:model="editShrimpCount" />
-            </div>
             {{-- <div class="mt-3">
                 <x-datetime-picker
                     label="End Date"
                     placeholder="End Date"
                     parse-format="YYYY-MM-DD"
                     display-format="MMMM DD, YYYY"
-                    wire:model.defer="endDate"
+                    wire:model.defer="editEndDate"
                     without-tips
                     :min="now()"
                     without-time
                 />
             </div> --}}
+
             <div class="mt-3">
-                <x-textarea label="Description" placeholder="write cycle description" wire:model="editDescription" />
+                <x-inputs.number label="Number of Trays" wire:model="editTrays" />
+            </div>
+            <div class="mt-3">
+                <x-inputs.number label="Expected Yield" wire:model="editExpectedYield" />
             </div>
 
-            @if ($editHarvestDate && $editHarvestWeight)
-                <div class="py-2 flex items-center text-sm text-gray-800 before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:before:border-neutral-600 dark:after:border-neutral-600">Edit Harvest Details</div>
-                <div class="mt-3">
-                    <x-datetime-picker
-                        label="Harvest Date"
-                        placeholder="Harvest Date"
-                        parse-format="YYYY-MM-DD"
-                        display-format="MMMM DD, YYYY"
-                        wire:model.defer="editHarvestDate"
-                        without-tips
-                        :min="now()"
-                        without-time
-                    />
-                </div>
-                <div class="relative w-auto mt-3">
-                    <span class="absolute left-[3.5rem] top-[0.10rem] text-xs italic text-green-400">(This value is in kilogram.)</span>
-                    <x-inputs.number label="Weight" wire:model="editHarvestWeight" />
-                </div>
-            @endif
+            <div class="mt-3">
+                <x-textarea label="Notes" placeholder="write cycle notes" wire:model="editNotes" />
+            </div>
+
+            <div class="mt-3">
+                <x-select
+                    label="Select Status"
+                    placeholder="Select Status"
+                    wire:model.defer="status"
+                >
+                    <x-select.option label="Current" value="current" />
+                    <x-select.option label="Completed" value="completed" />
+                </x-select>
+            </div>
             
             <x-slot name="footer" class="flex justify-end gap-x-4">
                 <div class="flex justify-end gap-x-4">
@@ -235,54 +242,4 @@
         </x-card>
     </x-modal>
 
-    <x-modal blur name="harvestCycle" persistent align="center" max-width="sm">
-        <x-card title="Harvest Cycle">
-            
-            <div class="relative w-auto flex flex-row items-center gap-1">
-                {{-- <span class="absolute left-[4.5rem] top-[0.10rem] text-xs italic text-green-400">(This value is not changeable.)</span>
-                <x-input right-icon="hashtag" label="Cycle No." placeholder="Ex: 1"  wire:model="editCycleNo" disabled /> --}}
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.05 4.575a1.575 1.575 0 1 0-3.15 0v3m3.15-3v-1.5a1.575 1.575 0 0 1 3.15 0v1.5m-3.15 0 .075 5.925m3.075.75V4.575m0 0a1.575 1.575 0 0 1 3.15 0V15M6.9 7.575a1.575 1.575 0 1 0-3.15 0v8.175a6.75 6.75 0 0 0 6.75 6.75h2.018a5.25 5.25 0 0 0 3.712-1.538l1.732-1.732a5.25 5.25 0 0 0 1.538-3.712l.003-2.024a.668.668 0 0 1 .198-.471 1.575 1.575 0 1 0-2.228-2.228 3.818 3.818 0 0 0-1.12 2.687M6.9 7.575V12m6.27 4.318A4.49 4.49 0 0 1 16.35 15m.002 0h-.002" />
-                </svg>
-                <div class="flex flex-row items-center gap-2">
-                    <p>
-                        Harvest Cycle No. 
-                       
-                    </p>
-                    @if ($harvestCycleNo)
-                        <p class="font-bold bg-yellow-500 px-2.5 text-white rounded-full text-center">{{ $harvestCycleNo }}</p>
-                    @else
-                        <div class="animate-spin inline-block size-4 border-[3px] border-current border-t-transparent text-blue-600 rounded-full dark:text-blue-500" role="status" aria-label="loading">
-                            <span class="sr-only">Loading...</span>
-                        </div>
-                    @endif
-                </div>
-            </div>
-            <div class="py-2 flex items-center text-sm text-gray-800 before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:before:border-neutral-600 dark:after:border-neutral-600">Harvest Details</div>
-            <div class="mt-3">
-                <x-datetime-picker
-                    label="Harvest Date"
-                    placeholder="Harvest Date"
-                    parse-format="YYYY-MM-DD"
-                    display-format="MMMM DD, YYYY"
-                    wire:model.defer="harvestDate"
-                    without-tips
-                    :min="now()"
-                    without-time
-                />
-            </div>
-
-            <div class="relative w-auto mt-3">
-                <span class="absolute left-[3.5rem] top-[0.10rem] text-xs italic text-green-400">(This value is in kilogram.)</span>
-                <x-inputs.number label="Weight" wire:model="harvestWeight" />
-            </div>
-            
-            <x-slot name="footer" class="flex justify-end gap-x-4">
-                <div class="flex justify-end gap-x-4">
-                    <x-button flat label="Cancel" x-on:click="close" />
-                    <x-button primary label="Save" wire:click="harvestCycleConfirmation({{ $selectedCycleToHarvestId }})" />
-                </div>
-            </x-slot>
-        </x-card>
-    </x-modal>
 </div>
