@@ -1,24 +1,37 @@
-
-@if (request()->is('ibroccogreens-admin/register'))
-  <img src="{{ asset('images/pana.png') }}" alt="" class="left-illustration-registration">
+{{-- @if (request()->is('ibroccogreens-admin/register'))
+  <div class="illustration-wrapper">
+    <img src="{{ asset('images/pana.png') }}" alt="" class="left-illustration-registration">
+  </div>
 @else
-  <img src="{{ asset('images/Illustration-1.png') }}" alt="" class="left-illustration-login">
-@endif
+  <div class="illustration-wrapper">
+    <img src="{{ asset('images/Illustration-1.png') }}" alt="" class="left-illustration-login">
+  </div>
+@endif --}}
 
 
 
-@for ($i = 0; $i < 20; $i++)
-  <img
-      src="{{ asset('images/broccoli.svg') }}"
-      class="broccoli"
-      style="
-          left: {{ rand(0, 100) }}%;
-          animation-delay: {{ rand(0, 5000) / 1000 }}s;
-          animation-duration: {{ rand(3000, 7000) / 1000 }}s;
-          width: {{ rand(20, 50) }}px;
-      "
-  />
-@endfor
+
+<div class="illustration-wrapper">
+  @if (request()->is('ibroccogreens-admin/register'))
+      <img src="{{ asset('images/pana.png') }}" alt="" class="left-illustration-registration illustration-image">
+  @else
+      <img src="{{ asset('images/Illustration-1.png') }}" alt="" class="left-illustration-login illustration-image">
+  @endif
+
+  @for ($i = 0; $i < 20; $i++)
+      <img
+          src="{{ asset('images/broccoli.svg') }}"
+          class="broccoli near-illustration"
+          style="
+              left: {{ rand(0, 100) }}%;
+              animation-delay: {{ rand(0, 5000) / 1000 }}s;
+              animation-duration: {{ rand(3000, 7000) / 1000 }}s;
+              width: {{ rand(20, 50) }}px;
+          "
+      />
+  @endfor
+</div>
+
 
 
 <style>
@@ -34,29 +47,50 @@ body {
   display: none;
 }
 
+
+
 @media screen and (min-width: 1024px) {
     main {
       position: absolute; right: 100px;
+    
+    }
+
+    .illustration-wrapper {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 50%;
+        height: 100vh;
+        overflow: hidden;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    .illustration-image {
+        position: absolute;
+        left: 100px;
+        top: 50px;
+        width: 350px;
+        height: auto;
+        z-index: 2;
+        pointer-events: auto;
     }
 
     .left-illustration-login,
     .left-illustration-registration {
-      display: block;
+        display: block;
+        /* position: relative;
+        width: 100%; */
+        z-index: 2;
     }
 
-    .left-illustration-login {
-      position: fixed;
-      left: 100px;
-      width: 350px;
-      z-index: 1;
-    }
-
-    .left-illustration-registration {
-      position: fixed;
-      left: 100px;
-      width: 350px;
-      margin-top: 25px;
-      z-index: 1;
+    .broccoli {
+        position: absolute;
+        top: -100px;
+        animation: drop-broccoli 5s linear infinite;
+        opacity: 0.9;
+        z-index: 0;
+        pointer-events: none;
     }
 
 
@@ -72,7 +106,7 @@ body {
 }
 
 /* Additional clones for effect */
-.broccoli::before,
+/* .broccoli::before,
 .broccoli::after {
     content: '';
     background-image: url('{{ asset('images/broccoli.svg') }}');
@@ -83,7 +117,7 @@ body {
     height: 40px;
     opacity: 0.6;
     animation: drop-broccoli 7s linear infinite;
-}
+} */
 
 /* Animation */
 @keyframes drop-broccoli {

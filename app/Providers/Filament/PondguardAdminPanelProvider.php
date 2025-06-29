@@ -4,6 +4,10 @@ namespace App\Providers\Filament;
 
 use App\Filament\Pages\Auth\Login;
 use App\Filament\Pages\Auth\Register;
+use App\Models\User;
+use DutchCodingCompany\FilamentSocialite\FilamentSocialitePlugin;
+use DutchCodingCompany\FilamentSocialite\Models\SocialiteUser;
+use DutchCodingCompany\FilamentSocialite\Provider;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -19,6 +23,8 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Laravel\Socialite\Contracts\User as SocialiteUserContract;
+use Illuminate\Contracts\Auth\Authenticatable;
 
 class PondguardAdminPanelProvider extends PanelProvider
 {
@@ -59,6 +65,30 @@ class PondguardAdminPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
+            ->plugin(
+                FilamentSocialitePlugin::make()
+                    // (required) Add providers corresponding with providers in `config/services.php`. 
+                    ->providers([
+                        // Create a provider 'gitlab' corresponding to the Socialite driver with the same name.
+                        Provider::make('google')
+                            ->label('Login with Google')
+                            ->icon('fab-google')
+                            ->color(Color::hex('#2f2a6b'))
+                            ->outlined(false)
+                            ->stateless(false)
+                            // ->scopes(['...'])
+                            // ->with([']),
+                    ])
+                    // (optional) Enable/disable registration of new (socialite-) users.
+                    ->registration(true)
+                    // (optional) Enable/disable registration of new (socialite-) users using a callback.
+                    // In this example, a login flow can only continue if there exists a user (Authenticatable) already.
+                    // ->registration(fn (string $provider, SocialiteUserContract $oauthUser, ?Authenticatable $user) => (bool) $user)
+                    // (optional) Change the associated model class.
+                    ->userModelClass(User::class)
+                    // (optional) Change the associated socialite class (see below).
+                    ->socialiteUserModelClass(SocialiteUser::class)
+            )
             ->authMiddleware([
                 Authenticate::class,
             ]);
