@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::post('/readings', [SensorController::class, 'storeSensorData']);
+Route::post('/store-daily-readings', [SensorController::class, 'storeDailySensorData']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

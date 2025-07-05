@@ -6,6 +6,8 @@ use App\Models\SensorDatas;
 use Carbon\Carbon;
 use Livewire\Component;
 use Kreait\Firebase\Contract\Database;
+use Livewire\Attributes\On;
+use Livewire\Attributes\Url;
 
 class Dashboard extends Component
 {
@@ -26,6 +28,9 @@ class Dashboard extends Component
 
     public $mistingSystemData;
     public $waterLevelData;
+
+    // #[Url()]
+    public $selectedBoard = 'B1';
 
     protected $listeners = [
         'updateSoilMoistureLevel' => 'handleSoilMoistureLevelUpdate',
@@ -159,33 +164,35 @@ class Dashboard extends Component
     public function fetchData()
     {
         try {
+            $board = $this->selectedBoard ?? 'B1';
+
             // SOIL MOISTURE
-            $referenceSoilMoisture = $this->database->getReference('SensorReadings/SoilMoisture');
+            $referenceSoilMoisture = $this->database->getReference("{$board}/SoilMoisture");
             $snapshotSoilMoisture = $referenceSoilMoisture->getSnapshot();
             $this->soilMoistureData = $snapshotSoilMoisture->getValue();
 
             // SOIL PH
-            $referenceSoilPH = $this->database->getReference('SensorReadings/SoilPH');
+            $referenceSoilPH = $this->database->getReference('{$board}/SoilPH');
             $snapshotSoilPH = $referenceSoilPH->getSnapshot();
             $this->soilPHData = $snapshotSoilPH->getValue();
 
             // SOIL WATER PH
-            $referenceWaterPH = $this->database->getReference('SensorReadings/WaterPH');
+            $referenceWaterPH = $this->database->getReference('{$board}/WaterPH');
             $snapshotWaterPH= $referenceWaterPH->getSnapshot();
             $this->waterPHData = $snapshotWaterPH->getValue();
 
             // TEMPERATURE
-            $referenceTemperature = $this->database->getReference('SensorReadings/Temperature');
+            $referenceTemperature = $this->database->getReference('{$board}/Temperature');
             $snapshotTemperature = $referenceTemperature->getSnapshot();
             $this->temperatureData = $snapshotTemperature->getValue();
 
             // HUMIDITY
-            $referenceHumidity = $this->database->getReference('SensorReadings/Humidity');
+            $referenceHumidity = $this->database->getReference('{$board}/Humidity');
             $snapshotHumidity = $referenceHumidity->getSnapshot();
             $this->humidityData = $snapshotHumidity->getValue();
 
             // AIR FLOW
-            $referenceAirFlow = $this->database->getReference('SensorReadings/AirFlow');
+            $referenceAirFlow = $this->database->getReference('{$board}/AirFlow');
             $snapshotAirFlow = $referenceAirFlow->getSnapshot();
             $this->airFlowData = $snapshotAirFlow->getValue();
 
@@ -244,6 +251,10 @@ class Dashboard extends Component
         $this->airFlowData = $airFlowLevel;
     }
 
+    public function updatedSelectedBoard($value)
+    {
+        $this->dispatch('board-changed', board: $value);
+    }
 
     // SYSTEM
     public function getFanState()

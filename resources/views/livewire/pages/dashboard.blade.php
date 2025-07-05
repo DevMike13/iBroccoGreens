@@ -1,4 +1,12 @@
 <div>
+    <div class="w-full max-w-sm mb-3 ml-auto">
+        <x-select
+            label="Select Board"
+            placeholder="Select one board"
+            :options="['B1', 'B2', 'B3', 'B4']"
+            wire:model.live="selectedBoard"
+        />
+    </div>
     <div class="flex justify-center items-center flex-col lg:flex-row">
         <div class="grid grid-cols-3 gap-2 w-full place-items-stretch">
             <div class="h-full flex flex-col justify-between bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
@@ -9,7 +17,7 @@
                     <div class="flex flex-col justify-center items-center gap-4">
                         <h1 class="text-sm text-center">Soil Moisture</h1>
                         <h3 class="text-2xl font-bold text-gray-800 dark:text-white">
-                            {{number_format($soilMoistureData, 2, '.', ',')}}
+                            {{ number_format((float) $soilMoistureData, 2, '.', ',') }}
                         </h3>
                     </div>
                 </div>
@@ -23,7 +31,7 @@
                     <div class="flex flex-col justify-center items-center gap-4">
                         <h1 class="text-sm text-center">Soil pH</h1>
                         <h3 class="text-2xl font-bold text-gray-800 dark:text-white">
-                            {{number_format($soilPHData, 2, '.', ',')}}
+                            {{number_format((float) $soilPHData, 2, '.', ',')}}
                         </h3>
                     </div>
                 </div>
@@ -37,7 +45,7 @@
                     <div class="flex flex-col justify-center items-center gap-4">
                         <h1 class="text-sm text-center">Water pH</h1>
                         <h3 class="text-2xl font-bold text-gray-800 dark:text-white">
-                            {{number_format($waterPHData, 2, '.', ',')}}
+                            {{number_format((float) $waterPHData, 2, '.', ',')}}
                         </h3>
                     </div>
                 </div>
@@ -53,7 +61,7 @@
                     <div class="flex flex-col justify-center items-center gap-4">
                         <h1 class="text-sm text-center">Temperature</h1>
                         <h3 class="text-2xl font-bold text-gray-800 dark:text-white">
-                            {{number_format($temperatureData, 2, '.', ',')}}
+                            {{number_format((float) $temperatureData, 2, '.', ',')}}
                         </h3>
                     </div>
                 </div>
@@ -67,7 +75,7 @@
                     <div class="flex flex-col justify-center items-center gap-4">
                         <h1 class="text-sm text-center">Humidity</h1>
                         <h3 class="text-2xl font-bold text-gray-800 dark:text-white">
-                            {{number_format($humidityData, 2, '.', ',')}}
+                            {{number_format((float) $humidityData, 2, '.', ',')}}
                         </h3>
                     </div>
                 </div>
@@ -81,7 +89,7 @@
                     <div class="flex flex-col justify-center items-center gap-4">
                         <h1 class="text-sm text-center">Air Flow</h1>
                         <h3 class="text-2xl font-bold text-gray-800 dark:text-white">
-                            {{number_format($airFlowData, 2, '.', ',')}}
+                            {{number_format((float) $airFlowData, 2, '.', ',')}}
                         </h3>
                     </div>
                 </div>
