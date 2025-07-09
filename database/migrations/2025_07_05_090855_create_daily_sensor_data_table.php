@@ -20,7 +20,6 @@ return new class extends Migration
             $table->decimal('water_ph', 6, 2);
             $table->decimal('temperature', 5, 2);
             $table->decimal('humidity', 5, 2);
-            $table->decimal('air_flow', 5, 2);
             $table->date('reading_date');
             $table->timestamps();
         });

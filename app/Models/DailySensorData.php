@@ -17,7 +17,6 @@ class DailySensorData extends Model
         'water_ph',
         'temperature',
         'humidity',
-        'air_flow',
         'reading_date'
     ];
 }

@@ -170,7 +170,7 @@
             });
     
             // Water PH
-            const waterPHRef = ref(database, basePath + 'WaterPH');
+            const waterPHRef = ref(database, 'B5/WaterPH');
             onValue(waterPHRef, (snapshot) => {
                 const waterPHLevel = snapshot.val();
                 console.log('Water PH Level: ', waterPHLevel);
@@ -178,7 +178,7 @@
             });
     
             // Temperature
-            const temperatureRef = ref(database, basePath + 'Temperature');
+            const temperatureRef = ref(database, 'B1/Temperature');
             onValue(temperatureRef, (snapshot) => {
                 const temperatureLevel = snapshot.val();
                 console.log('Temperature Level: ', temperatureLevel);
@@ -186,19 +186,11 @@
             });
     
             // Humidity
-            const humidityRef = ref(database, basePath + 'Humidity');
+            const humidityRef = ref(database, 'B1/Humidity');
             onValue(humidityRef, (snapshot) => {
                 const humidityLevel = snapshot.val();
                 console.log('Humidity Level: ', humidityLevel);
                 Livewire.dispatch('updateHumidityLevel', { humidityLevel });
-            });
-    
-            // Air Flow
-            const airFlowRef = ref(database, basePath + 'AirFlow');
-            onValue(airFlowRef, (snapshot) => {
-                const airFlowLevel = snapshot.val();
-                console.log('Air Flow Level: ', airFlowLevel);
-                Livewire.dispatch('updateAirFlowLevel', { airFlowLevel });
             });
     
             // Listen to Fan State

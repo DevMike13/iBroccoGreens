@@ -80,20 +80,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="h-full flex flex-col justify-between bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
-                <div class="flex justify-center items-center w-full pt-5">
-                   <img src="{{ asset('images/Wind.png') }}" alt="">
-                </div>
-                <div class="p-4 md:p-5">
-                    <div class="flex flex-col justify-center items-center gap-4">
-                        <h1 class="text-sm text-center">Air Flow</h1>
-                        <h3 class="text-2xl font-bold text-gray-800 dark:text-white">
-                            {{number_format((float) $airFlowData, 2, '.', ',')}}
-                        </h3>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     <div class="py-3 mt-3 flex items-center text-sm text-gray-800 before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:before:border-neutral-600 dark:after:border-neutral-600">System Status</div>

@@ -67,12 +67,6 @@
             </svg>                
             Humidity
           </button>
-          <button type="button" class="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-1 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:text-blue-500" id="tabs-with-icons-item-6" aria-selected="false" data-hs-tab="#tabs-with-icons-6" aria-controls="tabs-with-icons-6" role="tab">
-            <svg width="24" height="24" fill="#9E9E9E" viewBox="0 0 24 24">
-                <path d="M4 12h13a2 2 0 100-4 2 2 0 00-2 2H4v2zm0 4h9a2 2 0 100-4 2 2 0 00-2 2H4v2zm0 4h5a2 2 0 100-4 2 2 0 00-2 2H4v2z"/>
-            </svg>                
-            Air Flow
-          </button>
         </nav>
       </div>
       
@@ -100,11 +94,6 @@
         <div id="tabs-with-icons-5" class="hidden" role="tabpanel" aria-labelledby="tabs-with-icons-item-5">
             <div>
                 <canvas id="humidityChart"></canvas>
-            </div>
-        </div>
-        <div id="tabs-with-icons-6" class="hidden" role="tabpanel" aria-labelledby="tabs-with-icons-item-6">
-            <div>
-                <canvas id="airFlowChart"></canvas>
             </div>
         </div>
     </div>
@@ -295,44 +284,6 @@
         });
 
     </script>
-
-    <script>
-                            
-        var airFlowData = @json($airFlowData);
-        
-        console.log(airFlowData);
-        
-        const ctxAirFlow = document.getElementById('airFlowChart');
-        const daysAirFlow = airFlowData.map(item => item.Day);
-        const valuesAirFlow = airFlowData.map(item => item.Value);
-        
-        new Chart(ctxAirFlow, {
-            type: 'line',
-            data: {
-                labels: daysAirFlow,
-                datasets: [{
-                    label: 'Air Flow',
-                    data: valuesAirFlow, 
-                    borderWidth: 1,
-                    tension: 0.5,
-                    borderColor: '#9E9E9E',
-                    backgroundColor: '#9E9E9E',
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-        Livewire.on('updateAirFlowChart', (newAirFlowData) => {
-            airFlowData = newAirFlowData;
-        });
-
-    </script>
-    
 </div>
 
 

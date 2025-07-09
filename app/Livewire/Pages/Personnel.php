@@ -22,31 +22,29 @@ class Personnel extends Component
     public $name;
     // public $address;
     public $email;
-    public $mobileNo;
+    public $status = 'Active'; 
     public $password;
     public $password_confirmation;
 
     public $selectedPersonnelId;
     public $editName;
-    // public $editAddress;
     public $editEmail;
-    public $editMobileNo;
+    public $editStatus = 'Active';
 
     public function createNewPersonnel(){
         
         $this->validate([ 
             'name' => 'required|max:255',
             'email'=> 'required|email',
-            'mobileNo' => 'required',
             'password' => 'required|min:8|confirmed'
         ]);
 
         $newPersonnel = User::create([
             'name' => $this->name,
             'email' => $this->email,
-            'mobile_no' => '+63' . $this->mobileNo,
             'role' => 'user',
-            'password' => Hash::make($this->password)
+            'password' => Hash::make($this->password),
+            'status' => $this->status,
         ]);
 
         Notification::make()
@@ -63,7 +61,6 @@ class Personnel extends Component
     public function cancelCreate(){
         $this->name = "";
         $this->email = "";
-        $this->mobileNo = "";
     }
 
     // EDIT
@@ -74,7 +71,7 @@ class Personnel extends Component
             $this->selectedPersonnelId = $id;
             $this->editName = $personnel->name;
             $this->editEmail = $personnel->email;
-            $this->editMobileNo = $personnel->mobile_no;
+            $this->editStatus = $personnel->status ?? 'Active';
         }
     }
 
@@ -83,7 +80,6 @@ class Personnel extends Component
             $this->validate([ 
                 'editName' => 'required|max:255',
                 'editEmail'=> 'required|email',
-                'editMobileNo' => 'required',
             ]);
     
             $personnel = User::findOrFail($id);
@@ -91,7 +87,7 @@ class Personnel extends Component
             $personnel->update([
                 'name' => $this->editName,
                 'email' => $this->editEmail,
-                'mobile_no' => '+63' . $this->editMobileNo,
+                'status' => $this->editStatus,
             ]);
 
             Notification::make()
@@ -121,7 +117,6 @@ class Personnel extends Component
     public function cancelEdit(){
         $this->editName = "";
         $this->editEmail = "";
-        $this->editMobileNo = "";
     }
 
     // DELETE

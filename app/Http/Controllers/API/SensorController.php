@@ -51,7 +51,6 @@ class SensorController extends Controller
                 'water_ph' => 'required',
                 'temperature' => 'required',
                 'humidity' => 'required',
-                'air_flow' => 'required',
                 'reading_date' => 'required|date',
             ]);
     

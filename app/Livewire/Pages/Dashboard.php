@@ -18,7 +18,6 @@ class Dashboard extends Component
     public $waterPHData;
     public $temperatureData;
     public $humidityData;
-    public $airFlowData;
     
     public $fanState;
     public bool $isActiveFan;
@@ -38,10 +37,6 @@ class Dashboard extends Component
         'updateWaterPHLevel' => 'handleWaterPHLevelUpdate',
         'updateTemperatureLevel' => 'handleTemperatureLevelUpdate',
         'updateHumidityLevel' => 'handleHumidityLevelUpdate',
-        'updateAirFlowLevel' => 'handleAirFlowLevelUpdate',
-        'updateDOLevel' => 'handleDoLevelUpdate',
-        'updateALLevel' => 'handleAlLevelUpdate',
-        'updateWTLevel' => 'handleWtLevelUpdate',
         'updateFanState' => 'handleFanStateUpdate',
         'updateLightState' => 'handleLightStateUpdate',
         'updateMistingSystem' => 'handleMistingSystemUpdate',
@@ -177,24 +172,19 @@ class Dashboard extends Component
             $this->soilPHData = $snapshotSoilPH->getValue();
 
             // SOIL WATER PH
-            $referenceWaterPH = $this->database->getReference('{$board}/WaterPH');
+            $referenceWaterPH = $this->database->getReference('B5/WaterPH');
             $snapshotWaterPH= $referenceWaterPH->getSnapshot();
             $this->waterPHData = $snapshotWaterPH->getValue();
 
             // TEMPERATURE
-            $referenceTemperature = $this->database->getReference('{$board}/Temperature');
+            $referenceTemperature = $this->database->getReference('B1/Temperature');
             $snapshotTemperature = $referenceTemperature->getSnapshot();
             $this->temperatureData = $snapshotTemperature->getValue();
 
             // HUMIDITY
-            $referenceHumidity = $this->database->getReference('{$board}/Humidity');
+            $referenceHumidity = $this->database->getReference('B1/Humidity');
             $snapshotHumidity = $referenceHumidity->getSnapshot();
             $this->humidityData = $snapshotHumidity->getValue();
-
-            // AIR FLOW
-            $referenceAirFlow = $this->database->getReference('{$board}/AirFlow');
-            $snapshotAirFlow = $referenceAirFlow->getSnapshot();
-            $this->airFlowData = $snapshotAirFlow->getValue();
 
             // FAN STATE
             $referenceFanState = $this->database->getReference('System/Fan');
@@ -244,11 +234,6 @@ class Dashboard extends Component
     public function handleHumidityLevelUpdate($humidityLevel)
     {
         $this->humidityData = $humidityLevel;
-    }
-
-    public function handleAirFlowLevelUpdate($airFlowLevel)
-    {
-        $this->airFlowData = $airFlowLevel;
     }
 
     public function updatedSelectedBoard($value)
@@ -364,7 +349,6 @@ class Dashboard extends Component
             'waterPH' => $this->waterPHData,
             'temperature' => $this->temperatureData,
             'humidity' => $this->humidityData,
-            'airFlow' => $this->airFlowData,
             'mistingSystem' => $this->mistingSystemData,
             'waterLevel' => $this->waterLevelData,
         ]);

@@ -1,6 +1,6 @@
 <div>
     <div class="w-full flex justify-end items-center mb-3">
-        <x-button icon="plus-sm" primary label="Add New Personnel" onclick="$openModal('newPersonnel')" />
+        <x-button icon="plus-sm" positive label="Add New Personnel" onclick="$openModal('newPersonnel')" />
     </div>
     <div class="flex flex-col">
         <div class="-m-1.5 overflow-x-auto">
@@ -14,7 +14,7 @@
                                 <tr>
                                     <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Name</th>
                                     <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Email</th>
-                                    <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Mobile No.</th>
+                                    <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Status</th>
                                     {{-- <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Address</th> --}}
                                     <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Action</th>
                                 </tr>
@@ -29,7 +29,12 @@
                                             {{ $personnel->email }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
-                                            {{ $personnel->mobile_no }}
+                                            {{-- {{ $personnel->mobile_no }} --}}
+                                            @if ($personnel->status === 'Active')
+                                                <span class="text-green-600 font-semibold">Active</span>
+                                            @else
+                                                <span class="text-red-600 font-semibold">Inactive</span>
+                                            @endif
                                         </td>
                                         {{-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
                                             {{ $personnel->ad }}
@@ -71,9 +76,7 @@
                     <x-input class="pr-28" label="Email" placeholder="your email" suffix="@mail.com" wire:model="email"/>
                 </div>
 
-                <div class="mt-3">
-                    <x-inputs.phone label="Phone" mask="['+63 (###) ####-####']" wire:model="mobileNo"/>
-                </div>
+                
             
                 <div class="mt-3">
                     <x-inputs.password label="Password" wire:model="password" />
@@ -81,6 +84,44 @@
 
                 <div class="mt-3">
                     <x-inputs.password label="Confirm Password" wire:model="password_confirmation"/>
+                </div>
+
+                <div class="mt-3">
+                    <p class="text-sm font-medium">Status</p>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-2 w-full">
+                        <div>
+                            <input 
+                                wire:model.live="status" 
+                                type="radio" 
+                                id="status-Active" 
+                                name="status" 
+                                value="Active" 
+                                class="hidden peer"
+                            >
+                            <label for="status-Active"
+                                class="inline-flex items-center justify-center w-full py-1 px-3 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-2
+                                    peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 
+                                    transition text-lg font-medium font-secondary">
+                                Active
+                            </label>
+                        </div>
+                        <div>
+                            <input 
+                                wire:model.live="status" 
+                                type="radio" 
+                                id="status-Inactive" 
+                                name="status" 
+                                value="Inactive" 
+                                class="hidden peer"
+                            >
+                            <label for="status-Inactive"
+                                class="inline-flex items-center justify-center w-full py-1 px-3 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-2
+                                    peer-checked:border-red-600 peer-checked:text-red-600 hover:text-gray-600 hover:bg-gray-100 
+                                    transition text-lg font-medium font-secondary">
+                                Inactive
+                            </label>
+                        </div>
+                    </div>
                 </div>
 
                 <x-slot name="footer" class="flex justify-end gap-x-4">
@@ -104,7 +145,41 @@
             </div>
 
             <div class="mt-3">
-                <x-inputs.phone label="Phone" mask="['+63 (###) ####-####']" wire:model="editMobileNo"/>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-2 w-full">
+                    <div>
+                        <input 
+                            wire:model.live="editStatus" 
+                            type="radio" 
+                            id="editStatus-Active" 
+                            name="editStatus" 
+                            value="Active" 
+                            class="hidden peer"
+                        >
+                        <label for="editStatus-Active"
+                            class="inline-flex items-center justify-center w-full py-1 px-3 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-2
+                                peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 
+                                transition text-lg font-medium font-secondary">
+                            Active
+                        </label>
+                    </div>
+                    <div>
+                        <input 
+                            wire:model.live="editStatus" 
+                            type="radio" 
+                            id="editStatus-Inactive" 
+                            name="editStatus" 
+                            value="Inactive" 
+                            class="hidden peer"
+                        >
+                        <label for="editStatus-Inactive"
+                            class="inline-flex items-center justify-center w-full py-1 px-3 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-2
+                                peer-checked:border-red-600 peer-checked:text-red-600 hover:text-gray-600 hover:bg-gray-100 
+                                transition text-lg font-medium font-secondary">
+                            Inactive
+                        </label>
+                    </div>
+                </div>
             </div>
 
             <x-slot name="footer" class="flex justify-end gap-x-4">
