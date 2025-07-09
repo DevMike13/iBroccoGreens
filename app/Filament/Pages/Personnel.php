@@ -14,6 +14,8 @@ class Personnel extends Page
 
     protected static ?string $navigationLabel = "User Management";
 
+    protected static ?string $title = 'User Management';
+
     public static function shouldRegisterNavigation(): bool
     {
         return auth()->user()->role == 'admin';
