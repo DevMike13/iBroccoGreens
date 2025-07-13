@@ -5,6 +5,7 @@ namespace App\Livewire\Pages;
 use App\Models\Cycles;
 use App\Models\Harvests;
 use App\Models\Shrimps;
+use Carbon\Carbon;
 use Filament\Notifications\Notification;
 use Kreait\Firebase\Contract\Database;
 use Livewire\Component;
@@ -268,6 +269,13 @@ class CycleDetails extends Component
             $referenceCycle = $this->database->getReference('/CurrentCycleNo');
             $cycleValue = (int) $this->cycleNo;
             $referenceCycle->set($cycleValue); 
+
+            $startDate = Carbon::parse($this->startDate);
+
+            $this->database->getReference('/CycleStartMonth')->set($startDate->format('m'));
+            $this->database->getReference('/CycleStartDay')->set($startDate->format('d'));
+            $this->database->getReference('/CycleStartYear')->set($startDate->format('Y'));
+
         } catch (\Exception $e) {
             return response()->json(['error' => 'Error setting data: ' . $e->getMessage()], 500);
         }

@@ -18,6 +18,15 @@ class Dashboard extends Component
     public $waterPHData;
     public $temperatureData;
     public $humidityData;
+
+    public $soilMoistureDataB2;
+    public $soilPHDataB2;
+
+    public $soilMoistureDataB3;
+    public $soilPHDataB3;
+
+    public $soilMoistureDataB4;
+    public $soilPHDataB4;
     
     public $fanState;
     public bool $isActiveFan;
@@ -28,12 +37,18 @@ class Dashboard extends Component
     public $mistingSystemData;
     public $waterLevelData;
 
-    // #[Url()]
+    #[Url()]
     public $selectedBoard = 'B1';
 
     protected $listeners = [
         'updateSoilMoistureLevel' => 'handleSoilMoistureLevelUpdate',
         'updateSoilPHLevel' => 'handleSoilPHLevelUpdate',
+        'updateSoilMoistureLevelB2' => 'handleSoilMoistureLevelUpdateB2',
+        'updateSoilPHLevelB2' => 'handleSoilPHLevelUpdateB2',
+        'updateSoilMoistureLevelB3' => 'handleSoilMoistureLevelUpdateB3',
+        'updateSoilPHLevelB3' => 'handleSoilPHLevelUpdateB3',
+        'updateSoilMoistureLevelB4' => 'handleSoilMoistureLevelUpdateB4',
+        'updateSoilPHLevelB4' => 'handleSoilPHLevelUpdateB4',
         'updateWaterPHLevel' => 'handleWaterPHLevelUpdate',
         'updateTemperatureLevel' => 'handleTemperatureLevelUpdate',
         'updateHumidityLevel' => 'handleHumidityLevelUpdate',
@@ -159,17 +174,46 @@ class Dashboard extends Component
     public function fetchData()
     {
         try {
-            $board = $this->selectedBoard ?? 'B1';
-
+        
             // SOIL MOISTURE
-            $referenceSoilMoisture = $this->database->getReference("{$board}/SoilMoisture");
+            $referenceSoilMoisture = $this->database->getReference("B1/SoilMoisture");
             $snapshotSoilMoisture = $referenceSoilMoisture->getSnapshot();
             $this->soilMoistureData = $snapshotSoilMoisture->getValue();
 
             // SOIL PH
-            $referenceSoilPH = $this->database->getReference('{$board}/SoilPH');
+            $referenceSoilPH = $this->database->getReference('B1/SoilPH');
             $snapshotSoilPH = $referenceSoilPH->getSnapshot();
             $this->soilPHData = $snapshotSoilPH->getValue();
+
+            // SOIL MOISTURE B2
+            $referenceSoilMoistureB2 = $this->database->getReference("B2/SoilMoisture");
+            $snapshotSoilMoistureB2 = $referenceSoilMoistureB2->getSnapshot();
+            $this->soilMoistureDataB2 = $snapshotSoilMoistureB2->getValue();
+
+            // SOIL PH B2
+            $referenceSoilPHB2 = $this->database->getReference('B2/SoilPH');
+            $snapshotSoilPHB2 = $referenceSoilPHB2->getSnapshot();
+            $this->soilPHDataB2 = $snapshotSoilPHB2->getValue();
+
+            // SOIL MOISTURE B3
+            $referenceSoilMoistureB3 = $this->database->getReference("B3/SoilMoisture");
+            $snapshotSoilMoistureB3 = $referenceSoilMoistureB3->getSnapshot();
+            $this->soilMoistureDataB3 = $snapshotSoilMoistureB3->getValue();
+
+            // SOIL PH B3
+            $referenceSoilPHB3 = $this->database->getReference('B3/SoilPH');
+            $snapshotSoilPHB3 = $referenceSoilPHB3->getSnapshot();
+            $this->soilPHDataB3 = $snapshotSoilPHB3->getValue();
+
+            // SOIL MOISTURE B4
+            $referenceSoilMoistureB4 = $this->database->getReference("B4/SoilMoisture");
+            $snapshotSoilMoistureB4 = $referenceSoilMoistureB4->getSnapshot();
+            $this->soilMoistureDataB4 = $snapshotSoilMoistureB4->getValue();
+
+            // SOIL PH B4
+            $referenceSoilPHB4 = $this->database->getReference('B4/SoilPH');
+            $snapshotSoilPHB4 = $referenceSoilPHB4->getSnapshot();
+            $this->soilPHDataB4 = $snapshotSoilPHB4->getValue();
 
             // SOIL WATER PH
             $referenceWaterPH = $this->database->getReference('B5/WaterPH');
@@ -216,9 +260,45 @@ class Dashboard extends Component
         $this->soilMoistureData = $soilMoistureLevel;
     }
 
+    // SOIL MOISTURE B2
+    public function handleSoilMoistureLevelUpdateB2($soilMoistureLevelB2)
+    {
+        $this->soilMoistureDataB2 = $soilMoistureLevelB2;
+    }
+
+    // SOIL MOISTURE B3
+    public function handleSoilMoistureLevelUpdateB3($soilMoistureLevelB3)
+    {
+        $this->soilMoistureDataB3 = $soilMoistureLevelB3;
+    }
+
+    // SOIL MOISTURE B4
+    public function handleSoilMoistureLevelUpdateB4($soilMoistureLevelB4)
+    {
+        $this->soilMoistureDataB4 = $soilMoistureLevelB4;
+    }
+
     public function handleSoilPHLevelUpdate($soilPHLevel)
     {
         $this->soilPHData = $soilPHLevel;
+    }
+
+    // SOIL PH B2
+    public function handleSoilPHLevelUpdateB2($soilPHLevelB2)
+    {
+        $this->soilPHDataB2 = $soilPHLevelB2;
+    }
+
+    // SOIL PH B3
+    public function handleSoilPHLevelUpdateB3($soilPHLevelB3)
+    {
+        $this->soilPHDataB3 = $soilPHLevelB3;
+    }
+
+    // SOIL PH B4
+    public function handleSoilPHLevelUpdateB4($soilPHLevelB4)
+    {
+        $this->soilPHDataB4 = $soilPHLevelB4;
     }
 
     public function handleWaterPHLevelUpdate($waterPHLevel)
@@ -345,7 +425,13 @@ class Dashboard extends Component
     {
         return view('livewire.pages.dashboard', [
             'soilMoisture' => $this->soilMoistureData,
+            'soilMoistureB2' => $this->soilMoistureDataB2,
+            'soilMoistureB3' => $this->soilMoistureDataB3,
+            'soilMoistureB4' => $this->soilMoistureDataB4,
             'soilPH' => $this->soilPHData,
+            'soilPHB2' => $this->soilPHDataB2,
+            'soilPHB3' => $this->soilPHDataB3,
+            'soilPHB4' => $this->soilPHDataB4,
             'waterPH' => $this->waterPHData,
             'temperature' => $this->temperatureData,
             'humidity' => $this->humidityData,

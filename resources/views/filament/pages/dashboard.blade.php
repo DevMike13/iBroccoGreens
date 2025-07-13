@@ -154,19 +154,67 @@
             const basePath = `${board}/`;
     
             // Soil Moisture
-            const soilMoistureRef = ref(database, basePath + 'SoilMoisture');
+            const soilMoistureRef = ref(database, 'B1/SoilMoisture');
             onValue(soilMoistureRef, (snapshot) => {
                 const soilMoistureLevel = snapshot.val();
                 console.log('Soil Moisture Level: ', soilMoistureLevel);
                 Livewire.dispatch('updateSoilMoistureLevel', { soilMoistureLevel });
             });
+
+            // Soil Moisture B2
+            const soilMoistureRefB2 = ref(database, 'B2/SoilMoisture');
+            onValue(soilMoistureRefB2, (snapshot) => {
+                const soilMoistureLevelB2 = snapshot.val();
+                console.log('Soil Moisture Level B2: ', soilMoistureLevelB2);
+                Livewire.dispatch('updateSoilMoistureLevelB2', { soilMoistureLevelB2 });
+            });
+
+            // Soil Moisture B3
+            const soilMoistureRefB3 = ref(database, 'B3/SoilMoisture');
+            onValue(soilMoistureRefB3, (snapshot) => {
+                const soilMoistureLevelB3 = snapshot.val();
+                console.log('Soil Moisture Level B3: ', soilMoistureLevelB3);
+                Livewire.dispatch('updateSoilMoistureLevelB3', { soilMoistureLevelB3 });
+            });
+
+            // Soil Moisture B4
+            const soilMoistureRefB4 = ref(database, 'B4/SoilMoisture');
+            onValue(soilMoistureRefB4, (snapshot) => {
+                const soilMoistureLevelB4 = snapshot.val();
+                console.log('Soil Moisture Level B4: ', soilMoistureLevelB4);
+                Livewire.dispatch('updateSoilMoistureLevelB4', { soilMoistureLevelB4 });
+            });
     
             // Soil PH
-            const soilPHRef = ref(database, basePath + 'SoilPH');
+            const soilPHRef = ref(database, 'B1/SoilPH');
             onValue(soilPHRef, (snapshot) => {
                 const soilPHLevel = snapshot.val();
                 console.log('Soil PH Level: ', soilPHLevel);
                 Livewire.dispatch('updateSoilPHLevel', { soilPHLevel });
+            });
+
+            // Soil PH B2
+            const soilPHRefB2 = ref(database, 'B2/SoilPH');
+            onValue(soilPHRefB2, (snapshot) => {
+                const soilPHLevelB2 = snapshot.val();
+                console.log('Soil PH Level B2: ', soilPHLevelB2 );
+                Livewire.dispatch('updateSoilPHLevelB2', { soilPHLevelB2 });
+            });
+
+            // Soil PH B3
+            const soilPHRefB3 = ref(database, 'B3/SoilPH');
+            onValue(soilPHRefB3, (snapshot) => {
+                const soilPHLevelB3 = snapshot.val();
+                console.log('Soil PH Level B3: ', soilPHLevelB3 );
+                Livewire.dispatch('updateSoilPHLevelB3', { soilPHLevelB3 });
+            });
+
+            // Soil PH B4
+            const soilPHRefB4 = ref(database, 'B4/SoilPH');
+            onValue(soilPHRefB4, (snapshot) => {
+                const soilPHLevelB4 = snapshot.val();
+                console.log('Soil PH Level B4: ', soilPHLevelB4 );
+                Livewire.dispatch('updateSoilPHLevelB4', { soilPHLevelB4 });
             });
     
             // Water PH

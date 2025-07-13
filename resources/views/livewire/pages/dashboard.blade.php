@@ -16,9 +16,23 @@
                 <div class="p-4 md:p-5">
                     <div class="flex flex-col justify-center items-center gap-4">
                         <h1 class="text-sm text-center">Soil Moisture</h1>
-                        <h3 class="text-2xl font-bold text-gray-800 dark:text-white">
-                            {{ number_format((float) $soilMoistureData, 2, '.', ',') }}
-                        </h3>
+                        @if ($selectedBoard == 'B1')
+                            <h3 class="text-2xl font-bold text-gray-800 dark:text-white">
+                                {{ number_format((float) $soilMoistureData, 2, '.', ',') }}
+                            </h3>
+                        @elseif($selectedBoard == 'B2')
+                            <h3 class="text-2xl font-bold text-gray-800 dark:text-white">
+                                {{ number_format((float) $soilMoistureDataB2, 2, '.', ',') }}
+                            </h3>
+                        @elseif($selectedBoard == 'B3')
+                            <h3 class="text-2xl font-bold text-gray-800 dark:text-white">
+                                {{ number_format((float) $soilMoistureDataB3, 2, '.', ',') }}
+                            </h3>
+                        @elseif($selectedBoard == 'B4')
+                            <h3 class="text-2xl font-bold text-gray-800 dark:text-white">
+                                {{ number_format((float) $soilMoistureDataB4, 2, '.', ',') }}
+                            </h3>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -30,9 +44,23 @@
                 <div class="p-4 md:p-5">
                     <div class="flex flex-col justify-center items-center gap-4">
                         <h1 class="text-sm text-center">Soil pH</h1>
-                        <h3 class="text-2xl font-bold text-gray-800 dark:text-white">
-                            {{number_format((float) $soilPHData, 2, '.', ',')}}
-                        </h3>
+                        @if ($selectedBoard == 'B1')
+                            <h3 class="text-2xl font-bold text-gray-800 dark:text-white">
+                                {{number_format((float) $soilPHData, 2, '.', ',')}}
+                            </h3>
+                        @elseif($selectedBoard == 'B2')
+                            <h3 class="text-2xl font-bold text-gray-800 dark:text-white">
+                                {{ number_format((float) $soilPHDataB2, 2, '.', ',') }}
+                            </h3>
+                        @elseif($selectedBoard == 'B3')
+                            <h3 class="text-2xl font-bold text-gray-800 dark:text-white">
+                                {{ number_format((float) $soilPHDataB3, 2, '.', ',') }}
+                            </h3>
+                        @elseif($selectedBoard == 'B4')
+                            <h3 class="text-2xl font-bold text-gray-800 dark:text-white">
+                                {{ number_format((float) $soilPHDataB4, 2, '.', ',') }}
+                            </h3>
+                        @endif
                     </div>
                 </div>
             </div>
