@@ -39,7 +39,7 @@ class PondguardAdminPanelProvider extends PanelProvider
             ->passwordReset()
             ->emailVerification()
             ->profile()
-            ->brandLogo(asset('images/ibroccogreens-logo-rev.svg'))
+            ->brandLogo(asset('images/iBroccoGreensLogo.png'))
             ->favicon(asset('favicon.ico'))
             ->colors([
                 'primary' => '#659d38',
