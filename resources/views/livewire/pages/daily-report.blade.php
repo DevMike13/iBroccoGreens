@@ -1,6 +1,6 @@
 <div>
-    <div class="w-full mb-3 ml-auto flex flex-col lg:flex-row justify-between items-center gap-3">
-        <div class="w-[90%] lg:w-full flex gap-3">
+    <div class="w-full mb-3 ml-auto flex flex-col lg:flex-row justify-between lg:justify-end items-center gap-3">
+        <div class="w-[90%] lg:w-[80%] flex gap-3 lg:ml-20">
             <x-datetime-picker
                 label="Start Date"
                 placeholder="Start Date"
@@ -19,14 +19,14 @@
                 display-format="MMMM DD, YYYY"
             />
         </div>
-        <div class="w-[90%] lg:w-full">
+        <div class="w-[90%] lg:w-[30%]">
             <x-native-select
                 label="Select IoT Board"
                 :options="['B1', 'B2', 'B3', 'B4']"
                 wire:model="selectedBoard"
             />
         </div>
-        <div class="lg:pt-6 w-[90%] lg:w-full">
+        <div class="lg:pt-6 w-[90%] lg:w-fit">
             {{-- <x-button label="Apply" wire:click="getGraphValues"/> --}}
             <x-button icon="filter" positive label="Apply" wire:click="getGraphValues" />
         </div>

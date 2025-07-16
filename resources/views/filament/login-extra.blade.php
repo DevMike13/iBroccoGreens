@@ -20,7 +20,7 @@
 
   @for ($i = 0; $i < 20; $i++)
       <img
-          src="{{ asset('images/broccoli.svg') }}"
+          src="{{ asset('images/micro-leaf.png') }}"
           class="broccoli near-illustration"
           style="
               left: {{ rand(0, 100) }}%;
@@ -46,7 +46,13 @@ body {
 .left-illustration-registration {
   display: none;
 }
-
+/* @media screen and (max-width: 1023px) {
+  .custom-terms-button-input {
+    margin-left: -90px !important;
+    margin-top: 2px !important;
+    display: inline-block;
+  }
+} */
 
 
 @media screen and (min-width: 1024px) {
@@ -54,7 +60,10 @@ body {
       position: absolute; right: 100px;
     
     }
-
+    .custom-tems-button-input{
+      margin-left: -99px !important;
+      margin-top: 1.5px;
+    }
     .illustration-wrapper {
         position: fixed;
         top: 0;
@@ -104,7 +113,12 @@ body {
   z-index: -1;
   opacity: 0.9;
 }
-
+@media screen and (max-width: 1023px) {
+  .custom-tems-button-input {
+      margin-left: -200px !important;
+      margin-top: 3px !important;
+  }
+}
 /* Additional clones for effect */
 /* .broccoli::before,
 .broccoli::after {
