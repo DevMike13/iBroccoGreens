@@ -18,8 +18,8 @@ return new class extends Migration
             $table->date('start_date');
             $table->date('end_date')->nullable();
             $table->integer('trays')->nullable();
-            $table->integer('expected_yield')->nullable();
             $table->text('notes');
+            $table->enum('phase', ['germination', 'growth phase'])->default('germination');
             $table->enum('status', ['current', 'completed'])->default('current');
             $table->timestamps();
         });

@@ -17,9 +17,9 @@ class Cycles extends Model
         'start_date', 
         'end_date',
         'trays',
-        'expected_yield',
         'notes',
-        'status'
+        'status',
+        'phase'
     ];
 
     // public function samplings(): HasMany
@@ -41,4 +41,8 @@ class Cycles extends Model
     // {
     //     return $this->hasMany(SensorDatas::class);
     // }
+    public function yieldTrackers()
+    {
+        return $this->hasMany(YieldTracker::class);
+    }
 }

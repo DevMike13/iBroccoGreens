@@ -16,7 +16,7 @@
                                     <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Start Date</th>
                                     <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">End Date</th>
                                     <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Trays</th>
-                                    <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Expected Yield</th>
+                                    <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Phase</th>
                                     {{-- <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Description</th> --}}
                                     <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Status</th>
                                     <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Action</th>
@@ -51,8 +51,8 @@
                                             {{-- {{ number_format($cycle->shrimp->shrimp_count) }} --}}
                                             {{ number_format($cycle->trays) }}
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
-                                            {{ number_format($cycle->expected_yield) }}
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200 capitalize">
+                                            {{ $cycle->phase }}
                                         </td>
                                         @if ($cycle->status == 'current')
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
@@ -109,6 +109,82 @@
         </div>
     </div>
 
+    <div class="w-full mt-10 border-2 border-dashed rounded-md py-5 px-5">
+        <div class="w-full flex justify-end items-center mb-3">
+            @if($hasCycle)
+                <x-button icon="plus-sm" warning label="Create New Yield" onclick="$openModal('newYield')" wire:click="getCurrentCycleNumber"/>
+            @else
+                <x-button icon="plus-sm" warning label="Create New Yield" wire:click="getCurrentCycleNumberError"/>
+            @endif
+        </div>
+        <div class="flex flex-col">
+            <div class="-m-1.5 overflow-x-auto">
+                <div class="p-1.5 min-w-full inline-block align-middle">
+                    <div class="border-2 border-dashed rounded-md">
+                        @if (count($yieldLists) == 0)
+                            <h1 class="text-center font-normal text-lg my-5 italic text-gray-500">No Yield available.</h1>
+                        @else
+                            <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Cycle No.</th>
+                                        <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Tray</th>
+                                        <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Yield Per Tray</th>
+                                        <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Date</th>
+                                        <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($yieldLists as $yield)
+                                        <tr class="odd:bg-white even:bg-gray-100 hover:bg-gray-100 dark:odd:bg-neutral-800 dark:even:bg-neutral-700 dark:hover:bg-neutral-700">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
+                                                <p class="w-fit px-2">{{$yield->cycle_no}}</p>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
+                                                <p class="w-fit px-2">{{$yield->tray}}</p>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
+                                                <p class="w-fit px-2">{{$yield->yield_per_tray}} g</p>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">{{\Carbon\Carbon::parse($cycle->date)->format('M j, Y')}}</td>
+                                            
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                                <div class="hs-dropdown relative inline-flex">
+                                                    <button id="hs-dropdown-default" type="button" class="hs-dropdown-toggle py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
+                                                        Actions
+                                                        <svg class="hs-dropdown-open:rotate-180 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                                                    </button>
+                                                
+                                                    <div class="hs-dropdown-menu z-50 transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-60 bg-white shadow-md rounded-lg mt-2 dark:bg-neutral-800 dark:border dark:border-neutral-700 dark:divide-neutral-700 after:h-4 after:absolute after:-bottom-4 after:start-0 after:w-full before:h-4 before:absolute before:-top-4 before:start-0 before:w-full" role="menu" aria-orientation="vertical" aria-labelledby="hs-dropdown-default">
+                                                        <div class="p-1 space-y-0.5">
+                                                            <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-blue-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700" href="#" onclick="$openModal('editYield')">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                                                </svg>
+                                                                
+                                                                Edit
+                                                            </a>
+                                                            
+                                                            <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-red-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700" href="#">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                                                </svg>                                                                  
+                                                                Delete
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <x-modal blur name="newCycle" persistent align="center" max-width="sm">
         <x-card title="Create New Cycle">
             
@@ -159,9 +235,6 @@
 
             <div class="mt-3">
                 <x-inputs.number label="Number of Trays" wire:model="trays" />
-            </div>
-            <div class="mt-3">
-                <x-inputs.number label="Expected Yield" wire:model="expectedYield" />
             </div>
            
             <div class="mt-3">
@@ -242,4 +315,51 @@
         </x-card>
     </x-modal>
 
+
+    {{-- YIELD --}}
+    <x-modal blur name="newYield" persistent align="center" max-width="sm">
+        <x-card title="Create New Yield">
+            <div class="relative w-auto">
+                <span class="absolute left-[4.5rem] top-[0.10rem] text-xs italic text-green-400">(This will automatically fetch)</span>
+                <x-input right-icon="hashtag" label="Cycle No." placeholder="Ex: 1"  wire:model="currentCycleNoForYield" disabled />
+            </div>
+            <div class="mt-3">
+                <x-inputs.number label="Tray" wire:model="trayYield" />
+            </div>
+            <div class="relative w-auto mt-3">
+                <span class="absolute left-[6.5rem] top-[0.10rem] text-xs italic text-green-400">(Grams)</span>
+                <x-inputs.number label="Yield Per Tray" wire:model="yieldPerTrayYield" />
+            </div>
+            <div class="mt-3">
+                <x-datetime-picker
+                    label="Date"
+                    placeholder="Date"
+                    parse-format="YYYY-MM-DD"
+                    display-format="MMMM DD, YYYY"
+                    wire:model.defer="dateYield"
+                    without-tips
+                    :min="now()"
+                    without-time
+                />
+            </div>
+            <x-slot name="footer" class="flex justify-end gap-x-4">
+                <div class="flex justify-end gap-x-4">
+                    <x-button flat label="Cancel" x-on:click="close" />
+                    <x-button primary label="Save" wire:click="saveCycleYield" />
+                </div>
+            </x-slot>
+        </x-card>
+    </x-modal>
+
+    <x-modal blur name="editYield" persistent align="center" max-width="sm">
+        <x-card title="Edit Yield">
+            
+            <x-slot name="footer" class="flex justify-end gap-x-4">
+                <div class="flex justify-end gap-x-4">
+                    <x-button flat label="Cancel" x-on:click="close" wire:click="cancelEdit" />
+                    <x-button primary label="Save" />
+                </div>
+            </x-slot>
+        </x-card>
+    </x-modal>
 </div>

@@ -5,6 +5,7 @@ namespace App\Livewire\Pages;
 use App\Models\Cycles;
 use App\Models\Harvests;
 use App\Models\Shrimps;
+use App\Models\YieldTracker;
 use Carbon\Carbon;
 use Filament\Notifications\Notification;
 use Kreait\Firebase\Contract\Database;
@@ -25,7 +26,6 @@ class CycleDetails extends Component
     public $startDate;
     public $endDate;
     public $trays;
-    public $expectedYield;
     public $notes;
    
     public $selectedCycleId;
@@ -34,9 +34,30 @@ class CycleDetails extends Component
     public $editStartDate;
     public $editEndDate;
     public $editTrays;
-    public $editExpectedYield;
     public $editNotes;
     public $status;
+
+    public bool $hasCycle = false;
+    public $currentCycleNoForYield;
+
+    // YIELD
+    public $currentCycleIDYield;
+    public $cycleNoYield;
+    public $trayYield;
+    public $yieldPerTrayYield;
+    public $dateYield;
+
+    public function mount()
+    {
+        $latestCycle = Cycles::latest('cycle_no')->first();
+
+        if ($latestCycle) {
+            $this->hasCycle = true;
+            $this->currentCycleNoForYield = $latestCycle->cycle_no;
+        } else {
+            $this->hasCycle = false;
+        }
+    }
 
     public function getCycleNumber(Database $database){
         $latestCycle = Cycles::latest('cycle_no')->first();
@@ -44,6 +65,22 @@ class CycleDetails extends Component
 
         $this->database = $database;
         $this->fetchFirebaseCurrentCycle();
+    }
+
+    public function getCurrentCycleNumber(){
+
+        $latestCycle = Cycles::latest('cycle_no')->first();
+
+        $this->currentCycleNoForYield = $latestCycle->cycle_no;
+        $this->currentCycleIDYield = $latestCycle->id;
+    }
+
+    public function getCurrentCycleNumberError(){
+        Notification::make()
+            ->title('Error!')
+            ->body('No cycles found. Please create a cycle first.')
+            ->danger()
+            ->send();
     }
 
     public function createNewCycle(Database $database){
@@ -80,7 +117,6 @@ class CycleDetails extends Component
                 'microgreen_type' => $this->microgreenType,
                 'start_date' => $this->startDate,
                 'trays' => $this->trays,
-                'expected_yield' => $this->expectedYield,
                 'notes' => $this->notes,
                 'status' => 'current',
             ]);
@@ -103,7 +139,6 @@ class CycleDetails extends Component
                 'microgreen_type' => $this->microgreenType,
                 'start_date' => $this->startDate,
                 'trays' => $this->trays,
-                'expected_yield' => $this->expectedYield,
                 'notes' => $this->notes,
                 'status' => 'current',
             ]);
@@ -144,6 +179,34 @@ class CycleDetails extends Component
         ]);
     }
 
+    public function saveCycleYield()
+    {
+        $this->validate([ 
+            'currentCycleNoForYield' => 'required|integer',
+            'trayYield' => 'required|integer',
+            'yieldPerTrayYield' => 'required|integer',
+            'dateYield' => 'required|date',
+        ]);
+
+        $newCycleYield = YieldTracker::create([
+            'cycle_id' => $this->currentCycleIDYield,
+            'cycle_no' => $this->currentCycleNoForYield,
+            'tray' => $this->trayYield,
+            'yield_per_tray' => $this->yieldPerTrayYield,
+            'date' => $this->dateYield,
+        ]);
+
+        Notification::make()
+            ->title('Success!')
+            ->body('Cycle Yield has been created.')
+            ->success()
+            ->send();
+       
+        $this->dispatch('reload');
+
+        return redirect()->back();
+    }
+
     public function getSelectedCycle($id){
         $cycle = Cycles::findOrFail($id);
 
@@ -154,7 +217,6 @@ class CycleDetails extends Component
             $this->editMicrogreenType = $cycle->microgreen_type;
             $this->editEndDate = $cycle->end_date;
             $this->editTrays = $cycle->trays;
-            $this->editExpectedYield = $cycle->expected_yield;
             $this->editNotes = $cycle->notes;
             $this->status = $cycle->status;
             
@@ -169,7 +231,6 @@ class CycleDetails extends Component
                 'editMicrogreenType'  => 'required',
                 'editEndDate' => 'nullable|date',
                 'editTrays' => 'required|integer',
-                'editExpectedYield' => 'nullable|integer',
                 'editNotes' => 'required',
                 'status' => 'required',
             ]);
@@ -185,7 +246,6 @@ class CycleDetails extends Component
                 'start_date' => $this->editStartDate,
                 'end_date' => $endDate,
                 'trays' => $this->editTrays,
-                'expected_yield' => $this->editExpectedYield,
                 'notes' => $this->editNotes,
                 'status' => $this->status
             ]);
@@ -221,7 +281,6 @@ class CycleDetails extends Component
         $this->editEndDate = "";
         $this->editMicrogreenType = "";
         $this->editTrays = "";
-        $this->editExpectedYield = "";
         $this->editNotes = "";
         $this->status = "";
     }
@@ -284,8 +343,15 @@ class CycleDetails extends Component
     public function render()
     {
         $cycleLists = Cycles::orderBy('cycle_no', 'desc')->get();
+        $currentCycle = Cycles::where('status', 'current')->first();
+
+        $yieldLists = $currentCycle
+            ? YieldTracker::where('cycle_id', $currentCycle->id)->get()
+            : collect();
+       
         return view('livewire.pages.cycle-details', [
-            'cycleLists' => $cycleLists
+            'cycleLists' => $cycleLists,
+            'yieldLists' => $yieldLists,
         ]);
     }
 }
