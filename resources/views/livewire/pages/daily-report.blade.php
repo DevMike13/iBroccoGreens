@@ -21,8 +21,16 @@
         </div>
         <div class="w-[90%] lg:w-[30%]">
             <x-native-select
-                label="Select IoT Board"
-                :options="['B1', 'B2', 'B3', 'B4']"
+                label="Select Tray Number"
+                {{-- :options="['B1', 'B2', 'B3', 'B4']" --}}
+                :options="[
+                    ['name' => 'Tray 1',  'id' => 'B1'],
+                    ['name' => 'Tray 2', 'id' => 'B2'],
+                    ['name' => 'Tray 3',   'id' => 'B3'],
+                    ['name' => 'Tray 4',    'id' => 'B4'],
+                ]"
+                option-label="name"
+                option-value="id"
                 wire:model="selectedBoard"
             />
         </div>

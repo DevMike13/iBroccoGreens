@@ -1,9 +1,17 @@
 <div>
     <div class="w-full max-w-sm mb-3 ml-auto">
         <x-select
-            label="Select Board"
-            placeholder="Select one board"
-            :options="['B1', 'B2', 'B3', 'B4']"
+            label="Tray Number"
+            placeholder="Select tray number"
+            {{-- :options="['B1', 'B2', 'B3', 'B4']" --}}
+            :options="[
+                ['name' => 'Tray 1',  'id' => 'B1'],
+                ['name' => 'Tray 2', 'id' => 'B2'],
+                ['name' => 'Tray 3',   'id' => 'B3'],
+                ['name' => 'Tray 4',    'id' => 'B4'],
+            ]"
+            option-label="name"
+            option-value="id"
             wire:model.live="selectedBoard"
         />
     </div>
