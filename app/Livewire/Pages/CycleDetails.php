@@ -23,7 +23,7 @@ class CycleDetails extends Component
     public $currentCycleNo;
     
     public $cycleNo;
-    public $microgreenType;
+    // public $microgreenType;
     public $startDate;
     public $endDate;
     public $phase;
@@ -32,7 +32,7 @@ class CycleDetails extends Component
    
     public $selectedCycleId;
     public $editCycleNo;
-    public $editMicrogreenType;
+    // public $editMicrogreenType;
     public $editStartDate;
     public $editEndDate;
     public $editPhase;
@@ -81,24 +81,28 @@ class CycleDetails extends Component
                 'name' => 'Cycle ' . $cycle->cycle_no
             ])
             ->toArray();
-        // If there's a selectedCycleNoFilter from URL, use it
         if ($this->selectedCycleNoFilter) {
             $selectedCycle = Cycles::where('cycle_no', $this->selectedCycleNoFilter)->first();
 
             if ($selectedCycle) {
                 $this->filteredYieldLists = YieldTracker::where('cycle_id', $selectedCycle->id)->get();
             } else {
-                $this->filteredYieldLists = collect(); // fallback if cycle not found
+                $this->filteredYieldLists = collect(); 
             }
         } else {
-            // Otherwise, default to current cycle's yields
             $currentCycle = Cycles::where('status', 'current')->first();
+
+            if (!$currentCycle) {
+                $currentCycle = Cycles::where('status', 'completed')
+                    ->orderByDesc('end_date')
+                    ->first();
+            }
 
             if ($currentCycle) {
                 $this->selectedCycleNoFilter = $currentCycle->cycle_no;
                 $this->filteredYieldLists = YieldTracker::where('cycle_id', $currentCycle->id)->get();
             } else {
-                $this->filteredYieldLists = collect(); // No cycles yet
+                $this->filteredYieldLists = collect();
             }
         }
     }
@@ -144,7 +148,7 @@ class CycleDetails extends Component
         $this->validate([ 
             'cycleNo' => 'required|integer',
             'startDate' => 'required|date',
-            'microgreenType' => 'required',
+            // 'microgreenType' => 'required',
             'phase' => 'required',
             'trays' => 'required|integer',
             'notes' => 'required',
@@ -171,8 +175,9 @@ class CycleDetails extends Component
             // Create a new cycle
             $newCycle = Cycles::create([
                 'cycle_no' => $this->cycleNo,
-                'microgreen_type' => $this->microgreenType,
+                // 'microgreen_type' => $this->microgreenType,
                 'start_date' => $this->startDate,
+                'end_date' => Carbon::parse($this->startDate)->addDays(7),
                 'trays' => $this->trays,
                 'phase' => $this->phase,
                 'notes' => $this->notes,
@@ -194,8 +199,9 @@ class CycleDetails extends Component
             // If no previous cycle, create a new cycle directly
             $newCycle = Cycles::create([
                 'cycle_no' => $this->cycleNo,
-                'microgreen_type' => $this->microgreenType,
+                // 'microgreen_type' => $this->microgreenType,
                 'start_date' => $this->startDate,
+                'end_date' => Carbon::parse($this->startDate)->addDays(7),
                 'trays' => $this->trays,
                 'phase' => $this->phase,
                 'notes' => $this->notes,
@@ -273,7 +279,7 @@ class CycleDetails extends Component
             $this->selectedCycleId = $id;
             $this->editCycleNo = $cycle->cycle_no;
             $this->editStartDate = $cycle->start_date;
-            $this->editMicrogreenType = $cycle->microgreen_type;
+            // $this->editMicrogreenType = $cycle->microgreen_type;
             $this->editEndDate = $cycle->end_date;
             $this->editTrays = $cycle->trays;
             $this->editPhase = $cycle->phase;
@@ -288,8 +294,8 @@ class CycleDetails extends Component
             $this->validate([
                 'editCycleNo' => 'required|integer',
                 'editStartDate' => 'required|date',
-                'editMicrogreenType'  => 'required',
-                'editEndDate' => 'nullable|date',
+                // 'editMicrogreenType'  => 'required',
+                // 'editEndDate' => 'nullable|date',
                 'editTrays' => 'required|integer',
                 'editPhase' => 'required',
                 'editNotes' => 'required',
@@ -298,14 +304,14 @@ class CycleDetails extends Component
     
             $cycle = Cycles::findOrFail($id);
 
-            $endDate = $this->status === 'completed'
-                ? now()->format('Y-m-d') 
-                : $this->editEndDate;
+            // $endDate = $this->status === 'completed'
+            //     ? now()->format('Y-m-d') 
+            //     : $this->editEndDate;
     
             $cycle->update([
-                'microgreen_type' => $this->editMicrogreenType,
+                // 'microgreen_type' => $this->editMicrogreenType,
                 'start_date' => $this->editStartDate,
-                'end_date' => $endDate,
+                // 'end_date' => $endDate,
                 'trays' => $this->editTrays,
                 'phase' => $this->editPhase,
                 'notes' => $this->editNotes,
@@ -395,7 +401,7 @@ class CycleDetails extends Component
         $this->editCycleNo = "";
         $this->editStartDate = "";
         $this->editEndDate = "";
-        $this->editMicrogreenType = "";
+        // $this->editMicrogreenType = "";
         $this->editTrays = "";
         $this->editPhase = "";
         $this->editNotes = "";

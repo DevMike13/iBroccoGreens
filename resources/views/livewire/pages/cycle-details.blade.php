@@ -16,9 +16,10 @@
                                     <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Start Date</th>
                                     <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">End Date</th>
                                     <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Trays</th>
+                                    <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Days</th>
                                     <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Phase</th>
                                     {{-- <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Description</th> --}}
-                                    <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Status</th>
+                                    {{-- <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Status</th> --}}
                                     <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Action</th>
                                 </tr>
                             </thead>
@@ -48,8 +49,10 @@
                                         </td>
                                         {{-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">{{$cycle->description}}</td> --}}
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
-                                            {{-- {{ number_format($cycle->shrimp->shrimp_count) }} --}}
                                             {{ number_format($cycle->trays) }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
+                                            {{ \Carbon\Carbon::parse($cycle->start_date)->diffInDays(now()) }} day(s)
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200 capitalize">
                                             @if ($cycle->status == 'current')
@@ -58,7 +61,7 @@
                                                 Harvested
                                             @endif
                                         </td>
-                                        @if ($cycle->status == 'current')
+                                        {{-- @if ($cycle->status == 'current')
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
                                                 <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-green-500 text-white capitalize">{{$cycle->status}}</span>
                                             </td>
@@ -66,7 +69,7 @@
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
                                                 <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-teal-500 text-white capitalize">{{$cycle->status}}</span>
                                             </td>
-                                        @endif
+                                        @endif --}}
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                             <div class="hs-dropdown relative inline-flex">
                                                 <button id="hs-dropdown-default" type="button" class="hs-dropdown-toggle py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
@@ -218,7 +221,7 @@
                 <x-input right-icon="hashtag" label="Cycle No." placeholder="Ex: 1"  wire:model="cycleNo" disabled />
             </div>
             
-            <div class="mt-3">
+            {{-- <div class="mt-3">
                 <x-select
                     label="Select Microgreen Type"
                     placeholder="Select Microgreen Type"
@@ -230,7 +233,7 @@
                     <x-select.user-option src="https://images.pexels.com/photos/143133/pexels-photo-143133.jpeg" label="Carrot" value="Carrot" />
                     <x-select.user-option src="https://images.pexels.com/photos/1391505/pexels-photo-1391505.jpeg" label="Basil" value="Basil" />
                 </x-select>
-            </div>
+            </div> --}}
 
             <div class="mt-3">
                 <x-datetime-picker
