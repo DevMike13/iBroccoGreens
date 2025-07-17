@@ -13,9 +13,9 @@
 
 <div class="illustration-wrapper">
   @if (request()->is('ibroccogreens-admin/register'))
-      <img src="{{ asset('images/pana.png') }}" alt="" class="left-illustration-registration illustration-image">
+      <img src="{{ asset('images/BG3.png') }}" alt="" class="left-illustration-registration illustration-image">
   @else
-      <img src="{{ asset('images/Illustration-1.png') }}" alt="" class="left-illustration-login illustration-image">
+      <img src="{{ asset('images/BG1.png') }}" alt="" class="left-illustration-login illustration-image">
   @endif
 
   @for ($i = 0; $i < 20; $i++)
@@ -77,11 +77,13 @@ body {
 
     .illustration-image {
         position: absolute;
-        left: 100px;
-        top: 50px;
-        width: 350px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 400px;
         height: auto;
         z-index: 2;
+        border-radius: 200px;
         pointer-events: auto;
     }
 

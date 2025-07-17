@@ -52,7 +52,11 @@
                                             {{ number_format($cycle->trays) }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200 capitalize">
-                                            {{ $cycle->phase }}
+                                            @if ($cycle->status == 'current')
+                                                {{ $cycle->phase }}
+                                            @else
+                                                Harvested
+                                            @endif
                                         </td>
                                         @if ($cycle->status == 'current')
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
@@ -72,13 +76,15 @@
                                               
                                                 <div class="hs-dropdown-menu z-50 transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-60 bg-white shadow-md rounded-lg mt-2 dark:bg-neutral-800 dark:border dark:border-neutral-700 dark:divide-neutral-700 after:h-4 after:absolute after:-bottom-4 after:start-0 after:w-full before:h-4 before:absolute before:-top-4 before:start-0 before:w-full" role="menu" aria-orientation="vertical" aria-labelledby="hs-dropdown-default">
                                                     <div class="p-1 space-y-0.5">
-                                                        <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-blue-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700" href="#" wire:click="getSelectedCycle({{ $cycle->id }})" onclick="$openModal('editCycle')">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-                                                                <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                                                            </svg>
-                                                              
-                                                            Edit
-                                                        </a>
+                                                        @if ($cycle->status == 'current')
+                                                            <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-blue-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700" href="#" wire:click="getSelectedCycle({{ $cycle->id }})" onclick="$openModal('editCycle')">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                                                </svg>
+                                                                
+                                                                Edit
+                                                            </a>
+                                                        @endif
                                                         {{-- @if ($cycle->status == 'current' && $cycle->harvest == null)
                                                             <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-green-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700" href="#" wire:click="getSelectedHarvestCycle({{ $cycle->id }})" onclick="$openModal('harvestCycle')">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
@@ -109,13 +115,32 @@
         </div>
     </div>
 
-    <div class="w-full mt-10 border-2 border-dashed rounded-md py-5 px-5">
-        <div class="w-full flex justify-end items-center mb-3">
+    <div class="w-full mt-10 border-2 border-dashed rounded-md py-10 px-5">
+        <div class="w-full flex flex-col lg:flex-row justify-start items-center mb-3">
             @if($hasCycle)
                 <x-button icon="plus-sm" warning label="Create New Yield" onclick="$openModal('newYield')" wire:click="getCurrentCycleNumber"/>
             @else
                 <x-button icon="plus-sm" warning label="Create New Yield" wire:click="getCurrentCycleNumberError"/>
             @endif
+            <div class="ml-auto flex gap-3 items-center w-full max-w-lg mt-10 lg:mt-0">
+                <div class="flex-1 -mt-6">
+                    <x-native-select
+                        label="Select Cycle No."
+                        :options="$cycleNoOptions"
+                        option-label="name"
+                        option-value="id"
+                        wire:model.live="selectedCycleNoFilter"
+                    />
+                </div>
+            
+                {{-- <div class="flex-1">
+                    <x-button class="w-full" label="Apply Filter" wire:click="applyCycleFilter" />
+                </div> --}}
+            
+                <div class="flex-1">
+                    <x-button class="w-full" icon="chart-square-bar" zinc label="Show Graph" onclick="$openModal('graphModal')" wire:click="getCurrentCycleNumber" />
+                </div>
+            </div>
         </div>
         <div class="flex flex-col">
             <div class="-m-1.5 overflow-x-auto">
@@ -146,7 +171,7 @@
                                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
                                                 <p class="w-fit px-2">{{$yield->yield_per_tray}} g</p>
                                             </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">{{\Carbon\Carbon::parse($cycle->date)->format('M j, Y')}}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">{{\Carbon\Carbon::parse($yield->date)->format('M j, Y')}}</td>
                                             
                                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                                 <div class="hs-dropdown relative inline-flex">
@@ -157,7 +182,7 @@
                                                 
                                                     <div class="hs-dropdown-menu z-50 transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-60 bg-white shadow-md rounded-lg mt-2 dark:bg-neutral-800 dark:border dark:border-neutral-700 dark:divide-neutral-700 after:h-4 after:absolute after:-bottom-4 after:start-0 after:w-full before:h-4 before:absolute before:-top-4 before:start-0 before:w-full" role="menu" aria-orientation="vertical" aria-labelledby="hs-dropdown-default">
                                                         <div class="p-1 space-y-0.5">
-                                                            <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-blue-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700" href="#" onclick="$openModal('editYield')">
+                                                            <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-blue-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700" href="#" wire:click="getSelectedCycleYield({{ $yield->id }})" onclick="$openModal('editYield')">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
                                                                     <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                                                                 </svg>
@@ -165,7 +190,7 @@
                                                                 Edit
                                                             </a>
                                                             
-                                                            <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-red-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700" href="#">
+                                                            <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-red-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700" href="#" wire:click="deleteYieldConfirmation({{ $yield->id }}, {{ $yield->cycle_no }})">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
                                                                     <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
                                                                 </svg>                                                                  
@@ -236,6 +261,20 @@
             <div class="mt-3">
                 <x-inputs.number label="Number of Trays" wire:model="trays" />
             </div>
+
+            <div class="mt-3">
+                <x-select
+                    label="Select Phase"
+                    placeholder="Select one phase"
+                    :options="[
+                        ['name' => 'Germination',  'id' => 'germination'],
+                        ['name' => 'Growth Phase', 'id' => 'growth phase']
+                    ]"
+                    option-label="name"
+                    option-value="id"
+                    wire:model.defer="phase"
+                />
+            </div>
            
             <div class="mt-3">
                 <x-textarea label="Notes" placeholder="write cycle notes" wire:model="notes" />
@@ -287,10 +326,21 @@
             <div class="mt-3">
                 <x-inputs.number label="Number of Trays" wire:model="editTrays" />
             </div>
-            <div class="mt-3">
-                <x-inputs.number label="Expected Yield" wire:model="editExpectedYield" />
-            </div>
 
+            <div class="mt-3">
+                <x-select
+                    label="Select Phase"
+                    placeholder="Select one phase"
+                    :options="[
+                        ['name' => 'Germination',  'id' => 'germination'],
+                        ['name' => 'Growth Phase', 'id' => 'growth phase']
+                    ]"
+                    option-label="name"
+                    option-value="id"
+                    wire:model.defer="editPhase"
+                />
+            </div>
+            
             <div class="mt-3">
                 <x-textarea label="Notes" placeholder="write cycle notes" wire:model="editNotes" />
             </div>
@@ -353,13 +403,113 @@
 
     <x-modal blur name="editYield" persistent align="center" max-width="sm">
         <x-card title="Edit Yield">
-            
+            <div class="relative w-auto">
+                <span class="absolute left-[4.5rem] top-[0.10rem] text-xs italic text-green-400">(This will automatically fetch)</span>
+                <x-input right-icon="hashtag" label="Cycle No." placeholder="Ex: 1"  wire:model="editCycleNoYield" disabled />
+            </div>
+            <div class="mt-3">
+                <x-inputs.number label="Tray" wire:model="editTrayYield" />
+            </div>
+            <div class="relative w-auto mt-3">
+                <span class="absolute left-[6.5rem] top-[0.10rem] text-xs italic text-green-400">(Grams)</span>
+                <x-inputs.number label="Yield Per Tray" wire:model="editYieldPerTrayYield" />
+            </div>
+            <div class="mt-3">
+                <x-datetime-picker
+                    label="Date"
+                    placeholder="Date"
+                    parse-format="YYYY-MM-DD"
+                    display-format="MMMM DD, YYYY"
+                    wire:model.defer="editDateYield"
+                    without-tips
+                    :min="now()"
+                    without-time
+                />
+            </div>
             <x-slot name="footer" class="flex justify-end gap-x-4">
                 <div class="flex justify-end gap-x-4">
-                    <x-button flat label="Cancel" x-on:click="close" wire:click="cancelEdit" />
-                    <x-button primary label="Save" />
+                    <x-button flat label="Cancel" x-on:click="close" wire:click="cancelEditYield" />
+                    <x-button primary label="Save" wire:click="editYieldConfirmation({{ $selectedCycleYieldId }})" />
                 </div>
             </x-slot>
         </x-card>
     </x-modal>
+
+    <x-modal blur name="graphModal" persistent align="center" max-width="4xl">
+        <x-card title="">
+            <canvas id="yieldLineChart" class="w-[800px] h-[500px] "></canvas>
+            <x-slot name="footer" class="flex justify-end gap-x-4">
+                <div class="flex justify-end gap-x-4">
+                    <x-button flat label="Close" x-on:click="close" wire:click="closeGraphModal" />
+                </div>
+            </x-slot>
+        </x-card>
+    </x-modal>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        
+        const yieldData = @json($yieldLists);
+        
+        const labels = yieldData.map(item => {
+            const dateObj = new Date(item.date);
+            const formattedDate = dateObj.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+            return `${formattedDate} (Tray ${item.tray})`;
+        });
+        const yields = yieldData.map(item => item.yield_per_tray);
+        
+        const ctx = document.getElementById('yieldLineChart').getContext('2d');
+        
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Yield Per Tray',
+                    data: yields,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    fill: true,
+                    tension: 0.3,
+                    pointRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Yield Tracker Over Time'
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Date'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Yield (grams)'
+                        },
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+        Livewire.on('updateChart', (newGraphData) => {
+            yieldData = newGraphData;
+        });
+    </script>
+
+    
 </div>
