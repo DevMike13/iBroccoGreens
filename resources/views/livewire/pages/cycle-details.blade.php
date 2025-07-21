@@ -121,12 +121,13 @@
     <div class="w-full mt-10 border-2 border-dashed rounded-md py-10 px-5">
         <div class="w-full flex flex-col lg:flex-row justify-start items-center mb-3">
             @if($hasCycle)
-                <x-button icon="plus-sm" warning label="Create New Yield" onclick="$openModal('newYield')" wire:click="getCurrentCycleNumber"/>
+                <x-button icon="plus-sm" warning label="Add Yield" onclick="$openModal('newYield')" wire:click="getCurrentCycleNumber"/>
             @else
-                <x-button icon="plus-sm" warning label="Create New Yield" wire:click="getCurrentCycleNumberError"/>
+                <x-button icon="plus-sm" warning label="Add Yield" wire:click="getCurrentCycleNumberError"/>
             @endif
-            <div class="ml-auto flex gap-3 items-center w-full max-w-lg mt-10 lg:mt-0">
-                <div class="flex-1 -mt-6">
+            
+            <div class="ml-auto flex flex-col md:flex-row gap-3 items-center w-full max-w-lg mt-10 lg:mt-0">
+                <div class="flex-1 -mt-6 w-full">
                     <x-native-select
                         label="Select Cycle No."
                         :options="$cycleNoOptions"
@@ -139,8 +140,12 @@
                 {{-- <div class="flex-1">
                     <x-button class="w-full" label="Apply Filter" wire:click="applyCycleFilter" />
                 </div> --}}
+                <div class="flex-1 w-full">
+                    <x-button label="Export Excel" icon="document-download" primary wire:click="exportYieldsExcel"  class="w-full" />
+                    {{-- <x-button label="Export CSV" icon="document-download" wire:click="exportYieldsCsv" /> --}}
+                </div>
             
-                <div class="flex-1">
+                <div class="flex-1 w-full">
                     <x-button class="w-full" icon="chart-square-bar" zinc label="Show Graph" onclick="$openModal('graphModal')" wire:click="getCurrentCycleNumber" />
                 </div>
             </div>
@@ -371,7 +376,7 @@
 
     {{-- YIELD --}}
     <x-modal blur name="newYield" persistent align="center" max-width="sm">
-        <x-card title="Create New Yield">
+        <x-card title="Add Yield">
             <div class="relative w-auto">
                 <span class="absolute left-[4.5rem] top-[0.10rem] text-xs italic text-green-400">(This will automatically fetch)</span>
                 <x-input right-icon="hashtag" label="Cycle No." placeholder="Ex: 1"  wire:model="currentCycleNoForYield" disabled />

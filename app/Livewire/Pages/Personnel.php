@@ -148,7 +148,8 @@ class Personnel extends Component
 
     public function render()
     {
-        $personnelLists = User::where('role', 'user')->get();
+        // $personnelLists = User::where('role', 'user')->get();
+        $personnelLists = User::all();
         return view('livewire.pages.personnel', [
             'personnelLists' => $personnelLists
         ]);

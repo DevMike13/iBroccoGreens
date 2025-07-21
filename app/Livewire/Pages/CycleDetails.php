@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Pages;
 
+use App\Exports\FilteredYieldExport;
 use App\Models\Cycles;
 use App\Models\Harvests;
 use App\Models\Shrimps;
@@ -12,6 +13,7 @@ use Kreait\Firebase\Contract\Database;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Maatwebsite\Excel\Facades\Excel;
 use WireUi\Traits\Actions;
 
 class CycleDetails extends Component
@@ -500,7 +502,20 @@ class CycleDetails extends Component
             return response()->json(['error' => 'Error setting data: ' . $e->getMessage()], 500);
         }
     }
-    
+
+    public function exportYieldsExcel()
+    {
+        $cycleNo = $this->selectedCycleNoFilter ?? 'Unknown';
+        $date = Carbon::now()->format('Ymd_His');
+        $fileName = 'yield_cycle_' . $cycleNo . '_' . $date . '.xlsx';
+        return Excel::download(new FilteredYieldExport($this->filteredYieldLists), $fileName);
+    }
+
+    public function exportYieldsCsv()
+    {
+        return Excel::download(new FilteredYieldExport($this->filteredYieldLists), 'filtered_yields.csv', \Maatwebsite\Excel\Excel::CSV);
+    }
+        
     public function render()
     {
         $cycleLists = Cycles::orderBy('cycle_no', 'desc')->get();
