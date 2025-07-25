@@ -13,4 +13,6 @@ class CycleDetails extends Page
     protected static ?int $navigationSort = 3;
 
     protected static ?string $navigationLabel = 'Cultivation Cycles';
+    
+    protected static ?string $title = 'Cultivation Cycle';
 }

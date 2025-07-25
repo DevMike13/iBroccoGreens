@@ -22,6 +22,8 @@ class CycleDetails extends Component
     use WithPagination;
     protected Database $database;
 
+    public $activeTab = 'cycle';
+
     public $currentCycleNo;
     
     public $cycleNo;
@@ -65,8 +67,18 @@ class CycleDetails extends Component
 
     public $filteredYieldLists = [];
 
+    protected $queryString = ['activeTab'];
+
+    public function setActiveTab($tab)
+    {
+        $this->activeTab = $tab;
+        session(['activeTab' => $tab]);
+    }
+
     public function mount()
     {
+        $this->activeTab = session('activeTab', 'cycle');
+
         $latestCycle = Cycles::latest('cycle_no')->first();
 
         if ($latestCycle) {
