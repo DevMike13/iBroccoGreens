@@ -27,7 +27,7 @@
                 <div class="w-full h-auto flex flex-col mb-5">
                   <div class="w-full h-auto flex gap-5">
                     <div class="max-w-40 max-h-40">
-                      <img src="https://placehold.co/400" alt="" class="w-full h-auto">
+                      <img src="{{ asset('images/Ultrasonic.png') }}" alt="" class="w-full h-auto">
                     </div>
                     <div class="flex flex-col justify-center">
                       <h2 class="font-semibold">Ultrasonic Sensor</h2>
@@ -45,7 +45,7 @@
                 <div class="w-full h-auto flex flex-col mb-5">
                   <div class="w-full h-auto flex gap-5">
                     <div class="max-w-40 max-h-40">
-                      <img src="https://placehold.co/400" alt="" class="w-full h-auto">
+                      <img src="{{ asset('images/DHT11-Sensor.png') }}" alt="" class="w-full h-auto">
                     </div>
                     <div class="flex flex-col justify-center">
                       <h2 class="font-semibold">DHT22 - Temperature & Humidity Sensor</h2>
@@ -63,7 +63,7 @@
                 <div class="w-full h-auto flex flex-col mb-5">
                   <div class="w-full h-auto flex gap-5">
                     <div class="max-w-40 max-h-40">
-                      <img src="https://placehold.co/400" alt="" class="w-full h-auto">
+                      <img src="{{ asset('images/pH-450C_liquid_pH.png') }}" alt="" class="w-full h-auto">
                     </div>
                     <div class="flex flex-col justify-center">
                       <h2 class="font-semibold">pH-450C Liquid pH Sensor</h2>
@@ -80,7 +80,7 @@
                 <div class="w-full h-auto flex flex-col mb-5">
                   <div class="w-full h-auto flex gap-5">
                     <div class="max-w-40 max-h-40">
-                      <img src="https://placehold.co/400" alt="" class="w-full h-auto">
+                      <img src="{{ asset('images/Soil-Moisture-Sensor.png') }}" alt="" class="w-full h-auto">
                     </div>
                     <div class="flex flex-col justify-center">
                       <h2 class="font-semibold">Soil Moisture Sensor</h2>
@@ -98,7 +98,7 @@
                 <div class="w-full h-auto flex flex-col mb-5">
                   <div class="w-full h-auto flex gap-5">
                     <div class="max-w-40 max-h-40">
-                      <img src="https://placehold.co/400" alt="" class="w-full h-auto">
+                      <img src="{{ asset('images/Soil-pH-Sensor.png') }}" alt="" class="w-full h-auto">
                     </div>
                     <div class="flex flex-col justify-center">
                       <h2 class="font-semibold">RS485 Soil pH Sensor</h2>
@@ -116,25 +116,7 @@
                 <div class="w-full h-auto flex flex-col mb-5">
                   <div class="w-full h-auto flex gap-5">
                     <div class="max-w-40 max-h-40">
-                      <img src="https://placehold.co/400" alt="" class="w-full h-auto">
-                    </div>
-                    <div class="flex flex-col justify-center">
-                      <h2 class="font-semibold">RS485 Soil pH Sensor</h2>
-                      <ul class="ml-8">
-                        <li class="list-disc">Function: Monitors temperature and relative humidity to
-                          maintain optimal growing conditions.</li>
-                        <li class="list-disc">Troubleshooting Tip: Keep it away from moisture buildup or
-                          direct misting.                         
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="w-full h-auto flex flex-col mb-5">
-                  <div class="w-full h-auto flex gap-5">
-                    <div class="max-w-40 max-h-40">
-                      <img src="https://placehold.co/400" alt="" class="w-full h-auto">
+                      <img src="{{ asset('images/ESP8266-NodeMCU.png') }}" alt="" class="w-full h-auto">
                     </div>
                     <div class="flex flex-col justify-center">
                       <h2 class="font-semibold">ESP8266 Node MCU (Microcontroller)</h2>
@@ -226,7 +208,7 @@
                 <div class="w-full h-auto flex flex-col mb-5">
                   <div class="w-full h-auto flex gap-5">
                     <div class="max-w-40 max-h-40">
-                      <img src="https://placehold.co/400" alt="" class="w-full h-auto">
+                      <img src="{{ asset('images/Grow-Light.png') }}" alt="" class="w-full h-auto">
                     </div>
                     <div class="flex flex-col justify-center">
                       <h2 class="font-semibold">Grow Light</h2>
