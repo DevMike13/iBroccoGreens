@@ -1,6 +1,8 @@
-<div class="flex flex-col md:flex-row w-full h-screen bg-gradient-to-r lg:pt-0 md:pt-10 from-gray-200 to-white relative overflow-hidden">
-    <div class="w-full max-w-[1020px] h-full flex flex-col-reverse lg:flex-row mx-auto overflow-hidden">
-        <div class="w-full h-full flex flex-col lg:justify-center px-5 md:px-0 gap-5 relative z-10">
+<div class="flex flex-col md:flex-row w-full h-auto lg:h-screen bg-gradient-to-r lg:pt-0 md:pt-10 from-gray-200 to-white relative overflow-hidden">
+    <div class="w-full max-w-[1020px] flex flex-col items-center lg:flex-row mx-auto relative h-screen">
+        
+        <!-- Text content -->
+        <div class="w-full flex flex-col lg:justify-center px-5 md:px-0 gap-5 relative z-10 py-10">
             <h1 class="text-3xl text-center lg:text-left md:text-5xl font-bold">iBroccoGreens</h1>
             <p class="text-lg text-center lg:text-left">iBroccoGreens - Web-Based Monitoring System</p>
             <a href="ibroccogreens-admin/register" class="mx-auto lg:mx-0">
@@ -10,11 +12,10 @@
             </a>
         </div>
 
-        <div class="w-full my-20 lg:mb-0 lg:w-[70%] pointer-events-none z-0 relative md:absolute md:bottom-20 md:-right-[200px]">
-            <img src="{{ asset('images/BG2.png') }}" alt="" class="h-auto" style="width: 150%;">
-            <div class="absolute bottom-0 left-[330px] w-[37%] h-16 bg-gradient-to-t from-white to-transparent rounded-2xl"></div>
+        <!-- Image: Static on mobile, centered on lg -->
+        <div class="w-full my-10 lg:my-0 lg:w-[800px] pointer-events-none z-0 relative lg:absolute lg:top-1/2 lg:-translate-y-1/2 lg:-right-[260px]">
+            <img src="{{ asset('images/bg-new.png') }}" alt="" class="h-auto mx-auto lg:mx-0" style="width: 130%;">
         </div>
-        
-        
+
     </div>
 </div>

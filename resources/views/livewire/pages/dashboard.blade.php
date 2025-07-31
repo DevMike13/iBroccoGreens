@@ -47,7 +47,7 @@
 
             <div class="h-full flex flex-col justify-between bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
                 <div class="flex justify-center items-center w-full pt-5">
-                   <img src="{{ asset('images/PH.png') }}" alt="">
+                   <img src="{{ asset('images/soil-ph-icon.jpeg') }}" alt="" class="w-16 h-16">
                 </div>
                 <div class="p-4 md:p-5">
                     <div class="flex flex-col justify-center items-center gap-4">
@@ -75,7 +75,7 @@
 
             <div class="h-full flex flex-col justify-between bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
                 <div class="flex justify-center items-center w-full pt-5">
-                   <img src="{{ asset('images/PH-Water.png') }}" alt="">
+                   <img src="{{ asset('images/water-ph-icon.jpeg') }}" alt="" class="w-16 h-16">
                 </div>
                 <div class="p-4 md:p-5">
                     <div class="flex flex-col justify-center items-center gap-4">
@@ -105,7 +105,7 @@
 
             <div class="h-full flex flex-col justify-between bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
                 <div class="flex justify-center items-center w-full pt-5">
-                   <img src="{{ asset('images/Hygrometer.png') }}" alt="">
+                   <img src="{{ asset('images/humidity-icon.png') }}" alt="" class="w-16 h-16">
                 </div>
                 <div class="p-4 md:p-5">
                     <div class="flex flex-col justify-center items-center gap-4">
@@ -125,7 +125,7 @@
             <div class="w-full lg:w-1/2 flex flex-row justify-start items-center bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
                 <div class="flex justify-start items-center gap-3">
                     <div class="w-10 h-10 flex justify-center items-center">
-                        <img src="{{ asset('images/Fan Speed.png') }}" alt="" class="w-full h-auto">
+                        <img src="{{ asset('images/fan-icon.png') }}" alt="" class="w-full h-auto">
                     </div>
                     <p>Fan</p>
                 </div>
@@ -136,7 +136,7 @@
             <div class="w-full lg:w-1/2 flex flex-row justify-start items-center bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
                 <div class="flex justify-start items-center gap-3">
                     <div class="w-10 h-10 flex justify-center items-center">
-                        <img src="{{ asset('images/Wet.png') }}" alt="" class="w-full h-auto">
+                        <img src="{{ asset('images/misting-icon.png') }}" alt="" class="w-full h-auto">
                     </div>
                     <p>Misting System</p>
                 </div>
@@ -150,7 +150,7 @@
             <div class="w-full lg:w-1/2 flex flex-row justify-start items-center bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
                 <div class="flex justify-start items-center gap-3">
                     <div class="w-10 h-10 flex justify-center items-center">
-                        <img src="{{ asset('images/Light.png') }}" alt="" class="w-full h-auto">
+                        <img src="{{ asset('images/light-icon.png') }}" alt="" class="w-full h-auto">
                     </div>
                     <p>Lights</p>
                 </div>
@@ -161,7 +161,7 @@
             <div class="w-full lg:w-1/2 flex flex-row justify-start items-center bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
                 <div class="flex justify-start items-center gap-3">
                     <div class="w-10 h-10 flex justify-center items-center">
-                        <img src="{{ asset('images/Water.png') }}" alt="" class="w-full h-auto">
+                        <img src="{{ asset('images/water-level-icon.png') }}" alt="" class="w-full h-auto">
                     </div>
                     <p>Water Level</p>
                 </div>
