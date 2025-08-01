@@ -499,7 +499,7 @@
         const ctx = document.getElementById('yieldLineChart').getContext('2d');
         
         new Chart(ctx, {
-            type: 'bar',
+            type: 'line',
             data: {
                 labels: labels,
                 datasets: [{

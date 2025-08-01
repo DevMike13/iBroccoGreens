@@ -2,6 +2,8 @@
 
 namespace App\Filament\Pages\Auth;
 
+use App\Mail\SendOtpMail;
+use App\Models\User;
 use Filament\Forms\Components\Actions;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Pages\Page;
@@ -16,11 +18,18 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\HtmlString;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Section;
+use Filament\Http\Responses\Auth\Contracts\RegistrationResponse;
+use Filament\Notifications\Notification;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redirect;
 
 class Register extends BaseRegister
 {
     public $showingTermsModal = false;
-
+    
     protected function getForms(): array
     {
         return [
@@ -73,6 +82,54 @@ class Register extends BaseRegister
     public function openTermsModal(): void
     {
         $this->showingTermsModal = true;
+    }
+
+    public function register(): ?RegistrationResponse
+    {
+        $data = $this->form->getState();
+
+        DB::beginTransaction();
+
+        try {
+            $data = $this->mutateFormDataBeforeCreate($data);
+
+            // dd($data['password']);
+
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => $data['password'],
+                'role' => 'user',
+            ]);
+
+            $otp = rand(100000, 999999);
+            $user->update([
+                'otp_code' => $otp,
+                'otp_expires_at' => now()->addMinutes(10),
+            ]);
+
+            Mail::to($user->email)->send(new SendOtpMail($otp));
+
+            DB::commit();
+
+            Auth::logout();
+
+            // Manual redirect
+            Redirect::to(route('otp.verify', ['email' => $user->email]))->send();
+
+            // ✅ Add this to fix your error
+            return null;
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            Log::error('Registration error', ['error' => $e]);
+            // Notification::make()
+            //     ->title('Registration failed')
+            //     ->body('Something went wrong. Please try again.')
+            //     ->danger()
+            //     ->send();
+
+            return null;
+        }
     }
 
     protected function mutateFormDataBeforeCreate(array $data): array

@@ -19,7 +19,7 @@
         <div class="grid grid-cols-3 gap-2 w-full place-items-stretch">
             <div class="h-full flex flex-col justify-between bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
                 <div class="flex justify-center items-center w-full pt-5">
-                   <img src="{{ asset('images/Moisture.png') }}" alt="">
+                   <img src="{{ asset('images/soil-moisture-icon.png') }}" alt="" class="w-16 h-16">
                 </div>
                 <div class="p-4 md:p-5">
                     <div class="flex flex-col justify-center items-center gap-4">
@@ -91,7 +91,7 @@
 
             <div class="h-full flex flex-col justify-between bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
                 <div class="flex justify-center items-center w-full pt-5">
-                   <img src="{{ asset('images/Temperature.png') }}" alt="">
+                   <img src="{{ asset('images/temperature-icon.png') }}" alt="" class="w-16 h-16">
                 </div>
                 <div class="p-4 md:p-5">
                     <div class="flex flex-col justify-center items-center gap-4">
@@ -130,7 +130,8 @@
                     <p>Fan</p>
                 </div>
                 <div class="ml-auto">
-                    <x-toggle wire:model="isActiveFan" lg wire:click="toggleFan" />
+                    {{-- <x-toggle wire:model="isActiveFan" lg wire:click="toggleFan" /> --}}
+                    <p>{{ $fanState }}</p>
                 </div>
             </div>
             <div class="w-full lg:w-1/2 flex flex-row justify-start items-center bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
@@ -155,7 +156,8 @@
                     <p>Lights</p>
                 </div>
                 <div class="ml-auto">
-                    <x-toggle wire:model.defer="isActiveLight" lg wire:click="toggleLight" />
+                    {{-- <x-toggle wire:model.defer="isActiveLight" lg wire:click="toggleLight" /> --}}
+                    <p>{{ $lightState }}</p>
                 </div>
             </div>
             <div class="w-full lg:w-1/2 flex flex-row justify-start items-center bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">

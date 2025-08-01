@@ -37,7 +37,7 @@ class PondguardAdminPanelProvider extends PanelProvider
             ->login()
             ->registration(Register::class)
             ->passwordReset()
-            ->emailVerification()
+            // ->emailVerification()
             ->profile()
             ->brandLogo(asset('images/iBroccoGreensLogo.png'))
             ->favicon(asset('favicon.ico'))

@@ -11,6 +11,7 @@
         "dutchcodingcompany/filament-socialite": "^2.4",
         "filament/filament": "^3.2",
         "guzzlehttp/guzzle": "^7.9",
+        "hasan-ahani/filament-otp-input": "^1.0",
         "kreait/firebase-php": "^7.15",
         "kreait/laravel-firebase": "^5.9",
         "laravel/framework": "^10.0",

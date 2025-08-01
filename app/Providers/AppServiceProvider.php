@@ -43,7 +43,18 @@ class AppServiceProvider extends ServiceProvider
             PanelsRenderHook::USER_MENU_BEFORE,
             fn (): string => Blade::render('<livewire:components.notification-bell />')
         );
-        
+
+        FilamentView::registerRenderHook(
+            PanelsRenderHook::USER_MENU_BEFORE,
+            fn (): string => '<span class="inline-flex items-center rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-800 dark:bg-green-300 dark:text-green-800">'
+            . ucfirst(auth()->user()?->role ?? 'User') .
+        '</span>'
+        );
+
+        FilamentView::registerRenderHook(
+            PanelsRenderHook::AUTH_LOGIN_FORM_BEFORE,
+            fn (): string => Blade::render('<livewire:verify-account-button />'),
+        );
 
         // FilamentView::registerRenderHook(
         //     PanelsRenderHook::USER_MENU_BEFORE,

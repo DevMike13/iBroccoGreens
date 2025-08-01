@@ -10,7 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Filament\Panel;
 
-class User extends Authenticatable implements MustVerifyEmail, FilamentUser
+class User extends Authenticatable implements FilamentUser
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -24,7 +24,10 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
         'email',
         'password',
         'role',
-        'status'
+        'status',
+        'otp_code',
+        'otp_expires_at',
+        'otp_verified_at'
     ];
 
     /**
@@ -48,7 +51,7 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
 
     public function canAccessPanel(Panel $panel): bool
     {
-        return $this->status === 'Active';
+        return $this->status === 'Active' && $this->email_verified_at !== null;
     }
 
     // public function canAccessPanel(Panel $panel): bool
