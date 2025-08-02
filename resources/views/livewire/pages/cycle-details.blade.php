@@ -74,7 +74,15 @@
                                                     {{ number_format($cycle->trays) }}
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
-                                                    {{ \Carbon\Carbon::parse($cycle->start_date)->diffInDays(now()) }} day(s)
+                                                    @php
+                                                        $start = \Carbon\Carbon::parse($cycle->start_date);
+                                                        $end = \Carbon\Carbon::parse($cycle->end_date);
+                                                        $days = $start->diffInDays($end);
+                                                    @endphp
+
+                                                    @if ($days === 7)
+                                                        {{ $days }} day(s)
+                                                    @endif
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200 capitalize">
                                                     @if ($cycle->status == 'current')
