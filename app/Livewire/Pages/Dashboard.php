@@ -34,11 +34,14 @@ class Dashboard extends Component
     public $lightState;
     public bool $isActiveLight;
 
-    public $mistingSystemData;
+    public $mistingData;
+    public $mistingDataB2;
+    public $mistingDataB3;
+    public $mistingDataB4;
     public $waterLevelData;
 
     #[Url()]
-    public $selectedBoard = 'B1';
+    public $selectedBoard;
 
     protected $listeners = [
         'updateSoilMoistureLevel' => 'handleSoilMoistureLevelUpdate',
@@ -54,7 +57,10 @@ class Dashboard extends Component
         'updateHumidityLevel' => 'handleHumidityLevelUpdate',
         'updateFanState' => 'handleFanStateUpdate',
         'updateLightState' => 'handleLightStateUpdate',
-        'updateMistingSystem' => 'handleMistingSystemUpdate',
+        'updateMisting' => 'handleMistingUpdate',
+        'updateMistingB2' => 'handleMistingB2Update',
+        'updateMistingB3' => 'handleMistingB3Update',
+        'updateMistingB4' => 'handleMistingB4Update',
         'updateWaterLevel' => 'handleWaterLevelUpdate',
     ];
 
@@ -66,6 +72,7 @@ class Dashboard extends Component
     public function mount(Database $database)
     {
         $this->database = $database;
+        $this->selectedBoard = "B1";
         $this->fetchData();
         // $this->getFanState();
         // $this->getPhLevelDataForCurrentWeek();
@@ -240,10 +247,25 @@ class Dashboard extends Component
             $snapshotLightState = $referenceLightState->getSnapshot();
             $this->lightState = $snapshotLightState->getValue();
 
-            // MISTING SYSTEM
-            $referenceMistingSystem = $this->database->getReference('System/MistingSystem');
-            $snapshotMistingSystem = $referenceMistingSystem->getSnapshot();
-            $this->mistingSystemData = $snapshotMistingSystem->getValue();
+            // MISTING SYSTEM B1
+            $referenceMisting = $this->database->getReference('B1/Misting');
+            $snapshotMisting = $referenceMisting->getSnapshot();
+            $this->mistingData = $snapshotMisting->getValue();
+
+            // MISTING SYSTEM B2
+            $referenceMistingB2 = $this->database->getReference('B2/Misting');
+            $snapshotMistingB2 = $referenceMistingB2->getSnapshot();
+            $this->mistingDataB2 = $snapshotMistingB2->getValue();
+
+            // MISTING SYSTEM B3
+            $referenceMistingB3 = $this->database->getReference('B3/Misting');
+            $snapshotMistingB3 = $referenceMistingB3->getSnapshot();
+            $this->mistingDataB3 = $snapshotMistingB3->getValue();
+
+            // MISTING SYSTEM B4
+            $referenceMistingB4 = $this->database->getReference('B4/Misting');
+            $snapshotMistingB4 = $referenceMistingB4->getSnapshot();
+            $this->mistingDataB4 = $snapshotMistingB4->getValue();
 
             // WATER LEVEL
             $referenceWaterLevel = $this->database->getReference('System/WaterLevel');
@@ -423,9 +445,24 @@ class Dashboard extends Component
         // $this->isActiveFan = $fanState === 'ON';
     }
 
-    public function handleMistingSystemUpdate($mistingSystem)
+    public function handleMistingUpdate($mistingB1)
     {
-        $this->mistingSystemData = $mistingSystem;
+        $this->mistingData = $mistingB1;
+    }
+
+    public function handleMistingB2Update($mistingB2)
+    {
+        $this->mistingDataB2 = $mistingB2;
+    }
+
+    public function handleMistingB3Update($mistingB3)
+    {
+        $this->mistingDataB3 = $mistingB3;
+    }
+
+    public function handleMistingB4Update($mistingB4)
+    {
+        $this->mistingDataB4 = $mistingB4;
     }
 
     public function handleWaterLevelUpdate($waterLevel)
@@ -449,7 +486,7 @@ class Dashboard extends Component
             'fanState' => $this->fanState,
             'lightState' => $this->lightState,
             'humidity' => $this->humidityData,
-            'mistingSystem' => $this->mistingSystemData,
+            'mistingSystem' => $this->mistingData,
             'waterLevel' => $this->waterLevelData,
         ]);
     }

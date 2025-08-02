@@ -1,8 +1,8 @@
 <div>
     <div class="w-full max-w-sm mb-3 ml-auto">
-        <x-select
+        <x-native-select
             label="Tray Number"
-            placeholder="Select tray number"
+            {{-- placeholder="Select tray number" --}}
             {{-- :options="['B1', 'B2', 'B3', 'B4']" --}}
             :options="[
                 ['name' => 'Tray 1',  'id' => 'B1'],
@@ -142,7 +142,15 @@
                     <p>Misting System</p>
                 </div>
                 <div class="ml-auto">
-                    <p>{{ $mistingSystemData }}</p>
+                    @if ($selectedBoard == 'B1')
+                        <p>{{ $mistingData }}</p>
+                    @elseif($selectedBoard == 'B2')
+                        <p>{{ $mistingDataB2 }}</p>
+                    @elseif($selectedBoard == 'B3')
+                        <p>{{ $mistingDataB3 }}</p>
+                    @elseif($selectedBoard == 'B4')
+                        <p>{{ $mistingDataB4 }}</p>
+                    @endif
                 </div>
             </div>
         </div>

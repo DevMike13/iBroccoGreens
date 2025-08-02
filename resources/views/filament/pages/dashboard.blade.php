@@ -257,12 +257,36 @@
                 Livewire.dispatch('updateLightState', { lightState });
             });
 
-            // Listen to Misting System
-            const mistingSystemRef = ref(database, 'System/MistingSystem');
-            onValue(mistingSystemRef, (snapshot) => {
-                const mistingSystem = snapshot.val();
-                console.log('Misting System: ', mistingSystem);
-                Livewire.dispatch('updateMistingSystem', { mistingSystem });
+            // Listen to Misting B1
+            const mistingRef = ref(database, 'B1/Misting');
+            onValue(mistingRef, (snapshot) => {
+                const mistingB1 = snapshot.val();
+                console.log('Misting B1: ', mistingB1);
+                Livewire.dispatch('updateMisting', { mistingB1 });
+            });
+
+            // Listen to Misting B2
+            const mistingB2Ref = ref(database, 'B2/Misting');
+            onValue(mistingB2Ref, (snapshot) => {
+                const mistingB2 = snapshot.val();
+                console.log('Misting B2: ', mistingB2);
+                Livewire.dispatch('updateMistingB2', { mistingB2 });
+            });
+
+            // Listen to Misting B3
+            const mistingB3Ref = ref(database, 'B3/Misting');
+            onValue(mistingB3Ref, (snapshot) => {
+                const mistingB3 = snapshot.val();
+                console.log('Misting B3: ', mistingB3);
+                Livewire.dispatch('updateMistingB3', { mistingB3 });
+            });
+
+            // Listen to Misting B4
+            const mistingB4Ref = ref(database, 'B4/Misting');
+            onValue(mistingB4Ref, (snapshot) => {
+                const mistingB4 = snapshot.val();
+                console.log('Misting B4: ', mistingB4);
+                Livewire.dispatch('updateMistingB4', { mistingB4 });
             });
 
             // Listen to Water Level
