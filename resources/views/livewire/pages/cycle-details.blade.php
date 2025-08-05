@@ -76,20 +76,17 @@
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
                                                     @php
                                                         $start = \Carbon\Carbon::parse($cycle->start_date);
-                                                        $end = \Carbon\Carbon::parse($cycle->end_date);
-                                                        $days = $start->diffInDays($end);
+                                                        $today = \Carbon\Carbon::today();
+                                                        $daysSinceStart = $start->diffInDays($today);
+                                                        $cappedDays = min($daysSinceStart, 7); // cap at 7
                                                     @endphp
 
-                                                    @if ($days === 7)
-                                                        {{ $days }} day(s)
-                                                    @endif
+                                                    {{ $cappedDays }} day(s)
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200 capitalize">
-                                                    @if ($cycle->status == 'current')
+                                                    {{-- @if ($cycle->status == 'current') --}}
                                                         {{ $cycle->phase }}
-                                                    @else
-                                                        Harvested
-                                                    @endif
+                                                    {{-- @endif --}}
                                                 </td>
                                                 {{-- @if ($cycle->status == 'current')
                                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">

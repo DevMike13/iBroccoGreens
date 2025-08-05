@@ -164,8 +164,7 @@ class CycleDetails extends Component
             'startDate' => 'required|date',
             // 'microgreenType' => 'required',
             'phase' => 'required',
-            'trays' => 'required|integer',
-            'notes' => 'required',
+            'trays' => 'required|integer'
         ]);
 
         if ($this->cycleNo > 1) {
