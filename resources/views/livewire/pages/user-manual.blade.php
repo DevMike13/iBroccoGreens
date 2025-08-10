@@ -1,16 +1,16 @@
 <div>
     <div class="border-b border-gray-200 dark:border-neutral-700">
-        <nav class="-mb-0.5 flex justify-center gap-x-6" aria-label="Tabs" role="tablist" aria-orientation="horizontal">
-          <button type="button" class="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-1 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:text-blue-500 active" id="horizontal-alignment-item-1" aria-selected="true" data-hs-tab="#horizontal-alignment-1" aria-controls="horizontal-alignment-1" role="tab">
-            Hardware Tutorial
-          </button>
-          <button type="button" class="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-1 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:text-blue-500" id="horizontal-alignment-item-2" aria-selected="false" data-hs-tab="#horizontal-alignment-2" aria-controls="horizontal-alignment-2" role="tab">
-            Web Interface Tutorial
-          </button>
-        </nav>
-      </div>
+      <nav class="-mb-0.5 flex justify-center gap-x-6" aria-label="Tabs" role="tablist" aria-orientation="horizontal">
+        <button type="button" class="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-1 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:text-blue-500 active" id="horizontal-alignment-item-1" aria-selected="true" data-hs-tab="#horizontal-alignment-1" aria-controls="horizontal-alignment-1" role="tab">
+          Hardware Tutorial
+        </button>
+        <button type="button" class="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-1 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-none focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:text-blue-500" id="horizontal-alignment-item-2" aria-selected="false" data-hs-tab="#horizontal-alignment-2" aria-controls="horizontal-alignment-2" role="tab">
+          Web Interface Tutorial
+        </button>
+      </nav>
+    </div>
       
-      <div class="mt-3">
+    <div class="mt-3">
         <div id="horizontal-alignment-1" role="tabpanel" aria-labelledby="horizontal-alignment-item-1">
           <div class="hs-accordion-group">
             <div class="hs-accordion" id="hs-basic-with-title-and-arrow-stretched-heading-one">
@@ -24,18 +24,19 @@
                 </svg>
               </button>
               <div id="hs-basic-with-title-and-arrow-stretched-collapse-one" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" role="region" aria-labelledby="hs-basic-with-title-and-arrow-stretched-heading-one">
+                
                 <div class="w-full h-auto flex flex-col mb-5">
                   <div class="w-full h-auto flex gap-5">
                     <div class="max-w-40 max-h-40">
-                      <img src="{{ asset('images/Ultrasonic.png') }}" alt="" class="w-full h-auto">
+                      <img src="{{ asset('images/12V Air Circulation DC Fan.png') }}" alt="" class="w-full h-auto">
                     </div>
                     <div class="flex flex-col justify-center">
-                      <h2 class="font-semibold">Ultrasonic Sensor</h2>
+                      <h2 class="font-semibold">12V Air Circulation DC Fan</h2>
                       <ul class="ml-8">
-                        <li class="list-disc">Function: Measures the water level in the tank using
-                          ultrasonic sound waves.</li>
-                        <li class="list-disc">Troubleshooting Tip: If readings are unstable, ensure the
-                          sensor surface is clean and unobstructed.
+                        <li class="list-disc">Function: Provides airflow and ventilation to reduce humidity
+                          and heat buildup around plants.</li>
+                        <li class="list-disc">Troubleshooting Tip: Clean the fan blades and check the
+                          power connection if the fan stops or weakens.
                         </li>
                       </ul>
                     </div>
@@ -45,15 +46,15 @@
                 <div class="w-full h-auto flex flex-col mb-5">
                   <div class="w-full h-auto flex gap-5">
                     <div class="max-w-40 max-h-40">
-                      <img src="{{ asset('images/DHT11-Sensor.png') }}" alt="" class="w-full h-auto">
+                      <img src="{{ asset('images/100W Full Spectrum Sunshine.png') }}" alt="" class="w-full h-auto">
                     </div>
                     <div class="flex flex-col justify-center">
-                      <h2 class="font-semibold">DHT22 - Temperature & Humidity Sensor</h2>
+                      <h2 class="font-semibold">100W Full Spectrum Sunshine</h2>
                       <ul class="ml-8">
-                        <li class="list-disc">Function: Monitors temperature and relative humidity
-                          to maintain optimal growing conditions.</li>
-                        <li class="list-disc">Troubleshooting Tip: Keep it away from moisture
-                          buildup or direct misting.
+                        <li class="list-disc">Function: Mimics natural sunlight to promote
+                          photosynthesis and healthy plant growth.</li>
+                        <li class="list-disc">Troubleshooting Tip: Ensure proper placement to avoid
+                          overheating nearby components.                          
                         </li>
                       </ul>
                     </div>
@@ -63,14 +64,15 @@
                 <div class="w-full h-auto flex flex-col mb-5">
                   <div class="w-full h-auto flex gap-5">
                     <div class="max-w-40 max-h-40">
-                      <img src="{{ asset('images/pH-450C_liquid_pH.png') }}" alt="" class="w-full h-auto">
+                      <img src="{{ asset('images/Capacitive Soil Moisture Sensor.png') }}" alt="" class="w-full h-auto">
                     </div>
                     <div class="flex flex-col justify-center">
-                      <h2 class="font-semibold">pH-450C Liquid pH Sensor</h2>
+                      <h2 class="font-semibold">Capacitive Soil Moisture Sensor</h2>
                       <ul class="ml-8">
-                        <li class="list-disc">Function: Measures the pH level of the nutrient water
-                          solution in real time.</li>
-                        <li class="list-disc">Troubleshooting Tip: Regular calibration and cleaning are recommended for accuracy.
+                        <li class="list-disc">Function: Detects soil moisture levels without corrosion-prone
+                          metal parts, giving more accurate and long-lasting readings.</li>
+                        <li class="list-disc">Troubleshooting Tip: Ensure proper insertion into the soil and
+                          keep the sensor clean and dry at the connector area.                                                    
                         </li>
                       </ul>
                     </div>
@@ -80,15 +82,15 @@
                 <div class="w-full h-auto flex flex-col mb-5">
                   <div class="w-full h-auto flex gap-5">
                     <div class="max-w-40 max-h-40">
-                      <img src="{{ asset('images/Soil-Moisture-Sensor.png') }}" alt="" class="w-full h-auto">
+                      <img src="{{ asset('images/DHT11 Temp and Humidity Sensor.png') }}" alt="" class="w-full h-auto">
                     </div>
                     <div class="flex flex-col justify-center">
-                      <h2 class="font-semibold">Soil Moisture Sensor</h2>
+                      <h2 class="font-semibold">DHT11 - Temperature & Humidity Sensor</h2>
                       <ul class="ml-8">
-                        <li class="list-disc">Function: Detects the amount of water in the growing
-                          medium to guide watering schedules.</li>
-                        <li class="list-disc">Troubleshooting Tip: Ensure stable insertion and watch for
-                          rust or corrosion on probes.                          
+                        <li class="list-disc">Function: Tracks the temperature and relative humidity of
+                          the environment to ensure optimal plant conditions.</li>
+                        <li class="list-disc">Troubleshooting Tip: Keep away from direct misting or
+                          moisture to avoid inaccurate readings.                          
                         </li>
                       </ul>
                     </div>
@@ -98,15 +100,55 @@
                 <div class="w-full h-auto flex flex-col mb-5">
                   <div class="w-full h-auto flex gap-5">
                     <div class="max-w-40 max-h-40">
-                      <img src="{{ asset('images/Soil-pH-Sensor.png') }}" alt="" class="w-full h-auto">
+                      <img src="{{ asset('images/HCSR04 Ultrasonic Sensor.png') }}" alt="" class="w-full h-auto">
+                    </div>
+                    <div class="flex flex-col justify-center">
+                      <h2 class="font-semibold">HCSR04 Ultrasonic Sensor</h2>
+                      <ul class="ml-8">
+                        <li class="list-disc">Function: Measures water level by emitting ultrasonic
+                          waves and calculating distance based on the time it
+                          takes for the echo to return.</li>
+                        <li class="list-disc">Troubleshooting Tip: Make sure the sensor has a clear
+                          path and is free from dust, condensation, or water
+                          splashes.                          
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="w-full h-auto flex flex-col mb-5">
+                  <div class="w-full h-auto flex gap-5">
+                    <div class="max-w-40 max-h-40">
+                      <img src="{{ asset('images/Liquid pH Sensor.png') }}" alt="" class="w-full h-auto">
+                    </div>
+                    <div class="flex flex-col justify-center">
+                      <h2 class="font-semibold">pH-4502C Liquid pH Sensor</h2>
+                      <ul class="ml-8">
+                        <li class="list-disc">Function: Monitors the pH level of water or nutrient solutions in
+                          real time for proper plant nutrient absorption.</li>
+                        <li class="list-disc">Troubleshooting Tip: Calibrate using buffer solutions and
+                          clean the sensor tip gently to maintain accuracy.
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="w-full h-auto flex flex-col mb-5">
+                  <div class="w-full h-auto flex gap-5">
+                    <div class="max-w-40 max-h-40">
+                      <img src="{{ asset('images/RS485 Soil pH Sensor.png') }}" alt="" class="w-full h-auto">
                     </div>
                     <div class="flex flex-col justify-center">
                       <h2 class="font-semibold">RS485 Soil pH Sensor</h2>
                       <ul class="ml-8">
-                        <li class="list-disc">Function: Monitors temperature and relative humidity to
-                          maintain optimal growing conditions.</li>
-                        <li class="list-disc">Troubleshooting Tip: Keep it away from moisture buildup or
-                          direct misting.                         
+                        <li class="list-disc">Function: Measures soil acidity or alkalinity using RS485
+                          communication for reliable and long-distance data
+                          transmission.
+                        </li>
+                        <li class="list-disc">Troubleshooting Tip: Calibrate regularly and clean the
+                          sensor probe to avoid buildup that may affect accuracy.                         
                         </li>
                       </ul>
                     </div>
@@ -116,15 +158,14 @@
                 <div class="w-full h-auto flex flex-col mb-5">
                   <div class="w-full h-auto flex gap-5">
                     <div class="max-w-40 max-h-40">
-                      <img src="{{ asset('images/ESP8266-NodeMCU.png') }}" alt="" class="w-full h-auto">
+                      <img src="{{ asset('images/1 Channel 5V Relay.png') }}" alt="" class="w-full h-auto">
                     </div>
                     <div class="flex flex-col justify-center">
-                      <h2 class="font-semibold">ESP8266 Node MCU (Microcontroller)</h2>
+                      <h2 class="font-semibold">1 Channel 5V Relay</h2>
                       <ul class="ml-8">
-                        <li class="list-disc">Function: Serves as the main controller that gathers sensor
-                          data and transmits it to the web system via Wi-Fi.</li>
-                        <li class="list-disc">Troubleshooting Tip: Restart if the system becomes
-                          unresponsive or disconnects from the internet.                         
+                        <li class="list-disc">Function: Acts as a switch to control high-power
+                          devices like pumps or lights using
+                          microcontroller signals.                          
                         </li>
                       </ul>
                     </div>
@@ -134,16 +175,14 @@
                 <div class="w-full h-auto flex flex-col mb-5">
                   <div class="w-full h-auto flex gap-5">
                     <div class="max-w-40 max-h-40">
-                      <img src="https://placehold.co/400" alt="" class="w-full h-auto">
+                      <img src="{{ asset('images/Buck-Converter.png') }}" alt="" class="w-full h-auto">
                     </div>
                     <div class="flex flex-col justify-center">
-                      <h2 class="font-semibold">Water Pump</h2>
+                      <h2 class="font-semibold">Buck Converter</h2>
                       <ul class="ml-8">
-                        <li class="list-disc">Function: Automatically delivers water or nutrient solution to
-                          the grow trays based on moisture readings.
-                          </li>
-                        <li class="list-disc">Troubleshooting Tip: Check for clogging or wiring issues if
-                          flow stops.                        
+                        <li class="list-disc">Function: Steps down a higher voltage to a lower
+                          voltage efficiently, useful for matching the voltage
+                          requirement of components.                                                   
                         </li>
                       </ul>
                     </div>
@@ -153,15 +192,14 @@
                 <div class="w-full h-auto flex flex-col mb-5">
                   <div class="w-full h-auto flex gap-5">
                     <div class="max-w-40 max-h-40">
-                      <img src="https://placehold.co/400" alt="" class="w-full h-auto">
+                      <img src="{{ asset('images/ESP8266 Wemos D1 Mini Pro.png') }}" alt="" class="w-full h-auto">
                     </div>
                     <div class="flex flex-col justify-center">
-                      <h2 class="font-semibold">Fan</h2>
+                      <h2 class="font-semibold">ESP8266 Wemos D1 Mini Pro</h2>
                       <ul class="ml-8">
-                        <li class="list-disc">Function: Controls air circulation to maintain proper
-                          ventilation, temperature, and humidity.
-                          </li>
-                        <li class="list-disc">Troubleshooting Tip: Clear dust buildup and ensure                        
+                        <li class="list-disc">Function: A smaller version of the NodeMCU that
+                          also transmits data wirelessly and fits well in
+                          compact setups.                                                   
                         </li>
                       </ul>
                     </div>
@@ -171,15 +209,14 @@
                 <div class="w-full h-auto flex flex-col mb-5">
                   <div class="w-full h-auto flex gap-5">
                     <div class="max-w-40 max-h-40">
-                      <img src="https://placehold.co/400" alt="" class="w-full h-auto">
+                      <img src="{{ asset('images/NODE MCU ESP8266 WIFI MODULE V3.png') }}" alt="" class="w-full h-auto">
                     </div>
                     <div class="flex flex-col justify-center">
-                      <h2 class="font-semibold">pH Down Solution Pump</h2>
+                      <h2 class="font-semibold">NodeMCU ESP8266 Wi-Fi Module Version 3</h2>
                       <ul class="ml-8">
-                        <li class="list-disc">Function: Automatically adds acidic solution to lower the pH
-                          of the water when it's too high.                          
-                        </li>
-                        <li class="list-disc">Troubleshooting Tip: Monitor dosing and keep tubes clear.                     
+                        <li class="list-disc">Function: Acts as the main controller that
+                          processes sensor data and sends it to a web or
+                          cloud system via Wi-Fi.                                                   
                         </li>
                       </ul>
                     </div>
@@ -189,16 +226,91 @@
                 <div class="w-full h-auto flex flex-col mb-5">
                   <div class="w-full h-auto flex gap-5">
                     <div class="max-w-40 max-h-40">
-                      <img src="https://placehold.co/400" alt="" class="w-full h-auto">
+                      <img src="{{ asset('images/NodeMCU ESP8266 Wi-Fi Module Version 3 Baseboard.png') }}" alt="" class="w-full h-auto">
                     </div>
                     <div class="flex flex-col justify-center">
-                      <h2 class="font-semibold">pH Up Solution Pump</h2>
+                      <h2 class="font-semibold">NodeMCU ESP8266 Wi-Fi Module Version 3 Baseboard</h2>
                       <ul class="ml-8">
-                        <li class="list-disc">Function: Automatically dispenses alkaline solution to
-                          increase water pH when it's too low.                          
-                        </li>
-                        <li class="list-disc">Troubleshooting Tip: Make sure the solution container isn't
-                          empty, and tubing is unclogged.                                               
+                        <li class="list-disc">Function: Provides stable power and easy wiring
+                          connections for the NodeMCU to connect with
+                          sensors and modules.</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="w-full h-auto flex flex-col mb-5">
+                  <div class="w-full h-auto flex gap-5">
+                    <div class="max-w-40 max-h-40">
+                      <img src="{{ asset('images/RS485 Module.png') }}" alt="" class="w-full h-auto">
+                    </div>
+                    <div class="flex flex-col justify-center">
+                      <h2 class="font-semibold">RS485 Module</h2>
+                      <ul class="ml-8">
+                        <li class="list-disc">Function: Converts serial communication to
+                          RS485 standard for long-distance and noiseresistant data transmission.</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="w-full h-auto flex flex-col mb-5">
+                  <div class="w-full h-auto flex gap-5">
+                    <div class="max-w-40 max-h-40">
+                      <img src="{{ asset('images/SIM 800L GSM Module Version 2.png') }}" alt="" class="w-full h-auto">
+                    </div>
+                    <div class="flex flex-col justify-center">
+                      <h2 class="font-semibold">SIM800L GSM Module Version 2</h2>
+                      <ul class="ml-8">
+                        <li class="list-disc">Function: Sends SMS notifications or allows
+                          GSM-based communication for systems
+                          without Wi-Fi access.</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="w-full h-auto flex flex-col mb-5">
+                  <div class="w-full h-auto flex gap-5">
+                    <div class="max-w-40 max-h-40">
+                      <img src="{{ asset('images/Switch Mode Power Supply 12V 10Amp.png') }}" alt="" class="w-full h-auto">
+                    </div>
+                    <div class="flex flex-col justify-center">
+                      <h2 class="font-semibold">Switch Mode Power Supply 12V 10Amp</h2>
+                      <ul class="ml-8">
+                        <li class="list-disc">Function: Provides stable 12V power output for
+                          high-powered components like fans, pumps, or
+                          lights.</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="w-full h-auto flex flex-col mb-5">
+                  <div class="w-full h-auto flex gap-5">
+                    <div class="max-w-40 max-h-40">
+                      <img src="{{ asset('images/Switch Mode Power Supply 5V 10Amp.png') }}" alt="" class="w-full h-auto">
+                    </div>
+                    <div class="flex flex-col justify-center">
+                      <h2 class="font-semibold">Switch Mode Power Supply 5V 10Amp</h2>
+                      <ul class="ml-8">
+                        <li class="list-disc">Function: Supplies a steady 5V power
+                          source to microcontrollers and sensors.</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="w-full h-auto flex flex-col mb-5">
+                  <div class="w-full h-auto flex gap-5">
+                    <div class="max-w-40 max-h-40">
+                      <img src="{{ asset('images/USB 5V Water Pump.png') }}" alt="" class="w-full h-auto">
+                    </div>
+                    <div class="flex flex-col justify-center">
+                      <h2 class="font-semibold">USB 5V Water Pump</h2>
+                      <ul class="ml-8">
+                        <li class="list-disc">Function: Circulates water for irrigation or
+                          nutrient delivery in a plant system.
                         </li>
                       </ul>
                     </div>
@@ -208,21 +320,20 @@
                 <div class="w-full h-auto flex flex-col mb-5">
                   <div class="w-full h-auto flex gap-5">
                     <div class="max-w-40 max-h-40">
-                      <img src="{{ asset('images/Grow-Light.png') }}" alt="" class="w-full h-auto">
+                      <img src="{{ asset('images/USB Cable Micro.png') }}" alt="" class="w-full h-auto">
                     </div>
                     <div class="flex flex-col justify-center">
-                      <h2 class="font-semibold">Grow Light</h2>
+                      <h2 class="font-semibold">USB Cable Micro</h2>
                       <ul class="ml-8">
-                        <li class="list-disc">Function: Provides supplemental lighting to support
-                          plant photosynthesis during low-light hours.                          
-                        </li>
-                        <li class="list-disc">Troubleshooting Tip: Replace flickering lights and ensure
-                          timers are set correctly.                                               
+                        <li class="list-disc">Function: Powers microcontrollers and allows
+                          data transfer from microcontrollers to
+                          computers.
                         </li>
                       </ul>
                     </div>
                   </div>
                 </div>
+                {{-- END --}}
               </div>
             </div>
           
