@@ -1,19 +1,10 @@
 <div>
     <div class="w-full mb-3 ml-auto flex flex-col lg:flex-row justify-between lg:justify-end items-center gap-3">
-        <div class="w-[90%] lg:w-[80%] flex gap-3 lg:ml-20">
+        <div class="w-[90%] lg:w-[40%] flex gap-3 lg:ml-20">
             <x-datetime-picker
-                label="Start Date"
-                placeholder="Start Date"
-                wire:model.defer="startDate"
-                without-time
-                parse-format="YYYY-MM-DD"
-                display-format="MMMM DD, YYYY"
-            />
-
-            <x-datetime-picker
-                label="End Date"
-                placeholder="End Date"
-                wire:model.defer="endDate"
+                label="Filter Date"
+                placeholder="Filter Date"
+                wire:model.defer="filterDate"
                 without-time
                 parse-format="YYYY-MM-DD"
                 display-format="MMMM DD, YYYY"
@@ -115,13 +106,13 @@
         console.log(soilMoistureData);
         
         const ctx = document.getElementById('soilMoistureChart');
-        const days = soilMoistureData.map(item => item.Day);
+        const time = soilMoistureData.map(item => item.time);
         const values = soilMoistureData.map(item => item.Value);
         
         new Chart(ctx, {
             type: 'line',
             data: {
-                labels: days,
+                labels: time,
                 datasets: [{
                     label: 'Soil Moisture',
                     data: values, 
@@ -152,13 +143,13 @@
         console.log(soilPHData);
         
         const ctxSoil = document.getElementById('soilPHChart');
-        const daysSoil = soilPHData.map(item => item.Day);
+        const timeSoil = soilPHData.map(item => item.time);
         const valuesSoil = soilPHData.map(item => item.Value);
         
         new Chart(ctxSoil, {
             type: 'line',
             data: {
-                labels: daysSoil,
+                labels: timeSoil,
                 datasets: [{
                     label: 'Soil pH',
                     data: valuesSoil, 
@@ -189,13 +180,13 @@
         console.log(waterPHData);
         
         const ctxWater = document.getElementById('waterPHChart');
-        const daysWater = waterPHData.map(item => item.Day);
+        const timeWater = waterPHData.map(item => item.time);
         const valuesWater = waterPHData.map(item => item.Value);
         
         new Chart(ctxWater, {
             type: 'line',
             data: {
-                labels: daysWater,
+                labels: timeWater,
                 datasets: [{
                     label: 'Water pH',
                     data: valuesWater, 
@@ -226,13 +217,13 @@
         console.log(temperatureData);
         
         const ctxTemp = document.getElementById('temperatureChart');
-        const daysTemp = temperatureData.map(item => item.Day);
+        const timeTemp = temperatureData.map(item => item.time);
         const valuesTemp = temperatureData.map(item => item.Value);
         
         new Chart(ctxTemp, {
             type: 'line',
             data: {
-                labels: daysTemp,
+                labels: timeTemp,
                 datasets: [{
                     label: 'Temperature',
                     data: valuesTemp, 
@@ -263,13 +254,13 @@
         console.log(humidityData);
         
         const ctxHumid = document.getElementById('humidityChart');
-        const daysHumid = humidityData.map(item => item.Day);
+        const timeHumid = humidityData.map(item => item.time);
         const valuesHumid = humidityData.map(item => item.Value);
         
         new Chart(ctxHumid, {
             type: 'line',
             data: {
-                labels: daysHumid,
+                labels: timeHumid,
                 datasets: [{
                     label: 'Humidity',
                     data: valuesHumid, 

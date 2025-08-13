@@ -3,7 +3,7 @@
     <nav class="max-w-[85rem] w-full mx-auto px-4 flex flex-wrap basis-full items-center justify-between">
       <a class="flex-none text-xl font-medium focus:outline-none focus:opacity-80" href="#" aria-label="Brand">
         <span class="inline-flex items-center gap-x-2 text-xl text-white font-medium uppercase">
-          <img class="w-32 h-auto" src="{{ asset('images/iBroccoGreensLogo.png')}} " alt="Logo">
+          {{-- <img class="w-32 h-auto" src="{{ asset('images/iBroccoGreensLogo.png')}} " alt="Logo"> --}}
           {{-- iBroccoGreens --}}
         </span>
       </a>

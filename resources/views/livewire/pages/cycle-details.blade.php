@@ -77,7 +77,7 @@
                                                     @php
                                                         $start = \Carbon\Carbon::parse($cycle->start_date);
                                                         $today = \Carbon\Carbon::today();
-                                                        $daysSinceStart = $start->diffInDays($today);
+                                                        $daysSinceStart = $start->diffInDays($today) + 1;
                                                         $cappedDays = min($daysSinceStart, 7); // cap at 7
                                                     @endphp
 

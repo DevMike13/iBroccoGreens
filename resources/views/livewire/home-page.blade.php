@@ -3,8 +3,9 @@
         
         <!-- Text content -->
         <div class="w-full flex flex-col lg:justify-center px-5 md:px-0 gap-5 relative z-10 py-10">
-            <h1 class="text-3xl text-center lg:text-left md:text-5xl font-bold">iBroccoGreens</h1>
-            <p class="text-lg text-center lg:text-left">iBroccoGreens - Web-Based Monitoring System</p>
+            {{-- <h1 class="text-3xl text-center lg:text-left md:text-5xl font-bold">iBroccoGreens</h1> --}}
+            <img class="h-auto w-80 lg:mx-0 mx-auto" src="{{ asset('images/iBroccoGreensLogo.png')}} " alt="Logo">
+            <p class="text-lg text-center lg:text-left lg:w-2/5">A Web-Based Parameter Monitoring and Misting Automation with Cycle Level Harvest Tracking for Calabrese Broccoli Microgreens in Vertical Soilless Farming</p>
             <a href="ibroccogreens-admin/register" class="mx-auto lg:mx-0">
                 <button type="button" class="py-2 px-3 uppercase inline-flex items-center gap-x-2 text-sm font-medium rounded-lg text-white shadow-sm bg-[#639e2e] hover:bg-[#c0dac1] disabled:opacity-50 disabled:pointer-events-none">
                     Register

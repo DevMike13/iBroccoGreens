@@ -3,6 +3,7 @@
 namespace App\Livewire\Filament;
 
 use App\Models\Notifications;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class CustomNotification extends Component
@@ -26,6 +27,13 @@ class CustomNotification extends Component
         Notifications::where('is_read', false)->update(['is_read' => true]);
         $this->loadNotifications();
     }
+
+    public function clearAll()
+    {
+        DB::table('notifications')->delete();
+        $this->notifications = [];
+    }
+
 
     public function render()
     {

@@ -1,4 +1,5 @@
 <div 
+    wire:poll.5s
     x-data 
     x-on:click="$dispatch('toggle-custom-sidebar');" 
     class="relative mr-3 cursor-pointer text-gray-600 hover:text-primary-600 dark:text-gray-300"

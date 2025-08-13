@@ -18,193 +18,123 @@ class DailyReport extends Component
     public $temperatureData=[];
     public $humidityData=[];
     
-    #[Url(as: 'start')]
-    public ?string $startDate = null;
-
-    #[Url(as: 'end')]
-    public ?string $endDate = null;
+    #[Url(as: 'date')]
+    public ?string $filterDate = null;
 
     #[Url()]
     public $selectedBoard = 'B1';
 
     public function mount(){
-        $this->startDate ??= Carbon::now()->startOfMonth()->toDateString();
-        $this->endDate ??= Carbon::now()->endOfMonth()->toDateString();
+        
+        $this->filterDate ??= Carbon::now('Asia/Manila')->toDateString();
        
-        $this->getSoilMoistureForCurrentMonth($this->selectedBoard, $this->startDate, $this->endDate);
-        $this->getSoilPHForCurrentMonth($this->selectedBoard, $this->startDate, $this->endDate);
-        $this->getWaterPHForCurrentMonth($this->startDate, $this->endDate);
-        $this->getTemperatureForCurrentMonth($this->startDate, $this->endDate);
-        $this->getHumidityForCurrentMonth($this->startDate, $this->endDate);
+        $this->getSoilMoistureForCurrentMonth($this->selectedBoard, $this->filterDate);
+        $this->getSoilPHForCurrentMonth($this->selectedBoard, $this->filterDate);
+        $this->getWaterPHForCurrentMonth($this->filterDate);
+        $this->getTemperatureForCurrentMonth($this->filterDate);
+        $this->getHumidityForCurrentMonth($this->filterDate);
     }
 
-    public function getSoilMoistureForCurrentMonth($board, $startDate = null, $endDate = null)
+    public function getSoilMoistureForCurrentMonth($board, $filterDate = null)
     {
-        $startOfRange = $startDate ? Carbon::parse($startDate)->startOfDay() : Carbon::now()->startOfMonth();
-        $endOfRange = $endDate ? Carbon::parse($endDate)->endOfDay() : Carbon::now()->endOfMonth();
+        $filterDate = $filterDate ?? Carbon::now('Asia/Manila')->toDateString();
 
-        $moistureData = DailySensorData::selectRaw('DATE_FORMAT(reading_date, "%b, %d") as Day, soil_moisture as Value')
+        $moistureData = DailySensorData::selectRaw('DATE_FORMAT(reading_date, "%h:%i %p") as time, soil_moisture as Value')
             ->where('board', $board)
-            ->whereBetween(DB::raw('DATE(reading_date)'), [
-                $startOfRange->toDateString(),
-                $endOfRange->toDateString()
-            ])
-            ->whereIn('id', function ($query) use ($startOfRange, $endOfRange, $board) {
-                $query->selectRaw('MAX(id)')
-                    ->from('daily_sensor_data')
-                    ->where('board', $board)
-                    ->whereBetween(DB::raw('DATE(reading_date)'), [
-                        $startOfRange->toDateString(),
-                        $endOfRange->toDateString()
-                    ])
-                    ->groupByRaw('DATE(reading_date)');
-            })
+            ->whereDate('reading_date', $filterDate)
             ->orderBy('reading_date')
             ->get();
 
         $this->soilMoistureData = $moistureData->map(function ($item) {
             return [
-                'Day' => $item->Day,
+                'time' => $item->time,
                 'Value' => round($item->Value, 2)
             ];
         })->toArray();
     }
 
-    public function getSoilPHForCurrentMonth($board, $startDate = null, $endDate = null)
-    {
-        $startOfRange = $startDate ? Carbon::parse($startDate)->startOfDay() : Carbon::now()->startOfMonth();
-        $endOfRange = $endDate ? Carbon::parse($endDate)->endOfDay() : Carbon::now()->endOfMonth();
 
-        $phData = DailySensorData::selectRaw('DATE_FORMAT(reading_date, "%b, %d") as Day, soil_ph as Value')
+    public function getSoilPHForCurrentMonth($board, $filterDate = null)
+    {
+        $filterDate = $filterDate ?? Carbon::now('Asia/Manila')->toDateString();
+
+        $phData = DailySensorData::selectRaw('DATE_FORMAT(reading_date, "%h:%i %p") as time, soil_ph as Value')
             ->where('board', $board)
-            ->whereBetween(DB::raw('DATE(reading_date)'), [
-                $startOfRange->toDateString(),
-                $endOfRange->toDateString()
-            ])
-            ->whereIn('id', function ($query) use ($startOfRange, $endOfRange, $board) {
-                $query->selectRaw('MAX(id)')
-                    ->from('daily_sensor_data')
-                    ->where('board', $board)
-                    ->whereBetween(DB::raw('DATE(reading_date)'), [
-                        $startOfRange->toDateString(),
-                        $endOfRange->toDateString()
-                    ])
-                    ->groupByRaw('DATE(reading_date)');
-            })
+            ->whereDate('reading_date', $filterDate)
             ->orderBy('reading_date')
             ->get();
 
         $this->soilPHData = $phData->map(function ($item) {
             return [
-                'Day' => $item->Day,
+                'time' => $item->time,
                 'Value' => round($item->Value, 2)
             ];
         })->toArray();
     }
 
-    public function getWaterPHForCurrentMonth($startDate = null, $endDate = null)
+    public function getWaterPHForCurrentMonth($filterDate = null)
     {
-        $startOfRange = $startDate ? Carbon::parse($startDate)->startOfDay() : Carbon::now()->startOfMonth();
-        $endOfRange = $endDate ? Carbon::parse($endDate)->endOfDay() : Carbon::now()->endOfMonth();
+        $filterDate = $filterDate ?? Carbon::now('Asia/Manila')->toDateString();
 
-        $waterData = DailySensorData::selectRaw('DATE_FORMAT(reading_date, "%b, %d") as Day, water_ph as Value')
-            ->whereBetween(DB::raw('DATE(reading_date)'), [
-                $startOfRange->toDateString(),
-                $endOfRange->toDateString()
-            ])
-            ->whereIn('id', function ($query) use ($startOfRange, $endOfRange) {
-                $query->selectRaw('MAX(id)')
-                    ->from('daily_sensor_data')
-                    ->whereBetween(DB::raw('DATE(reading_date)'), [
-                        $startOfRange->toDateString(),
-                        $endOfRange->toDateString()
-                    ])
-                    ->groupByRaw('DATE(reading_date)');
-            })
+        $waterData = DailySensorData::selectRaw('DATE_FORMAT(reading_date, "%h:%i %p") as time, water_ph as Value')
+            ->where('board', 'B5')
+            ->whereDate('reading_date', $filterDate)
             ->orderBy('reading_date')
             ->get();
 
         $this->waterPHData = $waterData->map(function ($item) {
             return [
-                'Day' => $item->Day,
+                'time' => $item->time,
                 'Value' => round($item->Value, 2)
             ];
         })->toArray();
     }
 
-    public function getTemperatureForCurrentMonth($startDate = null, $endDate = null)
+    public function getTemperatureForCurrentMonth($filterDate = null)
     {
-        $startOfRange = $startDate ? Carbon::parse($startDate)->startOfDay() : Carbon::now()->startOfMonth();
-        $endOfRange = $endDate ? Carbon::parse($endDate)->endOfDay() : Carbon::now()->endOfMonth();
+        $filterDate = $filterDate ?? Carbon::now('Asia/Manila')->toDateString();
 
-        $tempData = DailySensorData::selectRaw('DATE_FORMAT(reading_date, "%b, %d") as Day, temperature as Value')
+        $tempData = DailySensorData::selectRaw('DATE_FORMAT(reading_date, "%h:%i %p") as time, temperature as Value')
             ->where('board', 'B1')
-            ->whereBetween(DB::raw('DATE(reading_date)'), [
-                $startOfRange->toDateString(),
-                $endOfRange->toDateString()
-            ])
-            ->whereIn('id', function ($query) use ($startOfRange, $endOfRange) {
-                $query->selectRaw('MAX(id)')
-                    ->from('daily_sensor_data')
-                    ->where('board', 'B1')
-                    ->whereBetween(DB::raw('DATE(reading_date)'), [
-                        $startOfRange->toDateString(),
-                        $endOfRange->toDateString()
-                    ])
-                    ->groupByRaw('DATE(reading_date)');
-            })
+            ->whereDate('reading_date', $filterDate)
             ->orderBy('reading_date')
             ->get();
 
         $this->temperatureData = $tempData->map(function ($item) {
             return [
-                'Day' => $item->Day,
+                'time' => $item->time,
                 'Value' => round($item->Value, 2)
             ];
         })->toArray();
     }
 
-    public function getHumidityForCurrentMonth($startDate = null, $endDate = null)
+    public function getHumidityForCurrentMonth($filterDate = null)
     {
-        $startOfRange = $startDate ? Carbon::parse($startDate)->startOfDay() : Carbon::now()->startOfMonth();
-        $endOfRange = $endDate ? Carbon::parse($endDate)->endOfDay() : Carbon::now()->endOfMonth();
+        $filterDate = $filterDate ?? Carbon::now('Asia/Manila')->toDateString();
 
-        $humidData = DailySensorData::selectRaw('DATE_FORMAT(reading_date, "%b, %d") as Day, humidity as Value')
+        $humidData = DailySensorData::selectRaw('DATE_FORMAT(reading_date, "%h:%i %p") as time, humidity as Value')
             ->where('board', 'B1')
-            ->whereBetween(DB::raw('DATE(reading_date)'), [
-                $startOfRange->toDateString(),
-                $endOfRange->toDateString()
-            ])
-            ->whereIn('id', function ($query) use ($startOfRange, $endOfRange) {
-                $query->selectRaw('MAX(id)')
-                    ->from('daily_sensor_data')
-                    ->where('board', 'B1')
-                    ->whereBetween(DB::raw('DATE(reading_date)'), [
-                        $startOfRange->toDateString(),
-                        $endOfRange->toDateString()
-                    ])
-                    ->groupByRaw('DATE(reading_date)');
-            })
+            ->whereDate('reading_date', $filterDate)
             ->orderBy('reading_date')
             ->get();
 
         $this->humidityData = $humidData->map(function ($item) {
             return [
-                'Day' => $item->Day,
+                'time' => $item->time,
                 'Value' => round($item->Value, 2)
             ];
         })->toArray();
     }
 
     public function getGraphValues(){
-        $start = $this->startDate ?? Carbon::now()->startOfMonth();
-        $end = $this->endDate ?? Carbon::now()->endOfMonth();
 
-        $this->getSoilMoistureForCurrentMonth($this->selectedBoard, $start, $end);
-        $this->getSoilPHForCurrentMonth($this->selectedBoard, $start, $end);
-        $this->getWaterPHForCurrentMonth($start, $end);
-        $this->getTemperatureForCurrentMonth($start, $end);
-        $this->getHumidityForCurrentMonth($start, $end);
+        $date = $this->filterDate ?? Carbon::now('Asia/Manila')->toDateString();
+
+        $this->getSoilMoistureForCurrentMonth($this->selectedBoard, $date);
+        $this->getSoilPHForCurrentMonth($this->selectedBoard, $date);
+        $this->getWaterPHForCurrentMonth($date);
+        $this->getTemperatureForCurrentMonth($date);
+        $this->getHumidityForCurrentMonth($date);
 
         $this->dispatch('updateChart', $this->soilMoistureData);
         $this->dispatch('updateSoilPHChart', $this->soilPHData);
