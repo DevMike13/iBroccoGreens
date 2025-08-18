@@ -21,8 +21,21 @@
       </div>
       <div id="hs-navbar-alignment" class="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow sm:grow-0 sm:basis-auto sm:block sm:order-2 ml-auto mr-5" aria-labelledby="hs-navbar-alignment-collapse">
         <div class="flex flex-col gap-5 mt-5 sm:flex-row sm:items-center sm:mt-0 sm:ps-5">
-          <a class="font-medium text-[#639e2e] focus:outline-none uppercase" href="#" aria-current="page">Home</a>
-          <a class="font-medium text-gray-600 hover:text-gray-400 focus:outline-none focus:text-gray-400 uppercase" href="#">About</a>
+          <a 
+            href="{{ route('home') }}" 
+            class="font-medium uppercase focus:outline-none
+                {{ request()->routeIs('home') ? 'text-[#639e2e]' : 'text-gray-600 hover:text-gray-400 focus:text-gray-400' }}"
+            aria-current="{{ request()->routeIs('home') ? 'page' : '' }}">
+            Home
+          </a>
+
+          <a 
+              href="{{ route('about') }}" 
+              class="font-medium uppercase focus:outline-none
+                  {{ request()->routeIs('about') ? 'text-[#639e2e]' : 'text-gray-600 hover:text-gray-400 focus:text-gray-400' }}"
+              aria-current="{{ request()->routeIs('about') ? 'page' : '' }}">
+              About
+          </a>
         </div>
       </div>
     </nav>

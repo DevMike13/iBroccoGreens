@@ -19,7 +19,7 @@
         <div class="grid grid-cols-3 gap-2 w-full place-items-stretch">
             <div class="h-full flex flex-col justify-between bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
                 <div class="flex justify-center items-center w-full pt-5">
-                   <img src="{{ asset('images/soil-moisture-icon.png') }}" alt="" class="w-16 h-16">
+                   <img src="{{ asset('images/soil-moist-new-icon.png') }}" alt="" class="w-16 h-16">
                 </div>
                 <div class="p-4 md:p-5">
                     <div class="flex flex-col justify-center items-center gap-4">
@@ -47,7 +47,7 @@
 
             <div class="h-full flex flex-col justify-between bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
                 <div class="flex justify-center items-center w-full pt-5">
-                   <img src="{{ asset('images/soil-ph-icon.jpeg') }}" alt="" class="w-16 h-16">
+                   <img src="{{ asset('images/soil-ph-icon-new.png') }}" alt="" class="w-16 h-16">
                 </div>
                 <div class="p-4 md:p-5">
                     <div class="flex flex-col justify-center items-center gap-4">
@@ -75,7 +75,7 @@
 
             <div class="h-full flex flex-col justify-between bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
                 <div class="flex justify-center items-center w-full pt-5">
-                   <img src="{{ asset('images/water-ph-icon.jpeg') }}" alt="" class="w-16 h-16">
+                   <img src="{{ asset('images/water-ph-icon-new.png') }}" alt="" class="w-16 h-16">
                 </div>
                 <div class="p-4 md:p-5">
                     <div class="flex flex-col justify-center items-center gap-4">
@@ -91,7 +91,7 @@
 
             <div class="h-full flex flex-col justify-between bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
                 <div class="flex justify-center items-center w-full pt-5">
-                   <img src="{{ asset('images/temperature-icon.png') }}" alt="" class="w-16 h-16">
+                   <img src="{{ asset('images/temp-icon-new.png') }}" alt="" class="w-16 h-16">
                 </div>
                 <div class="p-4 md:p-5">
                     <div class="flex flex-col justify-center items-center gap-4">
@@ -105,7 +105,7 @@
 
             <div class="h-full flex flex-col justify-between bg-white border shadow-sm rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
                 <div class="flex justify-center items-center w-full pt-5">
-                   <img src="{{ asset('images/humidity-icon.png') }}" alt="" class="w-16 h-16">
+                   <img src="{{ asset('images/humid-icon-new.png') }}" alt="" class="w-16 h-16">
                 </div>
                 <div class="p-4 md:p-5">
                     <div class="flex flex-col justify-center items-center gap-4">

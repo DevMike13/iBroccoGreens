@@ -3,6 +3,7 @@
 use App\Livewire\Auth\NotVerify;
 use App\Livewire\Auth\OtpVerify;
 use App\Livewire\HomePage;
+use App\Livewire\Pages\About;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', HomePage::class)->name('home');
 Route::get('/verify-account', NotVerify::class)->name('verify.account');
 Route::get('/verify-otp', OtpVerify::class)->name('otp.verify');
+Route::get('/about', About::class)->name('about');
 Route::get('/logagain', function () {
     return redirect( '/ibroccogreens-admin');
 })->name('login');

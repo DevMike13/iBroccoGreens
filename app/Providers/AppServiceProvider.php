@@ -46,9 +46,28 @@ class AppServiceProvider extends ServiceProvider
 
         FilamentView::registerRenderHook(
             PanelsRenderHook::USER_MENU_BEFORE,
-            fn (): string => '<span class="inline-flex items-center rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-800 dark:bg-green-300 dark:text-green-800">'
-            . ucfirst(auth()->user()?->role ?? 'User') .
-        '</span>'
+            fn (): string => '
+                <style>
+                    .user-role-badge {
+                        background-color: #dcfce7; /* light green */
+                        color: #166534;           /* green-800 */
+                        border-radius: 9999px;
+                        font-size: 0.75rem;
+                        font-weight: 500;
+                        padding: 0.25rem 0.75rem;
+                        display: inline-flex;
+                        align-items: center;
+                    }
+                    @media (prefers-color-scheme: dark) {
+                        .user-role-badge {
+                            background-color: #065f46; /* green-800 */
+                            color: #f0fdf4;           /* green-100 */
+                        }
+                    }
+                </style>
+                <span class="user-role-badge">'
+                    . ucfirst(auth()->user()?->role ?? 'User') .
+                '</span>'
         );
 
         FilamentView::registerRenderHook(

@@ -119,6 +119,7 @@ class CycleDetails extends Component
                 $this->filteredYieldLists = collect();
             }
         }
+        $this->phase = 'germination';
     }
 
     public function updatedSelectedCycleNoFilter()
@@ -311,7 +312,7 @@ class CycleDetails extends Component
                 // 'editEndDate' => 'nullable|date',
                 'editTrays' => 'required|integer',
                 'editPhase' => 'required',
-                'editNotes' => 'required',
+                // 'editNotes' => 'required',
                 'status' => 'required',
             ]);
     
