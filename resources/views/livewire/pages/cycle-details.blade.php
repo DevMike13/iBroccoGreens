@@ -84,9 +84,11 @@
                                                     {{ $cappedDays }} day(s)
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200 capitalize">
-                                                    {{-- @if ($cycle->status == 'current') --}}
+                                                    @if ($cycle->phase == 'growth phase')
+                                                        Growth
+                                                    @else
                                                         {{ $cycle->phase }}
-                                                    {{-- @endif --}}
+                                                    @endif
                                                 </td>
                                                 {{-- @if ($cycle->status == 'current')
                                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
