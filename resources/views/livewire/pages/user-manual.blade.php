@@ -192,6 +192,21 @@
                 <div class="w-full h-auto flex flex-col mb-5">
                   <div class="w-full h-auto flex gap-5">
                     <div class="max-w-40 max-h-40">
+                      <img src="{{ asset('images/DS1302 RTC Module with Battery.png') }}" alt="" class="w-full h-auto">
+                    </div>
+                    <div class="flex flex-col justify-center">
+                      <h2 class="font-semibold">DS1302 RTC Module with Battery</h2>
+                      <ul class="ml-8">
+                        <li class="list-disc">Function: Keeps real-time clock data even during power interruptions, ensuring time-sensitive tasks stay accurate.                                              
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="w-full h-auto flex flex-col mb-5">
+                  <div class="w-full h-auto flex gap-5">
+                    <div class="max-w-40 max-h-40">
                       <img src="{{ asset('images/ESP8266 Wemos D1 Mini Pro.png') }}" alt="" class="w-full h-auto">
                     </div>
                     <div class="flex flex-col justify-center">
