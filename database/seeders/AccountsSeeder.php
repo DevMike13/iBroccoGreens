@@ -23,6 +23,7 @@ class AccountsSeeder extends Seeder
             'password' => Hash::make('ibroccogreens@2025'),
             'role' => 'admin',
             'email_verified_at' => $now,
+            'is_approved' => true
         ]);
     }
 }

@@ -146,6 +146,38 @@ class Personnel extends Component
         ]);
     }
 
+    public function approvePersonnel($id)
+    {
+        $personnel = User::findOrFail($id);
+
+        $personnel->update([
+            'is_approved' => true,
+        ]);
+
+        Notification::make()
+            ->title('Approved!')
+            ->body('Personnel account has been approved successfully.')
+            ->success()
+            ->send();
+
+        $this->dispatch('reload');
+        return redirect()->back();
+    }
+
+    public function approvePersonnelConfirmation($id, $personnelName)
+    {
+        $this->dialog()->confirm([
+            'title'       => 'Approve Personnel?',
+            'description' => "Do you want to approve the account of: " . 
+                            html_entity_decode('<span class="text-green-600 underline">' . $personnelName . '</span>') . " ?",
+            'acceptLabel' => 'Yes, approve',
+            'method'      => 'approvePersonnel',
+            'icon'        => 'success',
+            'params'      => $id,
+        ]);
+    }
+
+
     public function render()
     {
         // $personnelLists = User::where('role', 'user')->get();

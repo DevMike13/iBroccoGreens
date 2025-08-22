@@ -27,7 +27,8 @@ class User extends Authenticatable implements FilamentUser
         'status',
         'otp_code',
         'otp_expires_at',
-        'otp_verified_at'
+        'otp_verified_at',
+        'is_approved',
     ];
 
     /**
@@ -49,10 +50,29 @@ class User extends Authenticatable implements FilamentUser
         'email_verified_at' => 'datetime',
     ];
 
+    // public function canLogin(): bool
+    // {
+    //     return ! is_null($this->email_verified_at)
+    //         && $this->is_approved
+    //         && $this->status === 'Active';
+    // }
+
     public function canAccessPanel(Panel $panel): bool
     {
-        return $this->status === 'Active' && $this->email_verified_at !== null;
+        if (is_null($this->email_verified_at)) {
+            session()->flash('filament.auth.error', 'Please verify your email first.');
+            return false;
+        }
+
+        if ($this->status !== 'Active') {
+            session()->flash('filament.auth.error', 'Your account is inactive. Please contact support.');
+            return false;
+        }
+
+        return true;
     }
+
+
 
     // public function canAccessPanel(Panel $panel): bool
     // {
