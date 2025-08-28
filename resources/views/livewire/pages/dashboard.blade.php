@@ -130,8 +130,8 @@
                     <p>Fan</p>
                 </div>
                 <div class="ml-auto">
-                    {{-- <x-toggle wire:model="isActiveFan" lg wire:click="toggleFan" /> --}}
-                    <p>{{ $fanState }}</p>
+                    <x-toggle left-label="Off" label="On" wire:model="isActiveFan" lg wire:click="toggleFan" />
+                    {{-- <p>{{ $fanState }}</p> --}}
                 </div>
             </div>
             <div class="w-full lg:w-1/2 flex flex-row justify-start items-center bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
@@ -143,13 +143,17 @@
                 </div>
                 <div class="ml-auto">
                     @if ($selectedBoard == 'B1')
-                        <p>{{ $mistingData }}</p>
+                        {{-- <p>{{ $mistingData }}</p> --}}
+                        <x-toggle left-label="Off" label="On" wire:model.defer="isActiveMistingData" lg wire:click="toggleMistingB1" />
                     @elseif($selectedBoard == 'B2')
-                        <p>{{ $mistingDataB2 }}</p>
+                        {{-- <p>{{ $mistingDataB2 }}</p> --}}
+                        <x-toggle left-label="Off" label="On" wire:model.defer="isActiveMistingDataB2" lg wire:click="toggleMistingB2" />
                     @elseif($selectedBoard == 'B3')
-                        <p>{{ $mistingDataB3 }}</p>
+                        {{-- <p>{{ $mistingDataB3 }}</p> --}}
+                        <x-toggle left-label="Off" label="On" wire:model.defer="isActiveMistingDataB3" lg wire:click="toggleMistingB3" />
                     @elseif($selectedBoard == 'B4')
-                        <p>{{ $mistingDataB4 }}</p>
+                        {{-- <p>{{ $mistingDataB4 }}</p> --}}
+                        <x-toggle left-label="Off" label="On" wire:model.defer="isActiveMistingDataB4" lg wire:click="toggleMistingB4" />
                     @endif
                 </div>
             </div>
@@ -164,8 +168,8 @@
                     <p>Lights</p>
                 </div>
                 <div class="ml-auto">
-                    {{-- <x-toggle wire:model.defer="isActiveLight" lg wire:click="toggleLight" /> --}}
-                    <p>{{ $lightState }}</p>
+                    <x-toggle left-label="Off" label="On" wire:model.defer="isActiveLight" lg wire:click="toggleLight" />
+                    {{-- <p>{{ $lightState }}</p> --}}
                 </div>
             </div>
             <div class="w-full lg:w-1/2 flex flex-row justify-start items-center bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">

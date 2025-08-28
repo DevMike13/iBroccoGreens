@@ -35,9 +35,17 @@ class Dashboard extends Component
     public bool $isActiveLight;
 
     public $mistingData;
+    public bool $isActiveMistingData;
+
     public $mistingDataB2;
+    public bool $isActiveMistingDataB2;
+
     public $mistingDataB3;
+    public bool $isActiveMistingDataB3;
+
     public $mistingDataB4;
+    public bool $isActiveMistingDataB4;
+
     public $waterLevelData;
 
     #[Url()]
@@ -72,8 +80,10 @@ class Dashboard extends Component
     public function mount(Database $database)
     {
         $this->database = $database;
+        // $this->getLightState();
         $this->selectedBoard = "B1";
         $this->fetchData();
+        
         // $this->getFanState();
         // $this->getPhLevelDataForCurrentWeek();
         // $this->getDOLevelDataForCurrentWeek();
@@ -344,125 +354,288 @@ class Dashboard extends Component
     }
 
     // SYSTEM
-    // public function getFanState()
-    // {
-    //     try {
-    //         $reference = $this->database->getReference('System/Fan');
-    //         $currentData = $reference->getValue();
+    public function getFanState()
+    {
+        try {
+            $reference = $this->database->getReference('System/Fan');
+            $currentData = $reference->getValue();
 
-    //         if ($currentData == 'ON') {
-    //             $this->fanState = 'ON';
-    //             $this->isActiveFan = true;
-    //         } else {
-    //             $this->fanState = 'OFF';
-    //             $this->isActiveFan = false;
-    //         }
-    //     } catch (\Exception $e) {
-    //         return response()->json(['error' => 'Error retrieving status: ' . $e->getMessage()], 500);
-    //     }
-    // }
+            if ($currentData == 'ON') {
+                $this->fanState = 'ON';
+                $this->isActiveFan = true;
+            } else {
+                $this->fanState = 'OFF';
+                $this->isActiveFan = false;
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error retrieving status: ' . $e->getMessage()], 500);
+        }
+    }
 
-    // public function toggleFan(Database $database)
-    // {
-    //     $this->database = $database;
-    //     try {
-    //         $reference = $this->database->getReference('System/Fan');
+    public function toggleFan(Database $database)
+    {
+        $this->database = $database;
+        try {
+            $reference = $this->database->getReference('System/Fan');
             
-    //         $currentData = $reference->getValue();
+            $currentData = $reference->getValue();
             
-    //         if ($currentData == 'OFF') {
-    //             $this->fanState = 'ON';
-    //             $this->isActiveFan = true;
-    //         } else {
-    //             $this->fanState = 'OFF';
-    //             $this->isActiveFan = false;
-    //         }
+            if ($currentData == 'OFF') {
+                $this->fanState = 'ON';
+                $this->isActiveFan = true;
+            } else {
+                $this->fanState = 'OFF';
+                $this->isActiveFan = false;
+            }
 
-    //         $reference->set($this->fanState);
+            $reference->set($this->fanState);
 
-    //     } catch (\Exception $e) {
-    //         return response()->json(['error' => 'Error toggling status: ' . $e->getMessage()], 500);
-    //     }
-    // }
-
-    // public function handleFanStateUpdate($fanState)
-    // {
-    //     $this->fanState = $fanState;
-    //     $this->isActiveFan = $fanState === 'ON';
-    // }
-
-    // LIGHT
-    // public function getLightState()
-    // {
-    //     try {
-    //         $reference = $this->database->getReference('System/Light');
-    //         $currentData = $reference->getValue();
-
-    //         if ($currentData == 'ON') {
-    //             $this->lightState = 'ON';
-    //             $this->isActiveLight = true;
-    //         } else {
-    //             $this->lightState = 'OFF';
-    //             $this->isActiveLight = false;
-    //         }
-    //     } catch (\Exception $e) {
-    //         return response()->json(['error' => 'Error retrieving status: ' . $e->getMessage()], 500);
-    //     }
-    // }
-
-    // public function toggleLight(Database $database)
-    // {
-    //     $this->database = $database;
-    //     try {
-    //         $reference = $this->database->getReference('System/Light');
-            
-    //         $currentData = $reference->getValue();
-            
-    //         if ($currentData == 'OFF') {
-    //             $this->lightState = 'ON';
-    //             $this->isActiveLight = true;
-    //         } else {
-    //             $this->lightState = 'OFF';
-    //             $this->isActiveLight = false;
-    //         }
-
-    //         $reference->set($this->lightState);
-
-    //     } catch (\Exception $e) {
-    //         return response()->json(['error' => 'Error toggling status: ' . $e->getMessage()], 500);
-    //     }
-    // }
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error toggling status: ' . $e->getMessage()], 500);
+        }
+    }
 
     public function handleFanStateUpdate($fanState)
     {
         $this->fanState = $fanState;
-        // $this->isActiveFan = $fanState === 'ON';
+        $this->isActiveFan = $fanState === 'ON';
+    }
+
+    // LIGHT
+    public function getLightState()
+    {
+        try {
+            $reference = $this->database->getReference('System/Light');
+            $currentData = $reference->getValue();
+
+            if ($currentData == 'ON') {
+                $this->lightState = 'ON';
+                $this->isActiveLight = true;
+            } else {
+                $this->lightState = 'OFF';
+                $this->isActiveLight = false;
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error retrieving status: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function toggleLight(Database $database)
+    {
+        $this->database = $database;
+        try {
+            $reference = $this->database->getReference('System/Light');
+            
+            $currentData = $reference->getValue();
+            
+            if ($currentData == 'OFF') {
+                $this->lightState = 'ON';
+                $this->isActiveLight = true;
+            } else {
+                $this->lightState = 'OFF';
+                $this->isActiveLight = false;
+            }
+
+            $reference->set($this->lightState);
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error toggling status: ' . $e->getMessage()], 500);
+        }
     }
 
     public function handleLightStateUpdate($lightState)
     {
         $this->lightState = $lightState;
-        // $this->isActiveFan = $fanState === 'ON';
+        $this->isActiveLight = $lightState === 'ON';
+    }
+
+    public function getMistingB1State()
+    {
+        try {
+            $reference = $this->database->getReference('B1/Misting');
+            $currentData = $reference->getValue();
+
+            if ($currentData == 'Active') {
+                $this->mistingData = 'Active';
+                $this->isActiveMistingData = true;
+            } else {
+                $this->mistingData = 'Inactive';
+                $this->isActiveMistingData = false;
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error retrieving status: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function toggleMistingB1(Database $database)
+    {
+        $this->database = $database;
+        try {
+            $reference = $this->database->getReference('B1/Misting');
+            
+            $currentData = $reference->getValue();
+            
+            if ($currentData == 'Inactive') {
+                $this->mistingData = 'Active';
+                $this->isActiveMistingData = true;
+            } else {
+                $this->mistingData = 'Inactive';
+                $this->isActiveMistingData = false;
+            }
+
+            $reference->set($this->mistingData);
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error toggling status: ' . $e->getMessage()], 500);
+        }
     }
 
     public function handleMistingUpdate($mistingB1)
     {
         $this->mistingData = $mistingB1;
+        $this->isActiveMistingData = $mistingB1 === 'Active';
+    }
+
+
+    public function getMistingB2State()
+    {
+        try {
+            $reference = $this->database->getReference('B2/Misting');
+            $currentData = $reference->getValue();
+
+            if ($currentData == 'Active') {
+                $this->mistingDataB2 = 'Active';
+                $this->isActiveMistingDataB2 = true;
+            } else {
+                $this->mistingDataB2 = 'Inactive';
+                $this->isActiveMistingDataB2 = false;
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error retrieving status: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function toggleMistingB2(Database $database)
+    {
+        $this->database = $database;
+        try {
+            $reference = $this->database->getReference('B2/Misting');
+            
+            $currentData = $reference->getValue();
+            
+            if ($currentData == 'Inactive') {
+                $this->mistingDataB2 = 'Active';
+                $this->isActiveMistingDataB2 = true;
+            } else {
+                $this->mistingDataB2 = 'Inactive';
+                $this->isActiveMistingDataB2 = false;
+            }
+
+            $reference->set($this->mistingDataB2);
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error toggling status: ' . $e->getMessage()], 500);
+        }
     }
 
     public function handleMistingB2Update($mistingB2)
     {
         $this->mistingDataB2 = $mistingB2;
+        $this->isActiveMistingDataB2 = $mistingB2 === 'Active';
+    }
+
+    public function getMistingB3State()
+    {
+        try {
+            $reference = $this->database->getReference('B3/Misting');
+            $currentData = $reference->getValue();
+
+            if ($currentData == 'Active') {
+                $this->mistingDataB3 = 'Active';
+                $this->isActiveMistingDataB3 = true;
+            } else {
+                $this->mistingDataB3 = 'Inactive';
+                $this->isActiveMistingDataB3 = false;
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error retrieving status: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function toggleMistingB3(Database $database)
+    {
+        $this->database = $database;
+        try {
+            $reference = $this->database->getReference('B3/Misting');
+            
+            $currentData = $reference->getValue();
+            
+            if ($currentData == 'Inactive') {
+                $this->mistingDataB3 = 'Active';
+                $this->isActiveMistingDataB3 = true;
+            } else {
+                $this->mistingDataB3 = 'Inactive';
+                $this->isActiveMistingDataB3 = false;
+            }
+
+            $reference->set($this->mistingDataB3);
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error toggling status: ' . $e->getMessage()], 500);
+        }
     }
 
     public function handleMistingB3Update($mistingB3)
     {
         $this->mistingDataB3 = $mistingB3;
+        $this->isActiveMistingDataB3 = $mistingB3 === 'Active';
+    }
+
+    public function getMistingB4State()
+    {
+        try {
+            $reference = $this->database->getReference('B4/Misting');
+            $currentData = $reference->getValue();
+
+            if ($currentData == 'Active') {
+                $this->mistingDataB4 = 'Active';
+                $this->isActiveMistingDataB4 = true;
+            } else {
+                $this->mistingDataB4 = 'Inactive';
+                $this->isActiveMistingDataB4 = false;
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error retrieving status: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function toggleMistingB4(Database $database)
+    {
+        $this->database = $database;
+        try {
+            $reference = $this->database->getReference('B4/Misting');
+            
+            $currentData = $reference->getValue();
+            
+            if ($currentData == 'Inactive') {
+                $this->mistingDataB4 = 'Active';
+                $this->isActiveMistingDataB4 = true;
+            } else {
+                $this->mistingDataB4 = 'Inactive';
+                $this->isActiveMistingDataB4 = false;
+            }
+
+            $reference->set($this->mistingDataB4);
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error toggling status: ' . $e->getMessage()], 500);
+        }
     }
 
     public function handleMistingB4Update($mistingB4)
     {
         $this->mistingDataB4 = $mistingB4;
+        $this->isActiveMistingDataB4 = $mistingB4 === 'Active';
     }
 
     public function handleWaterLevelUpdate($waterLevel)
@@ -484,7 +657,7 @@ class Dashboard extends Component
             'waterPH' => $this->waterPHData,
             'temperature' => $this->temperatureData,
             'fanState' => $this->fanState,
-            'lightState' => $this->lightState,
+            // 'lightState' => $this->lightState,
             'humidity' => $this->humidityData,
             'mistingSystem' => $this->mistingData,
             'waterLevel' => $this->waterLevelData,
