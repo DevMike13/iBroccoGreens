@@ -26,6 +26,7 @@ class User extends Authenticatable implements FilamentUser
         'role',
         'status',
         'otp_code',
+        'email_verified_at',
         'otp_expires_at',
         'otp_verified_at',
         'is_approved',
@@ -60,12 +61,10 @@ class User extends Authenticatable implements FilamentUser
     public function canAccessPanel(Panel $panel): bool
     {
         if (is_null($this->email_verified_at)) {
-            session()->flash('filament.auth.error', 'Please verify your email first.');
             return false;
         }
-
+    
         if ($this->status !== 'Active') {
-            session()->flash('filament.auth.error', 'Your account is inactive. Please contact support.');
             return false;
         }
 

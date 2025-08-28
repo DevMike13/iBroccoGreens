@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 
-class Register extends BaseRegister
+class Register extends \Filament\Pages\Auth\Register
 {
     public $showingTermsModal = false;
     
@@ -100,6 +100,7 @@ class Register extends BaseRegister
                 'email' => $data['email'],
                 'password' => $data['password'],
                 'role' => 'user',
+                'is_approved' => false
             ]);
 
             $otp = rand(100000, 999999);
@@ -116,17 +117,19 @@ class Register extends BaseRegister
 
             // Manual redirect
             Redirect::to(route('otp.verify', ['email' => $user->email]))->send();
+            // return redirect()->route('otp.verify', ['email' => $user->email]);
+
 
             // ✅ Add this to fix your error
             return null;
         } catch (\Throwable $e) {
             DB::rollBack();
             Log::error('Registration error', ['error' => $e]);
-            // Notification::make()
-            //     ->title('Registration failed')
-            //     ->body('Something went wrong. Please try again.')
-            //     ->danger()
-            //     ->send();
+            Notification::make()
+                ->title('Registration failed')
+                ->body('Something went wrong. Please try again.')
+                ->danger()
+                ->send();
 
             return null;
         }

@@ -23,8 +23,12 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use Laravel\Socialite\Contracts\User as SocialiteUserContract;
+// use Laravel\Socialite\Contracts\User as SocialiteUserContract;
 use Illuminate\Contracts\Auth\Authenticatable;
+
+// use DutchCodingCompany\FilamentSocialite\FilamentSocialitePlugin;
+use Laravel\Socialite\Contracts\User as SocialiteUserContract;
+use Illuminate\Support\Str;
 
 class PondguardAdminPanelProvider extends PanelProvider
 {
@@ -80,18 +84,44 @@ class PondguardAdminPanelProvider extends PanelProvider
                             // ->scopes(['...'])
                             // ->with([']),
                     ])
-                    // (optional) Enable/disable registration of new (socialite-) users.
                     ->registration(true)
+                    ->createUserUsing(function (string $provider, SocialiteUserContract $oauthUser, FilamentSocialitePlugin $plugin) {
+                        return User::create([
+                            'name'              => $oauthUser->getName(),
+                            'email'             => $oauthUser->getEmail(),
+                            'email_verified_at' => now(), // ✅ force verify
+                            'is_approved'       => false, // ✅ admin must approve
+                            'password'          => bcrypt(str()->random(16)),
+                        ]);
+                    })
+                    ->resolveUserUsing(function (string $provider, SocialiteUserContract $oauthUser, FilamentSocialitePlugin $plugin) {
+                        $user = User::firstWhere('email', $oauthUser->getEmail());
+            
+                        if ($user) {
+                            if (is_null($user->email_verified_at)) {
+                                $user->forceFill([
+                                    'email_verified_at' => now(), // ✅ fix null issue
+                                ])->save();
+                            }
+                            return $user;
+                        }
+            
+                        return null; // let createUserUsing handle registration
+                    })
+
+                    // (optional) Enable/disable registration of new (socialite-) users.
+                    
                     // (optional) Enable/disable registration of new (socialite-) users using a callback.
                     // In this example, a login flow can only continue if there exists a user (Authenticatable) already.
                     // ->registration(fn (string $provider, SocialiteUserContract $oauthUser, ?Authenticatable $user) => (bool) $user)
                     // (optional) Change the associated model class.
                     ->userModelClass(User::class)
                     // (optional) Change the associated socialite class (see below).
-                    ->socialiteUserModelClass(SocialiteUser::class)
+                    // ->socialiteUserModelClass(SocialiteUser::class)
             )
             ->authMiddleware([
                 Authenticate::class,
+                \App\Http\Middleware\EnsureUserIsApproved::class,
             ]);
     }
 }
