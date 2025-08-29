@@ -115,9 +115,41 @@
             </div>
         </div>
         <div id="segment-2" class="hidden" role="tabpanel" aria-labelledby="segment-item-2">
-          <p class="text-gray-500 dark:text-neutral-400">
-            This is the <em class="font-semibold text-gray-800 dark:text-neutral-200">second</em> item's tab body.
-          </p>
+            <div class="w-full flex justify-end items-end mb-2">
+                <x-button
+                    icon="download"
+                    primary
+                    label="Export XLSX"
+                    wire:click="exportSensorData"
+                />
+            </div>
+            <div class="overflow-x-auto">
+                
+                <table class="min-w-full border border-gray-300 text-sm">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="px-4 py-2 border dark:text-black">Soil Moisture</th>
+                            <th class="px-4 py-2 border dark:text-black">Soil pH</th>
+                            <th class="px-4 py-2 border dark:text-black">Water pH</th>
+                            <th class="px-4 py-2 border dark:text-black">Temperature (°C)</th>
+                            <th class="px-4 py-2 border dark:text-black">Humidity (%)</th>
+                            <th class="px-4 py-2 border dark:text-black">Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($soilMoistureData as $index => $row)
+                            <tr>
+                                <td class="px-4 py-2 border text-center">{{ $row['Value'] }}</td>
+                                <td class="px-4 py-2 border text-center">{{ $soilPHData[$index]['Value'] ?? '-' }}</td>
+                                <td class="px-4 py-2 border text-center">{{ $waterPHData[$index]['Value'] ?? '-' }}</td>
+                                <td class="px-4 py-2 border text-center">{{ $temperatureData[$index]['Value'] ?? '-' }}</td>
+                                <td class="px-4 py-2 border text-center">{{ $humidityData[$index]['Value'] ?? '-' }}</td>
+                                <td class="px-4 py-2 border text-center">{{ $row['time'] }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>            
         </div>
     </div>
     

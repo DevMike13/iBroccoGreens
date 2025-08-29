@@ -2,13 +2,14 @@
 
 namespace App\Livewire\Pages;
 
+use App\Exports\SensorReadingsExport;
 use App\Models\DailySensorData;
 use App\Models\SensorDatas;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Url;
 use Livewire\Component;
-
+use Maatwebsite\Excel\Facades\Excel;
 
 class DailyReport extends Component
 {
@@ -35,6 +36,18 @@ class DailyReport extends Component
         $this->getHumidityForCurrentMonth($this->filterDate);
     }
 
+    public function exportSensorData()
+    {
+        $date  = $this->filterDate ?? now()->toDateString();
+        $board = $this->selectedBoard ?? 'B1';
+
+        $filename = "SensorData_{$date}_{$board}.xlsx";
+
+        $this->dispatch('reload');
+
+        return Excel::download(new SensorReadingsExport($date, $board), $filename);
+    }
+    
     public function getSoilMoistureForCurrentMonth($board, $filterDate = null)
     {
         $filterDate = $filterDate ?? Carbon::now('Asia/Manila')->toDateString();
