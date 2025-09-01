@@ -152,7 +152,15 @@
     
             // Base path
             const basePath = `${board}/`;
-    
+            
+             // Listen to Master State
+            const masterRef = ref(database, 'System/MasterControll');
+            onValue(masterRef, (snapshot) => {
+                const masterState = snapshot.val();
+                console.log('Master State: ', masterState);
+                Livewire.dispatch('updateMasterState', { masterState });
+            });
+
             // Soil Moisture
             const soilMoistureRef = ref(database, 'B1/SoilMoisture');
             onValue(soilMoistureRef, (snapshot) => {
@@ -296,6 +304,8 @@
                 console.log('Water Level: ', waterLevel);
                 Livewire.dispatch('updateWaterLevel', { waterLevel });
             });
+
+           
         }
     
         listenToBoard(currentBoard);

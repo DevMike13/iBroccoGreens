@@ -4,6 +4,7 @@ namespace App\Livewire\Pages;
 
 use App\Models\SensorDatas;
 use Carbon\Carbon;
+use Filament\Notifications\Notification;
 use Livewire\Component;
 use Kreait\Firebase\Contract\Database;
 use Livewire\Attributes\On;
@@ -51,6 +52,9 @@ class Dashboard extends Component
     #[Url()]
     public $selectedBoard;
 
+    public $masterState;
+    public bool $isMasterEnabled;
+
     protected $listeners = [
         'updateSoilMoistureLevel' => 'handleSoilMoistureLevelUpdate',
         'updateSoilPHLevel' => 'handleSoilPHLevelUpdate',
@@ -70,6 +74,7 @@ class Dashboard extends Component
         'updateMistingB3' => 'handleMistingB3Update',
         'updateMistingB4' => 'handleMistingB4Update',
         'updateWaterLevel' => 'handleWaterLevelUpdate',
+        'updateMasterState' => 'handleMasterStateUpdate',
     ];
 
     public $phLevelData = [];
@@ -282,6 +287,11 @@ class Dashboard extends Component
             $snapshotWaterLevel = $referenceWaterLevel->getSnapshot();
             $this->waterLevelData = $snapshotWaterLevel->getValue();
 
+            // MISTING SYSTEM B4
+            $referenceMaster = $this->database->getReference('System/MasterControll');
+            $snapshotMaster = $referenceMaster->getSnapshot();
+            $this->masterState = $snapshotMaster->getValue();
+
         } catch (\Exception $e) {
             $this->soilMoistureData = 'Error: ' . $e->getMessage();
         }
@@ -372,8 +382,27 @@ class Dashboard extends Component
         }
     }
 
+    public function showMasterControlNotification()
+    {
+        Notification::make()
+            ->title('Info')
+            ->body('Master Control is active. You cannot toggle.')
+            ->info()
+            ->send();
+    }
+
+
     public function toggleFan(Database $database)
     {
+        if ($this->isMasterEnabled == true) {
+            Notification::make()
+                ->title('Info')
+                ->body('Master Control is active. You cannot toggle the fan.')
+                ->info()
+                ->send();
+            return;
+        }
+
         $this->database = $database;
         try {
             $reference = $this->database->getReference('System/Fan');
@@ -422,6 +451,15 @@ class Dashboard extends Component
 
     public function toggleLight(Database $database)
     {
+        if ($this->isMasterEnabled == true) {
+            Notification::make()
+                ->title('Info')
+                ->body('Master Control is active. You cannot toggle the light.')
+                ->info()
+                ->send();
+            return;
+        }
+
         $this->database = $database;
         try {
             $reference = $this->database->getReference('System/Light');
@@ -469,6 +507,15 @@ class Dashboard extends Component
 
     public function toggleMistingB1(Database $database)
     {
+        if ($this->isMasterEnabled == true) {
+            Notification::make()
+                ->title('Info')
+                ->body('Master Control is active. You cannot toggle.')
+                ->info()
+                ->send();
+            return;
+        }
+
         $this->database = $database;
         try {
             $reference = $this->database->getReference('B1/Misting');
@@ -517,6 +564,15 @@ class Dashboard extends Component
 
     public function toggleMistingB2(Database $database)
     {
+        if ($this->isMasterEnabled == true) {
+            Notification::make()
+                ->title('Info')
+                ->body('Master Control is active. You cannot toggle.')
+                ->info()
+                ->send();
+            return;
+        }
+
         $this->database = $database;
         try {
             $reference = $this->database->getReference('B2/Misting');
@@ -564,6 +620,15 @@ class Dashboard extends Component
 
     public function toggleMistingB3(Database $database)
     {
+        if ($this->isMasterEnabled == true) {
+            Notification::make()
+                ->title('Info')
+                ->body('Master Control is active. You cannot toggle.')
+                ->info()
+                ->send();
+            return;
+        }
+
         $this->database = $database;
         try {
             $reference = $this->database->getReference('B3/Misting');
@@ -611,6 +676,15 @@ class Dashboard extends Component
 
     public function toggleMistingB4(Database $database)
     {
+        if ($this->isMasterEnabled == true) {
+            Notification::make()
+                ->title('Info')
+                ->body('Master Control is active. You cannot toggle.')
+                ->info()
+                ->send();
+            return;
+        }
+
         $this->database = $database;
         try {
             $reference = $this->database->getReference('B4/Misting');
@@ -641,6 +715,53 @@ class Dashboard extends Component
     public function handleWaterLevelUpdate($waterLevel)
     {
         $this->waterLevelData = $waterLevel;
+    }
+
+    public function getMasterState()
+    {
+        try {
+            $reference = $this->database->getReference('System/MasterControll');
+            $currentData = $reference->getValue();
+
+            if ($currentData == 'ON') {
+                $this->masterState = 'ON';
+                $this->isMasterEnabled = true;
+            } else {
+                $this->masterState = 'OFF';
+                $this->isMasterEnabled = false;
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error retrieving status: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function toggleMasterState(Database $database)
+    {
+        $this->database = $database;
+        try {
+            $reference = $this->database->getReference('System/MasterControll');
+            
+            $currentData = $reference->getValue();
+            
+            if ($currentData == 'OFF') {
+                $this->masterState = 'ON';
+                $this->isMasterEnabled = true;
+            } else {
+                $this->masterState = 'OFF';
+                $this->isMasterEnabled = false;
+            }
+
+            $reference->set($this->masterState);
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error toggling status: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function handleMasterStateUpdate($masterState)
+    {
+        $this->masterState = $masterState;
+        $this->isMasterEnabled = $masterState === 'ON';
     }
 
     public function render()
