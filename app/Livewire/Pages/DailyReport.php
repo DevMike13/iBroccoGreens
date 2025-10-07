@@ -3,8 +3,10 @@
 namespace App\Livewire\Pages;
 
 use App\Exports\SensorReadingsExport;
+use App\Models\Cycles;
 use App\Models\DailySensorData;
 use App\Models\SensorDatas;
+use App\Models\YieldTracker;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Url;
@@ -18,6 +20,13 @@ class DailyReport extends Component
     public $waterPHData=[];
     public $temperatureData=[];
     public $humidityData=[];
+
+    public $soilMoistureKPI = [];
+    public $soilMoistureCycleKPI = [];
+    public $temperatureKPI = [];
+    public $humidityKPI = [];
+    public $successRateKPI = [];
+    public $totalYieldKPI = [];
     
     #[Url(as: 'date')]
     public ?string $filterDate = null;
@@ -34,6 +43,13 @@ class DailyReport extends Component
         $this->getWaterPHForCurrentMonth($this->filterDate);
         $this->getTemperatureForCurrentMonth($this->filterDate);
         $this->getHumidityForCurrentMonth($this->filterDate);
+
+        $this->calculateSoilMoistureKPI($this->selectedBoard, $this->filterDate);
+        $this->calculateTemperatureStability($this->filterDate);
+        $this->calculateHumidityStability($this->filterDate);
+        $this->calculateSuccessRate(); 
+        $this->calculateTotalYields();
+        $this->calculateSoilMoistureForCurrentCycle($this->selectedBoard);
     }
 
     public function exportSensorData()
@@ -66,6 +82,57 @@ class DailyReport extends Component
         })->toArray();
     }
 
+    public function calculateSoilMoistureKPI($board, $filterDate = null)
+    {
+        $filterDate = $filterDate ?? Carbon::now('Asia/Manila')->toDateString();
+
+        $avgMoisture = DailySensorData::where('board', $board)
+            ->whereDate('reading_date', $filterDate)
+            ->avg('soil_moisture');
+
+        $avgMoisture = round($avgMoisture, 2);
+
+        $status = ($avgMoisture >= 40 && $avgMoisture <= 60) ? 'optimal' : 'out-of-range';
+
+        $this->soilMoistureKPI = [
+            'average' => $avgMoisture,
+            'status'  => $status,
+        ];
+    }
+
+    public function calculateSoilMoistureForCurrentCycle($board)
+    {
+        // Get latest cycle
+        $latestCycle = Cycles::orderByDesc('cycle_no')->first();
+
+        if (!$latestCycle) {
+            $this->soilMoistureCycleKPI = [
+                'cycle_no' => null,
+                'average'  => 0,
+                'status'   => 'no-data',
+            ];
+            return;
+        }
+
+        // Query soil moisture readings within the cycle's date range
+        $avgMoisture = DailySensorData::where('board', $board)
+            ->where('cycle_id', $latestCycle->cycle_no) // ✅ fix here
+            ->whereBetween('reading_date', [
+                $latestCycle->start_date,
+                $latestCycle->end_date
+            ])
+            ->avg('soil_moisture');
+
+        $avgMoisture = round($avgMoisture, 2);
+
+        $status = ($avgMoisture >= 40 && $avgMoisture <= 60) ? 'optimal' : 'out-of-range';
+
+        $this->soilMoistureCycleKPI = [
+            'cycle_no' => $latestCycle->cycle_no,
+            'average'  => $avgMoisture,
+            'status'   => $status,
+        ];
+    }
 
     public function getSoilPHForCurrentMonth($board, $filterDate = null)
     {
@@ -121,6 +188,44 @@ class DailyReport extends Component
         })->toArray();
     }
 
+    public function calculateTemperatureStability($filterDate = null)
+    {
+        $filterDate = $filterDate ?? Carbon::now('Asia/Manila')->toDateString();
+
+        $readings = DailySensorData::where('board', 'B1')
+            ->whereDate('reading_date', $filterDate)
+            ->pluck('temperature')
+            ->toArray();
+
+        if (count($readings) === 0) {
+            $this->temperatureKPI = [
+                'avg'    => 0,
+                'stddev' => 0,
+                'n'      => 0,
+                'status' => 'no-data',
+            ];
+            return;
+        }
+
+        $n = count($readings);
+        $avg = array_sum($readings) / $n;
+
+        // Calculate variance
+        $variance = array_sum(array_map(fn($t) => pow($t - $avg, 2), $readings)) / $n;
+        $stddev = round(sqrt($variance), 2);
+
+        // KPI thresholds from your table
+        $status = ($stddev <= 2) ? 'stable' : 'unstable';
+
+        $this->temperatureKPI = [
+            'avg'    => round($avg, 2),
+            'stddev' => $stddev,
+            'n'      => $n,
+            'status' => $status,
+        ];
+    }
+
+
     public function getHumidityForCurrentMonth($filterDate = null)
     {
         $filterDate = $filterDate ?? Carbon::now('Asia/Manila')->toDateString();
@@ -138,6 +243,90 @@ class DailyReport extends Component
             ];
         })->toArray();
     }
+
+    public function calculateHumidityStability($filterDate = null)
+    {
+        $filterDate = $filterDate ?? Carbon::now('Asia/Manila')->toDateString();
+
+        $readings = DailySensorData::where('board', 'B1')
+            ->whereDate('reading_date', $filterDate)
+            ->pluck('humidity')
+            ->toArray();
+
+        if (count($readings) === 0) {
+            $this->humidityKPI = [
+                'avg'    => 0,
+                'stddev' => 0,
+                'n'      => 0,
+                'status' => 'no-data',
+            ];
+            return;
+        }
+
+        $n = count($readings);
+        $avg = array_sum($readings) / $n;
+
+        // Calculate variance
+        $variance = array_sum(array_map(fn($h) => pow($h - $avg, 2), $readings)) / $n;
+        $stddev = round(sqrt($variance), 2);
+
+        // KPI thresholds from your table
+        $status = ($stddev <= 5) ? 'stable' : 'unstable';
+
+        $this->humidityKPI = [
+            'avg'    => round($avg, 2),
+            'stddev' => $stddev,
+            'n'      => $n,
+            'status' => $status,
+        ];
+    }
+
+    public function calculateSuccessRate()
+    {
+        $cycles = Cycles::with('yieldTrackers')->get();
+
+        if ($cycles->isEmpty()) {
+            $this->successRateKPI = [
+                'rate'   => 0,
+                'status' => 'no-data',
+            ];
+            return;
+        }
+
+        $totalYield   = 0;
+        $totalTrays   = 0;
+
+        foreach ($cycles as $cycle) {
+            $totalYield += $cycle->yieldTrackers->sum('yield_per_tray');
+            $totalTrays += $cycle->trays;
+        }
+
+        // ✅ assume each tray is expected to yield 100g (adjust as needed)
+        $expectedYield = $totalTrays * 100;
+
+        $rate = ($expectedYield > 0) ? ($totalYield / $expectedYield) * 100 : 0;
+        $rate = round($rate, 2);
+
+        $status = $rate >= 80 ? 'good' : 'poor';
+
+        $this->successRateKPI = [
+            'rate'   => $rate,
+            'status' => $status,
+        ];
+    }
+
+    public function calculateTotalYields()
+    {
+        // ✅ Get total yields in grams across all YieldTracker records
+        $total = YieldTracker::sum('yield_per_tray');
+
+        // Store in KPI
+        $this->totalYieldKPI = [
+            'total' => $total,
+            'unit'  => 'g',
+        ];
+    }
+
 
     public function getGraphValues(){
 

@@ -43,6 +43,6 @@ class Cycles extends Model
     // }
     public function yieldTrackers()
     {
-        return $this->hasMany(YieldTracker::class);
+        return $this->hasMany(YieldTracker::class, 'cycle_id'); 
     }
 }

@@ -365,7 +365,7 @@
               <div id="hs-basic-with-title-and-arrow-stretched-collapse-two" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" role="region" aria-labelledby="hs-basic-with-title-and-arrow-stretched-heading-two">
                 <div class="w-full max-w-3xl mx-auto aspect-video">
                   <video class="w-full h-full" controls>
-                    <source src="/videos/sample.mp4" type="video/mp4" />
+                    <source src="{{ asset('/images/sensor-placements.mp4') }}" type="video/mp4" />
                     Your browser does not support the video tag.
                   </video>
                 </div>
@@ -385,7 +385,7 @@
               <div id="hs-basic-with-title-and-arrow-stretched-collapse-three" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" role="region" aria-labelledby="hs-basic-with-title-and-arrow-stretched-heading-three">
                 <div class="w-full max-w-3xl mx-auto aspect-video">
                   <video class="w-full h-full" controls>
-                    <source src="/videos/sample.mp4" type="video/mp4" />
+                    <source src="{{ asset('/images/broccoli-device.mp4') }}" type="video/mp4" />
                     Your browser does not support the video tag.
                   </video>
                 </div>
@@ -404,7 +404,7 @@
               </button>
               <div id="hs-basic-with-title-and-arrow-stretched-collapse-four" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" role="region" aria-labelledby="hs-basic-with-title-and-arrow-stretched-heading-four">
                 <div class="w-full max-w-3xl mx-auto">
-                  <img src="https://placehold.co/400" alt="" class="w-full h-auto">
+                  <img src="{{ asset('/images/floor-plan.png') }}" alt="" class="w-full h-auto">
                 </div>
               </div>
             </div>
@@ -426,7 +426,7 @@
                 <div class="w-full h-auto flex flex-col mb-5">
                   <div class="w-full h-auto flex flex-col md:flex-row justify-center items-center gap-5">
                     <div class="max-w-40 max-h-40">
-                      <img src="https://placehold.co/400" alt="" class="w-full h-auto">
+                      <img src="{{ asset('/images/1.jpg') }}" alt="" class="w-full h-auto">
                     </div>
                     <div class="flex flex-row justify-around w-full">
                       <div class="flex flex-col justify-center items-center">
@@ -450,7 +450,7 @@
                 <div class="w-full h-auto flex flex-col mb-5">
                   <div class="w-full h-auto flex flex-col md:flex-row justify-center items-center gap-5">
                     <div class="max-w-40 max-h-40">
-                      <img src="https://placehold.co/400" alt="" class="w-full h-auto">
+                      <img src="{{ asset('/images/2.jpg') }}" alt="" class="w-full h-auto">
                     </div>
                     <div class="flex flex-row justify-around w-full">
                       <div class="flex flex-col justify-center items-center">
@@ -474,7 +474,7 @@
                 <div class="w-full h-auto flex flex-col mb-5">
                   <div class="w-full h-auto flex flex-col md:flex-row justify-center items-center gap-5">
                     <div class="max-w-40 max-h-40">
-                      <img src="https://placehold.co/400" alt="" class="w-full h-auto">
+                      <img src="{{ asset('/images/3.jpg') }}" alt="" class="w-full h-auto">
                     </div>
                     <div class="flex flex-row justify-around w-full">
                       <div class="flex flex-col justify-center items-center">
@@ -498,7 +498,7 @@
                 <div class="w-full h-auto flex flex-col mb-5">
                   <div class="w-full h-auto flex flex-col md:flex-row justify-center items-center gap-5">
                     <div class="max-w-40 max-h-40">
-                      <img src="https://placehold.co/400" alt="" class="w-full h-auto">
+                      <img src="{{ asset('/images/4.jpg') }}" alt="" class="w-full h-auto">
                     </div>
                     <div class="flex flex-row justify-around w-full">
                       <div class="flex flex-col justify-center items-center">
@@ -535,15 +535,15 @@
                   <div>
                     <div class="w-full flex flex-col md:flex-row items-center justify-center gap-6">
                       <!-- Mobile image -->
-                      <div class="aspect-[9/19.5] h-80 md:h-96">
-                        <img src="https://placehold.co/400" alt="Mobile View"
-                             class="w-full h-full object-cover rounded-xl shadow-md" />
+                      <div class="aspect-[9/19.5] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl">
+                        <img src="{{ asset('/images/guide/Login.png') }}" alt="Mobile View"
+                             class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                     
                       <!-- Desktop image -->
-                      <div class="aspect-[16/10] h-80 md:h-96">
-                        <img src="https://placehold.co/600x400" alt="Desktop View"
-                             class="w-full h-full object-cover rounded-xl shadow-md" />
+                      <div class="aspect-[16/10] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl">
+                        <img src="{{ asset('/images/guide/desktop/Login.png') }}" alt="Desktop View"
+                             class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                       
                     </div>
@@ -557,15 +557,15 @@
                   <div>
                     <div class="w-full flex flex-col md:flex-row items-center justify-center gap-6">
                       <!-- Mobile image -->
-                      <div class="aspect-[9/19.5] h-80 md:h-96">
-                        <img src="https://placehold.co/400" alt="Mobile View"
-                             class="w-full h-full object-cover rounded-xl shadow-md" />
+                      <div class="aspect-[9/19.5] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl">
+                        <img src="{{ asset('/images/guide/Signup.png') }}" alt="Mobile View"
+                             class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                     
                       <!-- Desktop image -->
-                      <div class="aspect-[16/10] h-80 md:h-96">
-                        <img src="https://placehold.co/600x400" alt="Desktop View"
-                             class="w-full h-full object-cover rounded-xl shadow-md" />
+                      <div class="aspect-[16/10] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl">
+                        <img src="{{ asset('/images/guide/desktop/Signup.png') }}" alt="Desktop View"
+                             class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                       
                     </div>
@@ -578,15 +578,15 @@
                   <div>
                     <div class="w-full flex flex-col md:flex-row items-center justify-center gap-6">
                       <!-- Mobile image -->
-                      <div class="aspect-[9/19.5] h-80 md:h-96">
-                        <img src="https://placehold.co/400" alt="Mobile View"
-                             class="w-full h-full object-cover rounded-xl shadow-md" />
+                      <div class="aspect-[9/19.5] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl">
+                        <img src="{{ asset('/images/guide/Terms-and-Conditions.png') }}" alt="Mobile View"
+                             class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                     
                       <!-- Desktop image -->
-                      <div class="aspect-[16/10] h-80 md:h-96">
-                        <img src="https://placehold.co/600x400" alt="Desktop View"
-                             class="w-full h-full object-cover rounded-xl shadow-md" />
+                      <div class="aspect-[16/10] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl">
+                        <img src="{{ asset('/images/guide/desktop/Terms-and-Conditions.png') }}" alt="Desktop View"
+                             class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                       
                     </div>
@@ -599,15 +599,15 @@
                   <div>
                     <div class="w-full flex flex-col md:flex-row items-center justify-center gap-6">
                       <!-- Mobile image -->
-                      <div class="aspect-[9/19.5] h-80 md:h-96">
-                        <img src="https://placehold.co/400" alt="Mobile View"
-                             class="w-full h-full object-cover rounded-xl shadow-md" />
+                      <div class="aspect-[9/19.5] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl">
+                        <img src="{{ asset('/images/guide/Growers-Guide.png') }}" alt="Mobile View"
+                             class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                     
                       <!-- Desktop image -->
-                      <div class="aspect-[16/10] h-80 md:h-96">
-                        <img src="https://placehold.co/600x400" alt="Desktop View"
-                             class="w-full h-full object-cover rounded-xl shadow-md" />
+                      <div class="aspect-[16/10] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl">
+                        <img src="{{ asset('/images/guide/desktop/Growers-Guide.png') }}" alt="Desktop View"
+                             class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                       
                     </div>
@@ -621,15 +621,15 @@
                   <div>
                     <div class="w-full flex flex-col md:flex-row items-center justify-center gap-6">
                       <!-- Mobile image -->
-                      <div class="aspect-[9/19.5] h-80 md:h-96">
-                        <img src="https://placehold.co/400" alt="Mobile View"
-                             class="w-full h-full object-cover rounded-xl shadow-md" />
+                      <div class="aspect-[9/19.5] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl">
+                        <img src="{{ asset('/images/guide/Parameters.png') }}" alt="Mobile View"
+                             class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                     
                       <!-- Desktop image -->
-                      <div class="aspect-[16/10] h-80 md:h-96">
-                        <img src="https://placehold.co/600x400" alt="Desktop View"
-                             class="w-full h-full object-cover rounded-xl shadow-md" />
+                      <div class="aspect-[16/10] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl">
+                        <img src="{{ asset('/images/guide/desktop/Parameters.png') }}" alt="Desktop View"
+                             class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                       
                     </div>
@@ -642,15 +642,15 @@
                   <div>
                     <div class="w-full flex flex-col md:flex-row items-center justify-center gap-6">
                       <!-- Mobile image -->
-                      <div class="aspect-[9/19.5] h-80 md:h-96">
-                        <img src="https://placehold.co/400" alt="Mobile View"
-                             class="w-full h-full object-cover rounded-xl shadow-md" />
+                      <div class="aspect-[9/19.5] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl">
+                        <img src="{{ asset('/images/guide/Daily-Records.png') }}" alt="Mobile View"
+                             class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                     
                       <!-- Desktop image -->
-                      <div class="aspect-[16/10] h-80 md:h-96">
-                        <img src="https://placehold.co/600x400" alt="Desktop View"
-                             class="w-full h-full object-cover rounded-xl shadow-md" />
+                      <div class="aspect-[16/10] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl">
+                        <img src="{{ asset('/images/guide/desktop/Daily-Records.png') }}" alt="Desktop View"
+                             class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                       
                     </div>
@@ -664,15 +664,15 @@
                   <div>
                     <div class="w-full flex flex-col md:flex-row items-center justify-center gap-6">
                       <!-- Mobile image -->
-                      <div class="aspect-[9/19.5] h-80 md:h-96">
-                        <img src="https://placehold.co/400" alt="Mobile View"
-                             class="w-full h-full object-cover rounded-xl shadow-md" />
+                      <div class="aspect-[9/19.5] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl">
+                        <img src="{{ asset('/images/guide/Cultivation-Cycle.png') }}" alt="Mobile View"
+                             class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                     
                       <!-- Desktop image -->
-                      <div class="aspect-[16/10] h-80 md:h-96">
-                        <img src="https://placehold.co/600x400" alt="Desktop View"
-                             class="w-full h-full object-cover rounded-xl shadow-md" />
+                      <div class="aspect-[16/10] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl">
+                        <img src="{{ asset('/images/guide/desktop/Cultivation-Cycle.png') }}" alt="Desktop View"
+                             class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                       
                     </div>
@@ -687,15 +687,15 @@
                   <div>
                     <div class="w-full flex flex-col md:flex-row items-center justify-center gap-6">
                       <!-- Mobile image -->
-                      <div class="aspect-[9/19.5] h-80 md:h-96">
-                        <img src="https://placehold.co/400" alt="Mobile View"
-                             class="w-full h-full object-cover rounded-xl shadow-md" />
+                      <div class="aspect-[9/19.5] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl">
+                        <img src="{{ asset('/images/guide/Yield-Tracker-Page.png') }}" alt="Mobile View"
+                             class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                     
                       <!-- Desktop image -->
-                      <div class="aspect-[16/10] h-80 md:h-96">
-                        <img src="https://placehold.co/600x400" alt="Desktop View"
-                             class="w-full h-full object-cover rounded-xl shadow-md" />
+                      <div class="aspect-[16/10] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl">
+                        <img src="{{ asset('/images/guide/desktop/Yield-Tracker-Page.png') }}" alt="Desktop View"
+                             class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                       
                     </div>
@@ -710,15 +710,15 @@
                   <div>
                     <div class="w-full flex flex-col md:flex-row items-center justify-center gap-6">
                       <!-- Mobile image -->
-                      <div class="aspect-[9/19.5] h-80 md:h-96">
-                        <img src="https://placehold.co/400" alt="Mobile View"
-                             class="w-full h-full object-cover rounded-xl shadow-md" />
+                      <div class="aspect-[9/19.5] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl">
+                        <img src="{{ asset('/images/guide/User-Registration.png') }}" alt="Mobile View"
+                             class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                     
                       <!-- Desktop image -->
-                      <div class="aspect-[16/10] h-80 md:h-96">
-                        <img src="https://placehold.co/600x400" alt="Desktop View"
-                             class="w-full h-full object-cover rounded-xl shadow-md" />
+                      <div class="aspect-[16/10] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl">
+                        <img src="{{ asset('/images/guide/desktop/User-Registration.png') }}" alt="Desktop View"
+                             class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                       
                     </div>
@@ -731,15 +731,15 @@
                   <div>
                     <div class="w-full flex flex-col md:flex-row items-center justify-center gap-6">
                       <!-- Mobile image -->
-                      <div class="aspect-[9/19.5] h-80 md:h-96">
-                        <img src="https://placehold.co/400" alt="Mobile View"
-                             class="w-full h-full object-cover rounded-xl shadow-md" />
+                      <div class="aspect-[9/19.5] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl shadow-md">
+                        <img src="{{ asset('/images/guide/User-Management.png') }}" alt="Mobile View"
+                             class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                     
                       <!-- Desktop image -->
-                      <div class="aspect-[16/10] h-80 md:h-96">
-                        <img src="https://placehold.co/600x400" alt="Desktop View"
-                             class="w-full h-full object-cover rounded-xl shadow-md" />
+                      <div class="aspect-[16/10] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl">
+                        <img src="{{ asset('/images/guide/desktop/User-Management.png') }}" alt="Desktop View"
+                             class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                       
                     </div>
@@ -766,7 +766,7 @@
               <div id="hs-basic-with-title-and-arrow-stretched-collapse-three" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" role="region" aria-labelledby="hs-basic-with-title-and-arrow-stretched-heading-three">
                 <div class="w-full max-w-3xl mx-auto aspect-video">
                   <video class="w-full h-full" controls>
-                    <source src="/videos/sample.mp4" type="video/mp4" />
+                    <source src="{{ asset('/images/web-tut.mp4') }}" type="video/mp4" />
                     Your browser does not support the video tag.
                   </video>
                 </div>

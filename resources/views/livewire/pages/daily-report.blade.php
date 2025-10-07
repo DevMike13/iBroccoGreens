@@ -31,6 +31,155 @@
         </div>
     </div>
 
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5 my-5">
+        {{-- Soil Moisture --}}
+        <x-card class="p-4 flex flex-col items-center">
+            <h3 class="text-sm font-medium text-center">Average Soil Moisture</h3>
+            <div class="flex justify-center items-center gap-3 mt-3">
+                <div class="flex flex-col justify-center items-center border-r-2">
+                    <p class="text-sm">
+                        Daily
+                    </p>
+                    <div class="flex justify-center items-baseline">
+                        <p class="text-2xl font-bold">
+                            {{ $soilMoistureKPI['average'] ?? '-' }}
+                        </p>
+                        <span class="text-lg font-medium">%</span>
+                        @if(($soilMoistureKPI['status'] ?? '') === 'optimal')
+                            <div class="flex items-center text-green-600">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-5 fill-current" viewBox="0 0 20 20">
+                                    <polygon points="10,4 16,16 4,16" />
+                                </svg>
+                            </div>
+                        @else
+                            <div class="flex items-center text-red-600">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-5 fill-current" viewBox="0 0 20 20">
+                                    <polygon points="4,4 16,4 10,16" />
+                                </svg>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+                
+                <div class="flex flex-col justify-center items-center">
+                    <p class="text-sm">
+                        Cycle {{ $soilMoistureCycleKPI['cycle_no'] ?? '-' }}
+                    </p>
+                    <div class="flex justify-center items-center">
+                        <p class="text-2xl font-bold">
+                            {{ $soilMoistureCycleKPI['average'] ?? '0' }} %
+                        </p>
+                    
+                        @if(($soilMoistureCycleKPI['status'] ?? '') === 'optimal')
+                            <div class="flex items-center text-green-600">
+                                <!-- Solid up triangle -->
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-5 fill-current" viewBox="0 0 20 20">
+                                    <polygon points="10,4 16,16 4,16" />
+                                </svg>
+                            </div>
+                        @elseif(($soilMoistureCycleKPI['status'] ?? '') === 'out-of-range')
+                            <div class="flex items-center text-red-600">
+                                <!-- Solid down triangle -->
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-5 fill-current" viewBox="0 0 20 20">
+                                    <polygon points="4,4 16,4 10,16" />
+                                </svg>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+           
+        </x-card>
+    
+        {{-- Temperature --}}
+        <x-card class="p-4 flex flex-col items-center">
+            <h3 class="text-md font-medium text-center">Temperature Stability</h3>
+            <div class="flex justify-center items-center">
+                <p class="text-3xl font-bold">
+                    ± {{ $temperatureKPI['stddev'] ?? '-' }} °C
+                </p>
+            
+                @if(($temperatureKPI['status'] ?? '') === 'stable')
+                    <div class="flex items-center text-green-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-5 fill-current" viewBox="0 0 20 20">
+                            <polygon points="10,4 16,16 4,16" />
+                        </svg>
+                    </div>
+                @elseif(($temperatureKPI['status'] ?? '') === 'unstable')
+                    <div class="flex items-center text-red-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-5 fill-current" viewBox="0 0 20 20">
+                            <polygon points="4,4 16,4 10,16" />
+                        </svg>
+                    </div>
+                @else
+                    <span class="text-gray-500">No Data</span>
+                @endif
+            </div>
+        </x-card>
+    
+        {{-- Humidity --}}
+        <x-card class="p-4 flex flex-col items-center">
+            <h3 class="text-md font-medium text-center">Humidity Stability</h3>
+            <div class="flex justify-center items-center">
+                <p class="text-2xl font-bold">
+                    {{ $humidityKPI['avg'] ?? '-' }} % <span class="text-sm font-medium text-gray-500">avg</span>
+                </p>
+                @if(($humidityKPI['status'] ?? '') === 'stable')
+                    <div class="flex items-center text-green-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-5 fill-current" viewBox="0 0 20 20">
+                            <polygon points="10,4 16,16 4,16" />
+                        </svg>
+                    </div>
+                @elseif(($humidityKPI['status'] ?? '') === 'unstable')
+                    <div class="flex items-center text-red-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-5 fill-current" viewBox="0 0 20 20">
+                            <polygon points="4,4 16,4 10,16" />
+                        </svg>
+                    </div>
+                @endif
+            </div>
+            <p class="text-sm text-gray-500">
+                σ = {{ $humidityKPI['stddev'] ?? '-' }} | n = {{ $humidityKPI['n'] ?? 0 }}
+            </p>
+        </x-card>
+    
+        {{-- Germination --}}
+        <x-card class="p-4 flex flex-col items-center">
+            <h3 class="text-md font-medium text-center">Germination Success Rate</h3>
+        
+            <div class="flex items-center">
+                <p class="text-3xl font-bold">
+                    {{ $successRateKPI['rate'] ?? '-' }} %
+                </p>
+        
+                @if(($successRateKPI['status'] ?? '') === 'good')
+                    <div class="flex items-center text-green-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-5 fill-current" viewBox="0 0 20 20">
+                            <polygon points="10,4 16,16 4,16" />
+                        </svg>
+                    </div>
+                @elseif(($successRateKPI['status'] ?? '') === 'poor')
+                    <div class="flex items-center text-red-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-5 fill-current" viewBox="0 0 20 20">
+                            <polygon points="4,4 16,4 10,16" />
+                        </svg>
+                    </div>
+                @else
+                    <span class="text-gray-500 ml-2 text-sm">No Data</span>
+                @endif
+            </div>
+        </x-card>
+    
+        {{-- Total Yield --}}
+        <x-card class="p-4 flex flex-col items-center">
+            <h3 class="text-md font-medium">Total Yield</h3>
+            <p class="text-3xl font-bold">
+                {{ $totalYieldKPI['total'] ?? 0 }} g
+            </p>
+        </x-card>
+    </div>
+    
+
     <div class="flex justify-center items-center">
         <div class="flex bg-gray-100 hover:bg-gray-200 rounded-lg transition p-1 dark:bg-neutral-700 dark:hover:bg-neutral-600">
           <nav class="flex gap-x-1" aria-label="Tabs" role="tablist" aria-orientation="horizontal">

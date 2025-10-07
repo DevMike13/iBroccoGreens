@@ -31,4 +31,17 @@ class CycleController extends Controller
             'updated_phase' => $cycle->phase,
         ]);
     }
+
+    public function latest()
+    {
+        $latestCycle = Cycles::latest('created_at')->first();
+
+        if (!$latestCycle) {
+            return response()->json([
+                'message' => 'No cycles found.'
+            ], 404);
+        }
+
+        return response()->json($latestCycle);
+    }
 }

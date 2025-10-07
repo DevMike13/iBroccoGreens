@@ -21,6 +21,7 @@ Route::post('/store-daily-readings', [SensorController::class, 'storeDailySensor
 Route::post('/notifications', [NotificationController::class, 'store']);
 Route::get('/cycles', [CycleController::class, 'index']);
 Route::put('/cycles/{id}/update-phase', [CycleController::class, 'updatePhase']);
+Route::get('/cycles/latest', [CycleController::class, 'latest']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
