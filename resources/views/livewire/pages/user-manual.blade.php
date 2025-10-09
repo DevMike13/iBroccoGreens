@@ -403,9 +403,16 @@
                 </svg>
               </button>
               <div id="hs-basic-with-title-and-arrow-stretched-collapse-four" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" role="region" aria-labelledby="hs-basic-with-title-and-arrow-stretched-heading-four">
-                <div class="w-full max-w-3xl mx-auto">
-                  <img src="{{ asset('/images/floor-plan.png') }}" alt="" class="w-full h-auto">
-                </div>
+                <div class="w-full max-w-full grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div class="flex flex-col items-center">
+                    <img src="{{ asset('/images/guide/SE.png') }}" alt="SE View" class="w-full h-auto object-cover rounded">
+                    <h4 class="mt-2 text-center font-medium">SE View</h4>
+                  </div>
+                  <div class="flex flex-col items-center">
+                    <img src="{{ asset('/images/guide/SW.png') }}" alt="SW View" class="w-full h-auto object-cover rounded">
+                    <h4 class="mt-2 text-center font-medium">SW View</h4>
+                  </div>
+                </div>                
               </div>
             </div>
           </div>
@@ -425,8 +432,8 @@
               <div id="hs-basic-with-title-and-arrow-stretched-collapse-one" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" role="region" aria-labelledby="hs-basic-with-title-and-arrow-stretched-heading-one">
                 <div class="w-full h-auto flex flex-col mb-5">
                   <div class="w-full h-auto flex flex-col md:flex-row justify-center items-center gap-5">
-                    <div class="max-w-40 max-h-40">
-                      <img src="{{ asset('/images/1.jpg') }}" alt="" class="w-full h-auto">
+                    <div class="max-w-[400px] max-h-[400px]">
+                      <img src="{{ asset('/images/soil-moist-notif.jpg') }}" alt="" class="w-full h-auto">
                     </div>
                     <div class="flex flex-row justify-around w-full">
                       <div class="flex flex-col justify-center items-center">
@@ -449,8 +456,8 @@
 
                 <div class="w-full h-auto flex flex-col mb-5">
                   <div class="w-full h-auto flex flex-col md:flex-row justify-center items-center gap-5">
-                    <div class="max-w-40 max-h-40">
-                      <img src="{{ asset('/images/2.jpg') }}" alt="" class="w-full h-auto">
+                    <div class="max-w-[400px] max-h-[400px]">
+                      <img src="{{ asset('/images/temp-notif.jpg') }}" alt="" class="w-full h-auto">
                     </div>
                     <div class="flex flex-row justify-around w-full">
                       <div class="flex flex-col justify-center items-center">
@@ -473,8 +480,8 @@
 
                 <div class="w-full h-auto flex flex-col mb-5">
                   <div class="w-full h-auto flex flex-col md:flex-row justify-center items-center gap-5">
-                    <div class="max-w-40 max-h-40">
-                      <img src="{{ asset('/images/3.jpg') }}" alt="" class="w-full h-auto">
+                    <div class="max-w-[400px] max-h-[400px]">
+                      <img src="{{ asset('/images/humid-notif.jpg') }}" alt="" class="w-full h-auto">
                     </div>
                     <div class="flex flex-row justify-around w-full">
                       <div class="flex flex-col justify-center items-center">
@@ -497,8 +504,8 @@
 
                 <div class="w-full h-auto flex flex-col mb-5">
                   <div class="w-full h-auto flex flex-col md:flex-row justify-center items-center gap-5">
-                    <div class="max-w-40 max-h-40">
-                      <img src="{{ asset('/images/4.jpg') }}" alt="" class="w-full h-auto">
+                    <div class="max-w-[400px] max-h-[400px]">
+                      <img src="{{ asset('/images/water-ph-notif.jpg') }}" alt="" class="w-full h-auto">
                     </div>
                     <div class="flex flex-row justify-around w-full">
                       <div class="flex flex-col justify-center items-center">
@@ -643,13 +650,13 @@
                     <div class="w-full flex flex-col md:flex-row items-center justify-center gap-6">
                       <!-- Mobile image -->
                       <div class="aspect-[9/19.5] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl">
-                        <img src="{{ asset('/images/guide/Daily-Records.png') }}" alt="Mobile View"
+                        <img src="{{ asset('/images/guide/Daily-Records-New-M.png') }}" alt="Mobile View"
                              class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                     
                       <!-- Desktop image -->
                       <div class="aspect-[16/10] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl">
-                        <img src="{{ asset('/images/guide/desktop/Daily-Records.png') }}" alt="Desktop View"
+                        <img src="{{ asset('/images/guide/desktop/Daily-Records-New-D.jpg') }}" alt="Desktop View"
                              class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                       
@@ -764,7 +771,7 @@
                 </svg>
               </button>
               <div id="hs-basic-with-title-and-arrow-stretched-collapse-three" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" role="region" aria-labelledby="hs-basic-with-title-and-arrow-stretched-heading-three">
-                <div class="w-full max-w-3xl mx-auto aspect-video">
+                <div class="w-full max-w-full mx-auto aspect-video">
                   <video class="w-full h-full" controls>
                     <source src="{{ asset('/images/web-tut.mp4') }}" type="video/mp4" />
                     Your browser does not support the video tag.

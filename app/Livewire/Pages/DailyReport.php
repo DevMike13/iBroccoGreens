@@ -317,8 +317,27 @@ class DailyReport extends Component
 
     public function calculateTotalYields()
     {
-        // ✅ Get total yields in grams across all YieldTracker records
-        $total = YieldTracker::sum('yield_per_tray');
+        $total = 0;
+
+        // ✅ Find the latest cycle (either current or completed)
+        $latestCycle = Cycles::orderBy('cycle_no', 'desc')->first();
+
+        if ($latestCycle) {
+            if ($latestCycle->status === 'current') {
+                // ✅ If latest is current, show yields of the last completed cycle
+                $previousCycle = Cycles::where('cycle_no', '<', $latestCycle->cycle_no)
+                    ->where('status', 'completed')
+                    ->orderBy('cycle_no', 'desc')
+                    ->first();
+
+                if ($previousCycle) {
+                    $total = $previousCycle->yieldTrackers()->sum('yield_per_tray');
+                }
+            } else {
+                // ✅ If latest is already completed, use it
+                $total = $latestCycle->yieldTrackers()->sum('yield_per_tray');
+            }
+        }
 
         // Store in KPI
         $this->totalYieldKPI = [
@@ -326,6 +345,7 @@ class DailyReport extends Component
             'unit'  => 'g',
         ];
     }
+
 
 
     public function getGraphValues(){

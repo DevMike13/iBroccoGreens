@@ -488,7 +488,7 @@
     </x-modal>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
+    {{-- <script>
         
         const yieldData = @json($yieldLists);
         
@@ -550,7 +550,56 @@
         Livewire.on('updateChart', (newGraphData) => {
             yieldData = newGraphData;
         });
+    </script> --}}
+    <script>
+        const yieldData = @json($yieldSums);
+    
+        const labels = yieldData.map(item => `Cycle ${item.cycle_no}`);
+        const yields = yieldData.map(item => item.total_yield);
+    
+        const ctx = document.getElementById('yieldLineChart').getContext('2d');
+    
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Total Yield per Cycle',
+                    data: yields,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.4)',
+                    fill: true,
+                    tension: 0.3,
+                    pointRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'top' },
+                    title: {
+                        display: true,
+                        text: 'Total Yield per Cycle'
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Cycle No.'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Total Yield (grams)'
+                        },
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
     </script>
-
+    
     
 </div>

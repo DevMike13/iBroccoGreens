@@ -531,10 +531,16 @@ class CycleDetails extends Component
     public function render()
     {
         $cycleLists = Cycles::orderBy('cycle_no', 'desc')->get();
+
+        $yieldSums = YieldTracker::selectRaw('cycle_no, SUM(yield_per_tray) as total_yield')
+            ->groupBy('cycle_no')
+            ->orderBy('cycle_no')
+            ->get();
         
         return view('livewire.pages.cycle-details', [
             'cycleLists' => $cycleLists,
             'yieldLists' => $this->filteredYieldLists,
+            'yieldSums'  => $yieldSums,
         ]);
     }
 }

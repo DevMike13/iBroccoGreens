@@ -172,7 +172,7 @@
     
         {{-- Total Yield --}}
         <x-card class="p-4 flex flex-col items-center">
-            <h3 class="text-md font-medium">Total Yield</h3>
+            <h3 class="text-md font-medium">Total Yield of Previous Cycle</h3>
             <p class="text-3xl font-bold">
                 {{ $totalYieldKPI['total'] ?? 0 }} g
             </p>
