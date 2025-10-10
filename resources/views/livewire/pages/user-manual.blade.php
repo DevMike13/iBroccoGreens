@@ -543,13 +543,13 @@
                     <div class="w-full flex flex-col md:flex-row items-center justify-center gap-6">
                       <!-- Mobile image -->
                       <div class="aspect-[9/19.5] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl">
-                        <img src="{{ asset('/images/guide/Login.png') }}" alt="Mobile View"
+                        <img src="{{ asset('/images/guide/Login.jpg') }}" alt="Mobile View"
                              class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                     
                       <!-- Desktop image -->
                       <div class="aspect-[16/10] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl">
-                        <img src="{{ asset('/images/guide/desktop/Login.png') }}" alt="Desktop View"
+                        <img src="{{ asset('/images/guide/desktop/Login.jpg') }}" alt="Desktop View"
                              class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                       
@@ -565,13 +565,13 @@
                     <div class="w-full flex flex-col md:flex-row items-center justify-center gap-6">
                       <!-- Mobile image -->
                       <div class="aspect-[9/19.5] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl">
-                        <img src="{{ asset('/images/guide/Signup.png') }}" alt="Mobile View"
+                        <img src="{{ asset('/images/guide/Signup.jpg') }}" alt="Mobile View"
                              class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                     
                       <!-- Desktop image -->
                       <div class="aspect-[16/10] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl">
-                        <img src="{{ asset('/images/guide/desktop/Signup.png') }}" alt="Desktop View"
+                        <img src="{{ asset('/images/guide/desktop/Signup.jpg') }}" alt="Desktop View"
                              class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                       
@@ -586,13 +586,13 @@
                     <div class="w-full flex flex-col md:flex-row items-center justify-center gap-6">
                       <!-- Mobile image -->
                       <div class="aspect-[9/19.5] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl">
-                        <img src="{{ asset('/images/guide/Terms-and-Conditions.png') }}" alt="Mobile View"
+                        <img src="{{ asset('/images/guide/Terms-and-Conditions.jpg') }}" alt="Mobile View"
                              class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                     
                       <!-- Desktop image -->
                       <div class="aspect-[16/10] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl">
-                        <img src="{{ asset('/images/guide/desktop/Terms-and-Conditions.png') }}" alt="Desktop View"
+                        <img src="{{ asset('/images/guide/desktop/Terms-and-Conditions.jpg') }}" alt="Desktop View"
                              class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                       
@@ -607,13 +607,13 @@
                     <div class="w-full flex flex-col md:flex-row items-center justify-center gap-6">
                       <!-- Mobile image -->
                       <div class="aspect-[9/19.5] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl">
-                        <img src="{{ asset('/images/guide/Growers-Guide.png') }}" alt="Mobile View"
+                        <img src="{{ asset('/images/guide/Growers-Guide.jpg') }}" alt="Mobile View"
                              class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                     
                       <!-- Desktop image -->
                       <div class="aspect-[16/10] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl">
-                        <img src="{{ asset('/images/guide/desktop/Growers-Guide.png') }}" alt="Desktop View"
+                        <img src="{{ asset('/images/guide/desktop/Growers-Guide.jpg') }}" alt="Desktop View"
                              class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                       
@@ -629,13 +629,13 @@
                     <div class="w-full flex flex-col md:flex-row items-center justify-center gap-6">
                       <!-- Mobile image -->
                       <div class="aspect-[9/19.5] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl">
-                        <img src="{{ asset('/images/guide/Parameters.png') }}" alt="Mobile View"
+                        <img src="{{ asset('/images/guide/Parameters.jpg') }}" alt="Mobile View"
                              class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                     
                       <!-- Desktop image -->
                       <div class="aspect-[16/10] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl">
-                        <img src="{{ asset('/images/guide/desktop/Parameters.png') }}" alt="Desktop View"
+                        <img src="{{ asset('/images/guide/desktop/Parameters.jpg') }}" alt="Desktop View"
                              class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                       
@@ -650,7 +650,7 @@
                     <div class="w-full flex flex-col md:flex-row items-center justify-center gap-6">
                       <!-- Mobile image -->
                       <div class="aspect-[9/19.5] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl">
-                        <img src="{{ asset('/images/guide/Daily-Records-New-M.png') }}" alt="Mobile View"
+                        <img src="{{ asset('/images/guide/Daily-Records-New-M.jpg') }}" alt="Mobile View"
                              class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                     
@@ -672,13 +672,13 @@
                     <div class="w-full flex flex-col md:flex-row items-center justify-center gap-6">
                       <!-- Mobile image -->
                       <div class="aspect-[9/19.5] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl">
-                        <img src="{{ asset('/images/guide/Cultivation-Cycle.png') }}" alt="Mobile View"
+                        <img src="{{ asset('/images/guide/Cultivation-Cycle.jpg') }}" alt="Mobile View"
                              class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                     
                       <!-- Desktop image -->
                       <div class="aspect-[16/10] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl">
-                        <img src="{{ asset('/images/guide/desktop/Cultivation-Cycle.png') }}" alt="Desktop View"
+                        <img src="{{ asset('/images/guide/desktop/Cultivation-Cycle.jpg') }}" alt="Desktop View"
                              class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                       
@@ -695,13 +695,13 @@
                     <div class="w-full flex flex-col md:flex-row items-center justify-center gap-6">
                       <!-- Mobile image -->
                       <div class="aspect-[9/19.5] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl">
-                        <img src="{{ asset('/images/guide/Yield-Tracker-Page.png') }}" alt="Mobile View"
+                        <img src="{{ asset('/images/guide/Yield-Tracker-Page.jpg') }}" alt="Mobile View"
                              class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                     
                       <!-- Desktop image -->
                       <div class="aspect-[16/10] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl">
-                        <img src="{{ asset('/images/guide/desktop/Yield-Tracker-Page.png') }}" alt="Desktop View"
+                        <img src="{{ asset('/images/guide/desktop/Yield-Tracker-Page.jpg') }}" alt="Desktop View"
                              class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                       
@@ -718,13 +718,13 @@
                     <div class="w-full flex flex-col md:flex-row items-center justify-center gap-6">
                       <!-- Mobile image -->
                       <div class="aspect-[9/19.5] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl">
-                        <img src="{{ asset('/images/guide/User-Registration.png') }}" alt="Mobile View"
+                        <img src="{{ asset('/images/guide/User-Registration.jpg') }}" alt="Mobile View"
                              class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                     
                       <!-- Desktop image -->
                       <div class="aspect-[16/10] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl">
-                        <img src="{{ asset('/images/guide/desktop/User-Registration.png') }}" alt="Desktop View"
+                        <img src="{{ asset('/images/guide/desktop/User-Registration.jpg') }}" alt="Desktop View"
                              class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                       
@@ -739,13 +739,13 @@
                     <div class="w-full flex flex-col md:flex-row items-center justify-center gap-6">
                       <!-- Mobile image -->
                       <div class="aspect-[9/19.5] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl shadow-md">
-                        <img src="{{ asset('/images/guide/User-Management.png') }}" alt="Mobile View"
+                        <img src="{{ asset('/images/guide/User-Management.jpg') }}" alt="Mobile View"
                              class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                     
                       <!-- Desktop image -->
                       <div class="aspect-[16/10] h-80 md:h-96 flex items-center justify-center bg-gray-100 rounded-xl">
-                        <img src="{{ asset('/images/guide/desktop/User-Management.png') }}" alt="Desktop View"
+                        <img src="{{ asset('/images/guide/desktop/User-Management.jpg') }}" alt="Desktop View"
                              class="w-full h-full object-contain rounded-xl shadow-md" />
                       </div>
                       

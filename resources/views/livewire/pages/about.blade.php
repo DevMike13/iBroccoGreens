@@ -17,7 +17,7 @@
                 <img src="{{ asset('/images/about/About-3.jpg') }}" 
                      alt="" 
                      class="w-[400px] h-[300px] object-cover rounded">
-                <img src="{{ asset('/images/about/About-4.jpg') }}" 
+                <img src="{{ asset('/images/about/About-4.png') }}" 
                      alt="" 
                      class="w-[400px] h-[300px] object-cover rounded">
             </div>

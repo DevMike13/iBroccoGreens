@@ -25,5 +25,23 @@ class AccountsSeeder extends Seeder
             'email_verified_at' => $now,
             'is_approved' => true
         ]);
+
+        User::create([
+            'name' => 'Reynalyn Admin',
+            'email' => 'rodiquereyn@gmail.com',
+            'password' => Hash::make('rodiquereyn@2025'),
+            'role' => 'admin',
+            'email_verified_at' => $now,
+            'is_approved' => true
+        ]);
+
+        User::create([
+            'name' => 'Abigail Admin',
+            'email' => 'abigailvacunawa3412@gmail.com',
+            'password' => Hash::make('abigailvacunawa@2025'),
+            'role' => 'admin',
+            'email_verified_at' => $now,
+            'is_approved' => true
+        ]);
     }
 }
