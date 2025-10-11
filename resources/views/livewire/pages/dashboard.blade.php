@@ -1,19 +1,23 @@
 <div>
-    <div class="w-full max-w-sm mb-3 ml-auto">
-        <x-native-select
-            label="Tray Number"
-            {{-- placeholder="Select tray number" --}}
-            {{-- :options="['B1', 'B2', 'B3', 'B4']" --}}
-            :options="[
-                ['name' => 'Tray 1',  'id' => 'B1'],
-                ['name' => 'Tray 2', 'id' => 'B2'],
-                ['name' => 'Tray 3',   'id' => 'B3'],
-                ['name' => 'Tray 4',    'id' => 'B4'],
-            ]"
-            option-label="name"
-            option-value="id"
-            wire:model.live="selectedBoard"
-        />
+    <div class="flex flex-col-reverse lg:flex-row justify-between">
+        <h4 class="mt-auto mb-2 font-semibold">Parameter Monitoring</h4>
+
+        <div class="w-full max-w-sm mb-3 ml-auto">
+            <x-native-select
+                label="Tray Number"
+                {{-- placeholder="Select tray number" --}}
+                {{-- :options="['B1', 'B2', 'B3', 'B4']" --}}
+                :options="[
+                    ['name' => 'Tray 1',  'id' => 'B1'],
+                    ['name' => 'Tray 2', 'id' => 'B2'],
+                    ['name' => 'Tray 3',   'id' => 'B3'],
+                    ['name' => 'Tray 4',    'id' => 'B4'],
+                ]"
+                option-label="name"
+                option-value="id"
+                wire:model.live="selectedBoard"
+            />
+        </div>
     </div>
     <div class="flex justify-center items-center flex-col lg:flex-row">
         <div class="grid grid-cols-3 gap-2 w-full place-items-stretch">

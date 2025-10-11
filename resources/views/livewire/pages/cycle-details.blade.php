@@ -74,10 +74,28 @@
                                                     {{ number_format($cycle->trays) }}
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
+                                                    
+                                                    {{-- @php
+                                                        $start = \Carbon\Carbon::parse($cycle->start_date);
+                                                        $today = \Carbon\Carbon::today();
+                                                        
+                                                        $diff = $start->diffInDays($today);
+                                                        
+                                                        if ($diff === 0 || $diff === 1) {
+                                                            $daysSinceStart = 1;
+                                                        } else {
+                                                            $daysSinceStart = $diff; // so day 2 starts on the 3rd calendar day
+                                                        }
+                                                    
+                                                        $cappedDays = min($daysSinceStart, 7);
+                                                    @endphp
+
+                                                    {{ $cappedDays }} day(s) --}}
+
                                                     @php
                                                         $start = \Carbon\Carbon::parse($cycle->start_date);
                                                         $today = \Carbon\Carbon::today();
-                                                        $daysSinceStart = $start->diffInDays($today) + 1;
+                                                        $daysSinceStart = $start->diffInDays($today); // no +1, start at Day 0
                                                         $cappedDays = min($daysSinceStart, 7); // cap at 7
                                                     @endphp
 

@@ -18,6 +18,12 @@
       <img src="{{ asset('images/login-image.png') }}" alt="" class="left-illustration-login illustration-image">
   @endif
 
+  <div class="back-home-wrapper">
+    <a href="{{ url('/') }}" class="back-home-btn">← Back to Home</a>
+  </div>
+
+ 
+
   @for ($i = 0; $i < 20; $i++)
       <img
           src="{{ asset('images/micro-leaf.png') }}"
@@ -31,7 +37,9 @@
       />
   @endfor
 </div>
-
+{{-- <div class="back-home-wrapper-m">
+  <a href="{{ url('/') }}" class="back-home-btn-m">←</a>
+</div> --}}
 
 
 <style>
@@ -103,7 +111,35 @@ body {
         z-index: 0;
         pointer-events: none;
     }
+    /* .back-home-wrapper-m{
+      display: none;
+    }
+    .back-home-btn{
+      display: none;
+    } */
+    .back-home-wrapper {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: auto;
+    }
 
+    .back-home-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #10b981;
+        color: white;
+        font-weight: 600;
+        text-decoration: none;
+        border-radius: 100px;
+        transition: background 0.3s ease;
+        pointer-events: auto;
+    }
+
+    .back-home-btn:hover {
+        background-color: #059669;
+    }
 
 }
     
@@ -120,7 +156,29 @@ body {
       margin-left: -200px !important;
       margin-top: 3px !important;
   }
+  .back-home-wrapper {
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: auto;
+    }
 }
+.back-home-btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #10b981;
+      color: white;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 100px;
+      transition: background 0.3s ease;
+      pointer-events: auto;
+  }
+
+  .back-home-btn:hover {
+      background-color: #059669;
+  }
 /* Additional clones for effect */
 /* .broccoli::before,
 .broccoli::after {
@@ -133,6 +191,39 @@ body {
     height: 40px;
     opacity: 0.6;
     animation: drop-broccoli 7s linear infinite;
+} */
+
+/* @media screen and (max-width: 1023px) {
+
+  .back-home-wrapper{
+    display: none
+  }
+  .back-home-btn{
+    display: none;
+  }
+  .back-home-wrapper-m {
+    position: fixed;
+    bottom: 20px;  
+    right: 20px;
+    pointer-events: auto;
+    z-index: 9999; 
+  }
+
+  .back-home-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    padding: 0;
+    font-size: 22px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #10b981;
+    color: white;
+    font-weight: 600;
+    text-decoration: none;
+  }
 } */
 
 /* Animation */

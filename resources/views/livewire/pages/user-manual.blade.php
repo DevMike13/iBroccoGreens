@@ -419,6 +419,8 @@
         </div>
         <div id="horizontal-alignment-2" class="hidden" role="tabpanel" aria-labelledby="horizontal-alignment-item-2">
           <div class="hs-accordion-group">
+
+            {{-- SENSOR ALERT NOTIFICATION --}}
             <div class="hs-accordion" id="hs-basic-with-title-and-arrow-stretched-heading-one">
               <button class="hs-accordion-toggle hs-accordion-active:text-blue-600 py-3 inline-flex items-center justify-between gap-x-3 w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:hs-accordion-active:text-blue-500 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:outline-hidden dark:focus:text-neutral-400" aria-expanded="false" aria-controls="hs-basic-with-title-and-arrow-stretched-collapse-one">
                 Sensor Alert Notification
@@ -526,7 +528,8 @@
                 </div>
               </div>
             </div>
-          
+            
+            {{-- HOW TO USE THE IBROCCOGREENS WEBISTE --}}
             <div class="hs-accordion" id="hs-basic-with-title-and-arrow-stretched-heading-two">
               <button class="hs-accordion-toggle hs-accordion-active:text-blue-600 py-3 inline-flex items-center justify-between gap-x-3 w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:hs-accordion-active:text-blue-500 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:outline-hidden dark:focus:text-neutral-400" aria-expanded="false" aria-controls="hs-basic-with-title-and-arrow-stretched-collapse-two">
                 How to Use the iBroccoGreens Website
@@ -760,6 +763,7 @@
               </div>
             </div>
 
+            {{-- HOW TO USE THE IBROCCOGREENS WEBISTE VIDEO --}}
             <div class="hs-accordion" id="hs-basic-with-title-and-arrow-stretched-heading-three">
               <button class="hs-accordion-toggle hs-accordion-active:text-blue-600 py-3 inline-flex items-center justify-between gap-x-3 w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:hs-accordion-active:text-blue-500 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:outline-hidden dark:focus:text-neutral-400" aria-expanded="false" aria-controls="hs-basic-with-title-and-arrow-stretched-collapse-three">
                 How to Use the iBroccoGreens Website (Video Demo)
@@ -773,7 +777,7 @@
               <div id="hs-basic-with-title-and-arrow-stretched-collapse-three" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" role="region" aria-labelledby="hs-basic-with-title-and-arrow-stretched-heading-three">
                 <div class="w-full max-w-full mx-auto aspect-video">
                   <video class="w-full h-full" controls>
-                    <source src="{{ asset('/images/web-tut.mp4') }}" type="video/mp4" />
+                    <source src="{{ asset('/images/WEB-VIDEO-TUTORIAL.mp4') }}" type="video/mp4" />
                     Your browser does not support the video tag.
                   </video>
                 </div>
