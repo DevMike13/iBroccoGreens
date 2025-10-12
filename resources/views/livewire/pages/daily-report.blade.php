@@ -35,24 +35,27 @@
         {{-- Soil Moisture --}}
         <x-card class="p-4 flex flex-col items-center">
             <h3 class="text-sm font-medium text-center">Average Soil Moisture</h3>
-            <div class="flex justify-center items-center gap-3 mt-3">
-                <div class="flex flex-col justify-center items-center border-r-2">
-                    <p class="text-sm">
-                        Daily
-                    </p>
+
+            <div class="flex flex-row justify-center items-stretch gap-4 mt-3 w-full">
+                {{-- Daily --}}
+                <div class="flex-1 flex flex-col justify-center items-center">
+                    <p class="text-sm">Daily</p>
                     <div class="flex justify-center items-baseline">
                         <p class="text-2xl font-bold">
-                            {{ $soilMoistureKPI['average'] ?? '-' }}
+                            {{ number_format($soilMoistureKPI['average'] ?? 0, 1) ?? '-' }}
                         </p>
-                        <span class="text-lg font-medium">%</span>
+                        <span class="text-lg font-medium ml-1">%</span>
+
                         @if(($soilMoistureKPI['status'] ?? '') === 'optimal')
                             <div class="flex items-center text-green-600">
+                                <!-- Solid up triangle -->
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-5 fill-current" viewBox="0 0 20 20">
                                     <polygon points="10,4 16,16 4,16" />
                                 </svg>
                             </div>
                         @else
                             <div class="flex items-center text-red-600">
+                                <!-- Solid down triangle -->
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-5 fill-current" viewBox="0 0 20 20">
                                     <polygon points="4,4 16,4 10,16" />
                                 </svg>
@@ -60,16 +63,19 @@
                         @endif
                     </div>
                 </div>
-                
-                <div class="flex flex-col justify-center items-center">
-                    <p class="text-sm">
-                        Cycle {{ $soilMoistureCycleKPI['cycle_no'] ?? '-' }}
-                    </p>
-                    <div class="flex justify-center items-center">
+
+                {{-- Separator Line --}}
+                <div class="w-px bg-gray-300"></div>
+
+                {{-- Cycle --}}
+                <div class="flex-1 flex flex-col justify-center items-center">
+                    <p class="text-sm">Cycle {{ $soilMoistureCycleKPI['cycle_no'] ?? '-' }}</p>
+                    <div class="flex justify-center items-baseline">
                         <p class="text-2xl font-bold">
-                            {{ $soilMoistureCycleKPI['average'] ?? '0' }} %
+                            {{ number_format($soilMoistureCycleKPI['average'] ?? 0, 1) ?? '0' }}
                         </p>
-                    
+                        <span class="text-lg font-medium ml-1">%</span>
+
                         @if(($soilMoistureCycleKPI['status'] ?? '') === 'optimal')
                             <div class="flex items-center text-green-600">
                                 <!-- Solid up triangle -->
@@ -88,15 +94,15 @@
                     </div>
                 </div>
             </div>
-           
         </x-card>
+
     
         {{-- Temperature --}}
         <x-card class="p-4 flex flex-col items-center">
             <h3 class="text-md font-medium text-center">Temperature Stability</h3>
             <div class="flex justify-center items-center">
                 <p class="text-3xl font-bold">
-                    ± {{ $temperatureKPI['stddev'] ?? '-' }} °C
+                    ± {{ number_format($temperatureKPI['stddev'] ?? 0, 1) ?? '-' }} °C
                 </p>
             
                 @if(($temperatureKPI['status'] ?? '') === 'stable')
@@ -111,8 +117,6 @@
                             <polygon points="4,4 16,4 10,16" />
                         </svg>
                     </div>
-                @else
-                    <span class="text-gray-500">No Data</span>
                 @endif
             </div>
         </x-card>
@@ -122,7 +126,7 @@
             <h3 class="text-md font-medium text-center">Humidity Stability</h3>
             <div class="flex justify-center items-center">
                 <p class="text-2xl font-bold">
-                    {{ $humidityKPI['avg'] ?? '-' }} % <span class="text-sm font-medium text-gray-500">avg</span>
+                    {{ number_format($humidityKPI['avg'] ?? 0, 1) ?? '-' }} % <span class="text-sm font-medium text-gray-500">avg</span>
                 </p>
                 @if(($humidityKPI['status'] ?? '') === 'stable')
                     <div class="flex items-center text-green-600">
@@ -144,7 +148,7 @@
         </x-card>
     
         {{-- Germination --}}
-        <x-card class="p-4 flex flex-col items-center">
+        {{-- <x-card class="p-4 flex flex-col items-center">
             <h3 class="text-md font-medium text-center">Germination Success Rate</h3>
         
             <div class="flex items-center">
@@ -168,14 +172,107 @@
                     <span class="text-gray-500 ml-2 text-sm">No Data</span>
                 @endif
             </div>
+        </x-card> --}}
+
+        {{-- Germination Success Rate --}}
+        <x-card class="p-4 flex flex-col items-center">
+            <h3 class="text-sm font-medium text-center">Germination Success Rate</h3>
+
+            <div class="flex flex-row justify-center items-stretch gap-4 mt-3 w-full">
+                {{-- Previous Cycle --}}
+                <div class="flex-1 flex flex-col justify-center items-center">
+                    <p class="text-sm">Previous Cycle</p>
+                    <div class="flex justify-center items-center">
+                        <p class="text-2xl font-bold">
+                            {{ $successRateKPI['previous']['rate'] ?? 0 }}
+                        </p>
+                        <span class="text-lg font-medium ml-1">%</span>
+
+                        @if(($successRateKPI['previous']['status'] ?? '') === 'good')
+                            <div class="flex items-center text-green-600 ml-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-5 fill-current" viewBox="0 0 20 20">
+                                    <polygon points="10,4 16,16 4,16" />
+                                </svg>
+                            </div>
+                        @elseif(($successRateKPI['previous']['status'] ?? '') === 'poor')
+                            <div class="flex items-center text-red-600 ml-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-5 fill-current" viewBox="0 0 20 20">
+                                    <polygon points="4,4 16,4 10,16" />
+                                </svg>
+                            </div>
+                        @endif
+                    </div>
+                    <p class="text-xs italic">Cycle {{ $successRateKPI['previous']['cycle'] ?? '-' }}</p>
+                </div>
+
+                {{-- Separator Line --}}
+                <div class="w-px bg-gray-300"></div>
+
+                {{-- Current Cycle --}}
+                <div class="flex-1 flex flex-col justify-center items-center">
+                    <p class="text-sm">Current Cycle</p>
+                    <div class="flex justify-center items-center">
+                        <p class="text-2xl font-bold">
+                            {{ $successRateKPI['current']['rate'] ?? 0 }}
+                        </p>
+                        <span class="text-lg font-medium ml-1">%</span>
+
+                        @if(($successRateKPI['current']['status'] ?? '') === 'good')
+                            <div class="flex items-center text-green-600 ml-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-5 fill-current" viewBox="0 0 20 20">
+                                    <polygon points="10,4 16,16 4,16" />
+                                </svg>
+                            </div>
+                        @elseif(($successRateKPI['current']['status'] ?? '') === 'poor')
+                            <div class="flex items-center text-red-600 ml-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-5 fill-current" viewBox="0 0 20 20">
+                                    <polygon points="4,4 16,4 10,16" />
+                                </svg>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
         </x-card>
+
     
         {{-- Total Yield --}}
-        <x-card class="p-4 flex flex-col items-center">
+        {{-- <x-card class="p-4 flex flex-col items-center">
             <h3 class="text-md font-medium">Total Yield of Previous Cycle</h3>
             <p class="text-3xl font-bold">
                 {{ $totalYieldKPI['total'] ?? 0 }} g
             </p>
+        </x-card> --}}
+        {{-- Total Yield --}}
+        <x-card class="p-4 flex flex-col items-center">
+            <h3 class="text-sm font-medium text-center">Total Yield</h3>
+
+            <div class="flex flex-row justify-center items-stretch gap-4 mt-3 w-full">
+                {{-- Previous Cycle --}}
+                <div class="flex-1 flex flex-col justify-center items-center">
+                    <p class="text-sm">Previous Cycle</p>
+                    <div class="flex justify-center items-baseline">
+                        <p class="text-2xl font-bold">
+                            {{ $totalYieldKPI['previous'] ?? 0 }}
+                        </p>
+                        <span class="text-lg font-medium ml-1">g</span>
+                    </div>
+                </div>
+
+                {{-- Separator Line (always vertical) --}}
+                <div class="w-px bg-gray-300"></div>
+
+                {{-- Current Cycle --}}
+                <div class="flex-1 flex flex-col justify-center items-center">
+                    <p class="text-sm">Current Cycle</p>
+                    <div class="flex justify-center items-baseline">
+                        <p class="text-2xl font-bold">
+                            {{ $totalYieldKPI['current'] ?? 0 }}
+                        </p>
+                        <span class="text-lg font-medium ml-1">g</span>
+                    </div>
+                </div>
+            </div>
         </x-card>
     </div>
     

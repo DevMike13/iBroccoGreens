@@ -44,12 +44,12 @@ class DailyReport extends Component
         $this->getTemperatureForCurrentMonth($this->filterDate);
         $this->getHumidityForCurrentMonth($this->filterDate);
 
-        $this->calculateSoilMoistureKPI($this->selectedBoard, $this->filterDate);
+        $this->calculateSoilMoistureKPI($this->filterDate);
         $this->calculateTemperatureStability($this->filterDate);
         $this->calculateHumidityStability($this->filterDate);
-        $this->calculateSuccessRate(); 
-        $this->calculateTotalYields();
-        $this->calculateSoilMoistureForCurrentCycle($this->selectedBoard);
+        $this->calculateSuccessRate($this->filterDate); 
+        $this->calculateTotalYields($this->filterDate);
+        $this->calculateSoilMoistureForCurrentCycle($this->filterDate);
     }
 
     public function exportSensorData()
@@ -82,12 +82,11 @@ class DailyReport extends Component
         })->toArray();
     }
 
-    public function calculateSoilMoistureKPI($board, $filterDate = null)
+    public function calculateSoilMoistureKPI($filterDate = null)
     {
         $filterDate = $filterDate ?? Carbon::now('Asia/Manila')->toDateString();
 
-        $avgMoisture = DailySensorData::where('board', $board)
-            ->whereDate('reading_date', $filterDate)
+        $avgMoisture = DailySensorData::whereDate('reading_date', $filterDate)
             ->avg('soil_moisture');
 
         $avgMoisture = round($avgMoisture, 2);
@@ -100,12 +99,62 @@ class DailyReport extends Component
         ];
     }
 
-    public function calculateSoilMoistureForCurrentCycle($board)
-    {
-        // Get latest cycle
-        $latestCycle = Cycles::orderByDesc('cycle_no')->first();
+    // public function calculateSoilMoistureForCurrentCycle($board)
+    // {
+    //     $latestCycle = Cycles::orderByDesc('cycle_no')->first();
 
-        if (!$latestCycle) {
+    //     if (!$latestCycle) {
+    //         $this->soilMoistureCycleKPI = [
+    //             'cycle_no' => null,
+    //             'average'  => 0,
+    //             'status'   => 'no-data',
+    //         ];
+    //         return;
+    //     }
+
+    //     $avgMoisture = DailySensorData::where('board', $board)
+    //         ->where('cycle_id', $latestCycle->cycle_no)
+    //         ->whereBetween('reading_date', [
+    //             $latestCycle->start_date,
+    //             $latestCycle->end_date
+    //         ])
+    //         ->avg('soil_moisture');
+
+    //     $avgMoisture = round($avgMoisture, 2);
+
+    //     $status = ($avgMoisture >= 40 && $avgMoisture <= 60) ? 'optimal' : 'out-of-range';
+
+    //     $this->soilMoistureCycleKPI = [
+    //         'cycle_no' => $latestCycle->cycle_no,
+    //         'average'  => $avgMoisture,
+    //         'status'   => $status,
+    //     ];
+    // }
+
+    public function calculateSoilMoistureForCurrentCycle($filterDate = null)
+    {
+        if ($filterDate) {
+            $cycleNo = DailySensorData::whereDate('reading_date', $filterDate)
+                ->value('cycle_id');
+
+            if (!$cycleNo) {
+                $this->soilMoistureCycleKPI = [
+                    'cycle_no' => null,
+                    'average'  => 0,
+                    'status'   => 'no-data',
+                ];
+                return;
+            }
+
+            // Get cycle info from Cycles table (optional, if you store cycles there)
+            $cycle = Cycles::where('cycle_no', $cycleNo)->first();
+        } else {
+            // 🔹 No filter date → use latest cycle
+            $cycle = Cycles::orderByDesc('cycle_no')->first();
+            $cycleNo = $cycle?->cycle_no;
+        }
+
+        if (!$cycleNo) {
             $this->soilMoistureCycleKPI = [
                 'cycle_no' => null,
                 'average'  => 0,
@@ -114,13 +163,8 @@ class DailyReport extends Component
             return;
         }
 
-        // Query soil moisture readings within the cycle's date range
-        $avgMoisture = DailySensorData::where('board', $board)
-            ->where('cycle_id', $latestCycle->cycle_no) // ✅ fix here
-            ->whereBetween('reading_date', [
-                $latestCycle->start_date,
-                $latestCycle->end_date
-            ])
+        // 🔹 Calculate avg soil moisture for that cycle_no
+        $avgMoisture = DailySensorData::where('cycle_id', $cycleNo)
             ->avg('soil_moisture');
 
         $avgMoisture = round($avgMoisture, 2);
@@ -128,11 +172,13 @@ class DailyReport extends Component
         $status = ($avgMoisture >= 40 && $avgMoisture <= 60) ? 'optimal' : 'out-of-range';
 
         $this->soilMoistureCycleKPI = [
-            'cycle_no' => $latestCycle->cycle_no,
+            'cycle_no' => $cycleNo,
             'average'  => $avgMoisture,
             'status'   => $status,
         ];
     }
+
+
 
     public function getSoilPHForCurrentMonth($board, $filterDate = null)
     {
@@ -281,72 +327,215 @@ class DailyReport extends Component
         ];
     }
 
-    public function calculateSuccessRate()
-    {
-        $cycles = Cycles::with('yieldTrackers')->get();
+    // public function calculateSuccessRate()
+    // {
+    //     $cycles = Cycles::with('yieldTrackers')->get();
 
-        if ($cycles->isEmpty()) {
-            $this->successRateKPI = [
-                'rate'   => 0,
-                'status' => 'no-data',
-            ];
+    //     if ($cycles->isEmpty()) {
+    //         $this->successRateKPI = [
+    //             'rate'   => 0,
+    //             'status' => 'no-data',
+    //         ];
+    //         return;
+    //     }
+
+    //     $totalYield   = 0;
+    //     $totalTrays   = 0;
+
+    //     foreach ($cycles as $cycle) {
+    //         $totalYield += $cycle->yieldTrackers->sum('yield_per_tray');
+    //         $totalTrays += $cycle->trays;
+    //     }
+
+    //     // ✅ assume each tray is expected to yield 100g (adjust as needed)
+    //     $expectedYield = $totalTrays * 100;
+
+    //     $rate = ($expectedYield > 0) ? ($totalYield / $expectedYield) * 100 : 0;
+    //     $rate = round($rate, 2);
+
+    //     $status = $rate >= 80 ? 'good' : 'poor';
+
+    //     $this->successRateKPI = [
+    //         'rate'   => $rate,
+    //         'status' => $status,
+    //     ];
+    // }
+
+    public function calculateSuccessRate($filterDate = null)
+    {
+        $this->successRateKPI = [
+            'previous' => ['rate' => 0, 'status' => 'no-data'],
+            'current'  => ['rate' => 0, 'status' => 'no-data'],
+        ];
+
+        if ($filterDate) {
+            $filterTracker = YieldTracker::whereDate('date', $filterDate)->first();
+
+            if ($filterTracker) {
+                $filterCycle = Cycles::with('yieldTrackers')
+                    ->where('cycle_no', $filterTracker->cycle_no)
+                    ->first();
+
+                if ($filterCycle) {
+                    $this->successRateKPI['previous'] = $this->computeCycleSuccess($filterCycle);
+                }
+            }
+
+            return; 
+        }
+
+        $latestCycle = Cycles::with('yieldTrackers')->orderBy('cycle_no', 'desc')->first();
+
+        if (! $latestCycle) {
             return;
         }
 
-        $totalYield   = 0;
-        $totalTrays   = 0;
+        if ($latestCycle->status === 'current') {
+            if ($latestCycle->phase !== 'germination') {
+                $this->successRateKPI['current'] = $this->computeCycleSuccess($latestCycle);
+            }
 
-        foreach ($cycles as $cycle) {
-            $totalYield += $cycle->yieldTrackers->sum('yield_per_tray');
-            $totalTrays += $cycle->trays;
+            $previousCycle = Cycles::with('yieldTrackers')
+                ->where('cycle_no', '<', $latestCycle->cycle_no)
+                ->where('status', 'completed')
+                ->orderBy('cycle_no', 'desc')
+                ->first();
+
+            if ($previousCycle) {
+                $this->successRateKPI['previous'] = $this->computeCycleSuccess($previousCycle);
+            }
+        } else {
+            $this->successRateKPI['previous'] = $this->computeCycleSuccess($latestCycle);
         }
+    }
 
-        // ✅ assume each tray is expected to yield 100g (adjust as needed)
-        $expectedYield = $totalTrays * 100;
 
+    protected function computeCycleSuccess($cycle)
+    {
+        $totalYield = $cycle->yieldTrackers->sum('yield_per_tray');
+        $totalTrays = $cycle->trays;
+
+        $expectedYield = $totalTrays * 100; 
         $rate = ($expectedYield > 0) ? ($totalYield / $expectedYield) * 100 : 0;
         $rate = round($rate, 2);
 
         $status = $rate >= 80 ? 'good' : 'poor';
 
-        $this->successRateKPI = [
+        return [
             'rate'   => $rate,
             'status' => $status,
+            'cycle'  => $cycle->cycle_no,
         ];
     }
 
-    public function calculateTotalYields()
+
+    // public function calculateTotalYields()
+    // {
+    //     $total = 0;
+
+    //     $latestCycle = Cycles::orderBy('cycle_no', 'desc')->first();
+
+    //     if ($latestCycle) {
+    //         if ($latestCycle->status === 'current') {
+    //             $previousCycle = Cycles::where('cycle_no', '<', $latestCycle->cycle_no)
+    //                 ->where('status', 'completed')
+    //                 ->orderBy('cycle_no', 'desc')
+    //                 ->first();
+
+    //             if ($previousCycle) {
+    //                 $total = $previousCycle->yieldTrackers()->sum('yield_per_tray');
+    //             }
+    //         } else {
+    //             $total = $latestCycle->yieldTrackers()->sum('yield_per_tray');
+    //         }
+    //     }
+
+    //     $this->totalYieldKPI = [
+    //         'total' => $total,
+    //         'unit'  => 'g',
+    //     ];
+    // }
+
+    // public function calculateTotalYields()
+    // {
+    //     $currentTotal  = 0;
+    //     $previousTotal = 0;
+    
+    //     $currentCycle = Cycles::where('status', 'current')
+    //         ->orderBy('cycle_no', 'desc')
+    //         ->first();
+    
+    //     if ($currentCycle) {
+        
+    //         $currentTotal = $currentCycle->yieldTrackers()->sum('yield_per_tray');
+    
+    //         $previousCycle = Cycles::where('cycle_no', '<', $currentCycle->cycle_no)
+    //             ->where('status', 'completed')
+    //             ->orderBy('cycle_no', 'desc')
+    //             ->first();
+    
+    //         if ($previousCycle) {
+    //             $previousTotal = $previousCycle->yieldTrackers()->sum('yield_per_tray');
+    //         }
+    //     }
+    
+    //     $this->totalYieldKPI = [
+    //         'current'  => $currentTotal,
+    //         'previous' => $previousTotal,
+    //         'unit'     => 'g',
+    //     ];
+    // }
+
+    public function calculateTotalYields($filterDate = null)
     {
-        $total = 0;
+        $currentTotal  = 0;
+        $previousTotal = 0;
 
-        // ✅ Find the latest cycle (either current or completed)
-        $latestCycle = Cycles::orderBy('cycle_no', 'desc')->first();
+        $currentCycle = Cycles::where('status', 'current')
+            ->orderBy('cycle_no', 'desc')
+            ->first();
 
-        if ($latestCycle) {
-            if ($latestCycle->status === 'current') {
-                // ✅ If latest is current, show yields of the last completed cycle
-                $previousCycle = Cycles::where('cycle_no', '<', $latestCycle->cycle_no)
+        if ($currentCycle) {
+            $currentTotal = $currentCycle->yieldTrackers()->sum('yield_per_tray');
+
+            if ($filterDate) {
+                $filterTracker = YieldTracker::whereDate('date', $filterDate)->first();
+
+                if ($filterTracker) {
+                    $filterCycle = Cycles::where('cycle_no', $filterTracker->cycle_no)->first();
+
+                    if ($filterCycle) {
+                        $previousTotal = $filterCycle->yieldTrackers()->sum('yield_per_tray');
+                    }
+                }
+            } else {
+                $previousCycle = Cycles::where('cycle_no', '<', $currentCycle->cycle_no)
                     ->where('status', 'completed')
                     ->orderBy('cycle_no', 'desc')
                     ->first();
 
                 if ($previousCycle) {
-                    $total = $previousCycle->yieldTrackers()->sum('yield_per_tray');
+                    $previousTotal = $previousCycle->yieldTrackers()->sum('yield_per_tray');
                 }
-            } else {
-                // ✅ If latest is already completed, use it
-                $total = $latestCycle->yieldTrackers()->sum('yield_per_tray');
+            }
+        } else {
+            $previousCycle = Cycles::where('status', 'completed')
+                ->orderBy('cycle_no', 'desc')
+                ->first();
+    
+            if ($previousCycle) {
+                $previousTotal = $previousCycle->yieldTrackers()->sum('yield_per_tray');
             }
         }
 
-        // Store in KPI
         $this->totalYieldKPI = [
-            'total' => $total,
-            'unit'  => 'g',
+            'current'  => $currentTotal,
+            'previous' => $previousTotal,
+            'unit'     => 'g',
         ];
     }
 
-
+    
 
     public function getGraphValues(){
 
