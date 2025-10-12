@@ -253,10 +253,11 @@
                     <p class="text-sm">Previous Cycle</p>
                     <div class="flex justify-center items-baseline">
                         <p class="text-2xl font-bold">
-                            {{ $totalYieldKPI['previous'] ?? 0 }}
+                            {{ $totalYieldKPI['previous']['total'] ?? 0 }}
                         </p>
                         <span class="text-lg font-medium ml-1">g</span>
                     </div>
+                    <p class="text-xs italic">Cycle {{ $totalYieldKPI['previous']['cycle_no'] ?? '-' }}</p>
                 </div>
 
                 {{-- Separator Line (always vertical) --}}
@@ -267,10 +268,11 @@
                     <p class="text-sm">Current Cycle</p>
                     <div class="flex justify-center items-baseline">
                         <p class="text-2xl font-bold">
-                            {{ $totalYieldKPI['current'] ?? 0 }}
+                            {{ $totalYieldKPI['current']['total'] ?? 0 }}
                         </p>
                         <span class="text-lg font-medium ml-1">g</span>
                     </div>
+                    <p class="text-xs italic">Cycle {{ $totalYieldKPI['current']['cycle_no'] ?? '-' }}</p>
                 </div>
             </div>
         </x-card>

@@ -22,25 +22,6 @@ class Cycles extends Model
         'phase'
     ];
 
-    // public function samplings(): HasMany
-    // {
-    //     return $this->hasMany(Samplings::class, 'cycle_id');
-    // }
-    
-    // public function shrimp(): HasOne
-    // {
-    //     return $this->hasOne(Shrimps::class, 'cycle_id');
-    // }
-
-    // public function harvest(): HasOne
-    // {
-    //     return $this->hasOne(Harvests::class, 'cycle_id');
-    // }
-
-    // public function sensors(): HasMany
-    // {
-    //     return $this->hasMany(SensorDatas::class);
-    // }
     public function yieldTrackers()
     {
         return $this->hasMany(YieldTracker::class, 'cycle_id'); 
