@@ -86,7 +86,10 @@ class Dashboard extends Component
     {
         $this->database = $database;
         // $this->getLightState();
-        $this->selectedBoard = "B1";
+        // $this->selectedBoard = "B1";
+        if (!$this->selectedBoard) {
+            $this->selectedBoard = "B1";
+        }
         $this->fetchData();
         
         // $this->getFanState();
